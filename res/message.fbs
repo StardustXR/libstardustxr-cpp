@@ -1,0 +1,12 @@
+namespace StardustXR;
+
+table Message {
+	type: uint;
+	id: int;
+	object: string;
+	method: string;
+	error: string;
+	data:[ubyte] (flexbuffer);
+}
+
+root_type Message;
