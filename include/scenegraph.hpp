@@ -5,7 +5,7 @@ namespace StardustXR {
 class Scenegraph {
   Scenegraph();
 
-  pure virtual void signal(std::string path, std::string method);
+  pure virtual void executeMethod(std::string path, std::string method);
 }
 
 } // namespace StardustXR
