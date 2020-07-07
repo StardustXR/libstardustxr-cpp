@@ -21,7 +21,7 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_ERROR = 12,
     VT_DATA = 14
   };
-  uint32_t type() const { return GetField<uint32_t>(VT_TYPE, 0); }
+  uint8_t type() const { return GetField<uint8_t>(VT_TYPE, 0); }
   int32_t id() const { return GetField<int32_t>(VT_ID, 0); }
   const flatbuffers::String *object() const {
     return GetPointer<const flatbuffers::String *>(VT_OBJECT);
@@ -40,7 +40,7 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint32_t>(verifier, VT_TYPE) &&
+           VerifyField<uint8_t>(verifier, VT_TYPE) &&
            VerifyField<int32_t>(verifier, VT_ID) &&
            VerifyOffset(verifier, VT_OBJECT) &&
            verifier.VerifyString(object()) &&
@@ -56,8 +56,8 @@ struct MessageBuilder {
   typedef Message Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_type(uint32_t type) {
-    fbb_.AddElement<uint32_t>(Message::VT_TYPE, type, 0);
+  void add_type(uint8_t type) {
+    fbb_.AddElement<uint8_t>(Message::VT_TYPE, type, 0);
   }
   void add_id(int32_t id) { fbb_.AddElement<int32_t>(Message::VT_ID, id, 0); }
   void add_object(flatbuffers::Offset<flatbuffers::String> object) {
@@ -83,7 +83,7 @@ struct MessageBuilder {
 };
 
 inline flatbuffers::Offset<Message>
-CreateMessage(flatbuffers::FlatBufferBuilder &_fbb, uint32_t type = 0,
+CreateMessage(flatbuffers::FlatBufferBuilder &_fbb, uint8_t type = 0,
               int32_t id = 0,
               flatbuffers::Offset<flatbuffers::String> object = 0,
               flatbuffers::Offset<flatbuffers::String> method = 0,
@@ -100,7 +100,7 @@ CreateMessage(flatbuffers::FlatBufferBuilder &_fbb, uint32_t type = 0,
 }
 
 inline flatbuffers::Offset<Message>
-CreateMessageDirect(flatbuffers::FlatBufferBuilder &_fbb, uint32_t type = 0,
+CreateMessageDirect(flatbuffers::FlatBufferBuilder &_fbb, uint8_t type = 0,
                     int32_t id = 0, const char *object = nullptr,
                     const char *method = nullptr, const char *error = nullptr,
                     const std::vector<uint8_t> *data = nullptr) {
