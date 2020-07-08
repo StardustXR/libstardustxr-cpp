@@ -12,19 +12,24 @@ Messenger::Messenger(int readFD, int writeFD, Scenegraph *scenegraph) {
 uint Messenger::generateMessageID() { return pendingMessages.size(); }
 
 void Messenger::sendSignal(const char *object, const char *method,
-                           std::vector<uint8_t> &argumentsFlexBuffer) {
+                           std::vector<uint8_t> &data) {
+  sendCall(3, 0, object, method, data);
+}
 
+void Messenger::sendCall(uint8_t type, uint id, const char *object,
+                         const char *method, std::vector<uint8_t> &data) {
   builder.Clear();
 
-  auto object_path = builder.CreateString(object);
-  auto method_name = builder.CreateString(method);
+  auto objectPath = builder.CreateString(object);
+  auto methodName = builder.CreateString(method);
+  auto dataBuffer = builder.CreateVector<uint8_t>(data);
 
   MessageBuilder messageBuilder(builder);
-  messageBuilder.add_type(3);
-  messageBuilder.add_id(generateMessageID());
-  messageBuilder.add_object(object_path);
-  messageBuilder.add_method(method_name);
-  messageBuilder.add_data(argumentsFlexBuffer);
+  messageBuilder.add_type(type);
+  messageBuilder.add_id(id);
+  messageBuilder.add_object(objectPath);
+  messageBuilder.add_method(methodName);
+  messageBuilder.add_data(dataBuffer);
   auto message = messageBuilder.Finish();
 
   builder.Finish(message);
