@@ -1,3 +1,6 @@
+#ifndef STARDUSTXR_MESSENGER_H
+#define STARDUSTXR_MESSENGER_H
+
 #include "message.hpp"
 #include "scenegraph.hpp"
 
@@ -41,3 +44,5 @@ private:
 };
 
 } // namespace StardustXR
+
+#endif // STARDUSTXR_MESSENGER_H

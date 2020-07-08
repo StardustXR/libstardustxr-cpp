@@ -1,3 +1,6 @@
+#ifndef STARDUSTXR_SCENEGRAPH_H
+#define STARDUSTXR_SCENEGRAPH_H
+
 #include <unistd.h>
 
 namespace StardustXR {
@@ -10,3 +13,5 @@ class Scenegraph {
 };
 
 } // namespace StardustXR
+
+#endif // STARDUSTXR_SCENEGRAPH_H
