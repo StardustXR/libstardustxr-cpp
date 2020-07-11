@@ -6,6 +6,7 @@
 namespace StardustXR {
 
 class Scenegraph {
+public:
   Scenegraph(){};
   virtual ~Scenegraph(){};
 

@@ -16,6 +16,13 @@ void Messenger::sendSignal(const char *object, const char *method,
   sendCall(3, 0, object, method, data);
 }
 
+flexbuffers::Reference
+Messenger::executeRemoteMethod(const char *object, const char *method,
+                               std::vector<uint8_t> &data) {
+  uint id = generateMessageID();
+  sendCall(1, id, object, method, data);
+}
+
 void Messenger::sendCall(uint8_t type, uint id, const char *object,
                          const char *method, std::vector<uint8_t> &data) {
   builder.Clear();
