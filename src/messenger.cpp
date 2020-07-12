@@ -46,7 +46,7 @@ void Messenger::sendCall(uint8_t type, uint id, const char *object,
   sendMessage(builder.GetBufferPointer(), builder.GetSize());
 }
 
-void Messenger::sendMessage(uint8_t *buffer, uint size) {
+void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
   write(messageWriteFD, &size, 4);
   write(messageWriteFD, buffer, size);
 }
