@@ -14,11 +14,11 @@ std::chrono::duration<double> benchmark_time(void *(*function)()) {
 int s2cpipe[2];
 int c2spipe[2];
 
-void client() {
+void client(int readFD, int writeFD) {
   printf("Client Started\n");
 
   StardustXR::BlankScenegraph blankScenegraph;
-  StardustXR::Messenger messenger(s2cpipe[0], c2spipe[1], &blankScenegraph);
+  StardustXR::Messenger messenger(readFD, writeFD, &blankScenegraph);
 
   flexbuffers::Builder fbb;
   fbb.String("Echo test");
@@ -26,12 +26,15 @@ void client() {
   std::vector<uint8_t> flexbuffer = fbb.GetBuffer();
 
   messenger.sendSignal("/test", "echo", flexbuffer);
+  std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 }
-void server() {
+
+void server(int readFD, int writeFD) {
   printf("Server Started\n");
 
   StardustXR::BlankScenegraph blankScenegraph;
-  StardustXR::Messenger messenger(s2cpipe[0], c2spipe[1], &blankScenegraph);
+  StardustXR::Messenger messenger(readFD, writeFD, &blankScenegraph);
+  std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 }
 
 int main(int argc, char **argv) {
@@ -54,11 +57,11 @@ int main(int argc, char **argv) {
   if (cpid == 0) {
     close(s2cpipe[1]);
     close(c2spipe[0]);
-    client();
+    client(s2cpipe[0], c2spipe[1]);
   } else {
     close(s2cpipe[0]);
     close(c2spipe[1]);
-    server();
+    server(c2spipe[0], s2cpipe[1]);
   }
 
   return 0;
