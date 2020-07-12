@@ -45,6 +45,7 @@ private:
   std::thread handlerThread;
 
   void messageHandler();
+  void handleMessage(const Message *message);
 };
 
 } // namespace StardustXR

@@ -64,10 +64,24 @@ void Messenger::messageHandler() {
     read(messageReadFD, messageBinary, messageLength);
 
     const Message *message = GetMessage(messageBinary);
-    printf("Message recieved with type %u and id %u", message->type(),
-           message->id());
+    handleMessage(message);
+
     free(messageBinary);
     delete message;
+  }
+}
+
+void Messenger::handleMessage(const Message *message) {
+  switch (message->type()) {
+  case 0:
+    fputs(message->error()->c_str(), stderr);
+    break;
+  case 1:
+  case 2:
+    scenegraph->executeMethod(message->object()->str(),
+                              message->method()->str(),
+                              message->data_flexbuffer_root());
+    break;
   }
 }
 
