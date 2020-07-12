@@ -54,15 +54,20 @@ void Messenger::sendMessage(uint8_t *buffer, uint size) {
 void Messenger::messageHandler() {
   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   while (true) {
-    uint32_t *messageLength = 0;
-    read(messageReadFD, messageLength, 4);
+    uint32_t messageLength;
+    if (read(messageReadFD, &messageLength, 4) == 0) {
+      printf("Pipe broke!\n");
+      return;
+    }
 
-    uint8_t *messageBinary = 0;
-    read(messageReadFD, messageBinary, *messageLength);
+    void *messageBinary = malloc(messageLength);
+    read(messageReadFD, messageBinary, messageLength);
 
     const Message *message = GetMessage(messageBinary);
     printf("Message recieved with type %u and id %u", message->type(),
            message->id());
+    free(messageBinary);
+    delete message;
   }
 }
 
