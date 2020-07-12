@@ -3,6 +3,7 @@
 
 #include "message.hpp"
 #include "scenegraph.hpp"
+#include <thread>
 
 namespace StardustXR {
 
@@ -41,6 +42,9 @@ protected:
 private:
   int messageReadFD;
   int messageWriteFD;
+  std::thread handlerThread;
+
+  void messageHandler();
 };
 
 } // namespace StardustXR

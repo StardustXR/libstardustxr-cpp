@@ -7,6 +7,9 @@ Messenger::Messenger(int readFD, int writeFD, Scenegraph *scenegraph) {
   this->messageWriteFD = writeFD;
   this->scenegraph = scenegraph;
   this->builder = flatbuffers::FlatBufferBuilder(1024);
+
+  this->handlerThread =
+      std::thread(&StardustXR::Messenger::messageHandler, this);
 }
 
 uint Messenger::generateMessageID() { return pendingMessages.size(); }
@@ -46,6 +49,21 @@ void Messenger::sendCall(uint8_t type, uint id, const char *object,
 void Messenger::sendMessage(uint8_t *buffer, uint size) {
   write(messageWriteFD, &size, 4);
   write(messageWriteFD, buffer, size);
+}
+
+void Messenger::messageHandler() {
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  while (true) {
+    uint32_t *messageLength = 0;
+    read(messageReadFD, messageLength, 4);
+
+    uint8_t *messageBinary = 0;
+    read(messageReadFD, messageBinary, *messageLength);
+
+    const Message *message = GetMessage(messageBinary);
+    printf("Message recieved with type %u and id %u", message->type(),
+           message->id());
+  }
 }
 
 } // namespace StardustXR
