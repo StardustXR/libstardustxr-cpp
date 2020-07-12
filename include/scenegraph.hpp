@@ -1,6 +1,7 @@
 #ifndef STARDUSTXR_SCENEGRAPH_H
 #define STARDUSTXR_SCENEGRAPH_H
 
+#include "flatbuffers/flexbuffers.h"
 #include <unistd.h>
 
 namespace StardustXR {
@@ -10,7 +11,8 @@ public:
   Scenegraph(){};
   virtual ~Scenegraph(){};
 
-  virtual void executeMethod(std::string path, std::string method) = 0;
+  virtual void executeMethod(std::string path, std::string method,
+                             flexbuffers::Reference args) = 0;
 };
 
 } // namespace StardustXR
