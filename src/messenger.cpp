@@ -12,7 +12,7 @@ Messenger::Messenger(int readFD, int writeFD, Scenegraph *scenegraph) {
       std::thread(&StardustXR::Messenger::messageHandler, this);
 }
 
-uint Messenger::generateMessageID() { return pendingMessages.size(); }
+uint Messenger::generateMessageID() { return 0; }
 
 void Messenger::sendSignal(const char *object, const char *method,
                            std::vector<uint8_t> &data) {
