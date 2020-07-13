@@ -11,8 +11,11 @@ public:
   Scenegraph(){};
   virtual ~Scenegraph(){};
 
-  virtual void executeMethod(std::string path, std::string method,
-                             flexbuffers::Reference args) = 0;
+  virtual void sendSignal(std::string path, std::string method,
+                          flexbuffers::Reference data) = 0;
+  virtual std::vector<uint8_t> executeMethod(std::string path,
+                                             std::string method,
+                                             flexbuffers::Reference args) = 0;
 };
 
 } // namespace StardustXR
