@@ -3,14 +3,16 @@
 
 #include "message.hpp"
 #include "scenegraph.hpp"
+#include <map>
+#include <mutex>
 #include <thread>
 
 namespace StardustXR {
 
-struct PendingMessage {
-  uint8_t type;
-  uint id;
-};
+typedef struct pending_message {
+  const Message *message;
+  std::mutex mutex;
+} PendingMessage;
 
 class Messenger {
 public:
@@ -34,7 +36,6 @@ public:
 protected:
   flatbuffers::FlatBufferBuilder builder;
 
-  std::vector<PendingMessage> pendingMessages;
   Scenegraph *scenegraph;
 
   uint generateMessageID();
@@ -42,6 +43,9 @@ protected:
 private:
   int messageReadFD;
   int messageWriteFD;
+  uint32_t pendingMessageID;
+  flexbuffers::Reference pendingMessageReturn;
+  std::mutex syncMethodMutex;
   std::thread handlerThread;
 
   void messageHandler();

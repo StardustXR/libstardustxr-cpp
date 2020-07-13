@@ -23,7 +23,10 @@ flexbuffers::Reference
 Messenger::executeRemoteMethod(const char *object, const char *method,
                                std::vector<uint8_t> &data) {
   uint id = generateMessageID();
-  sendCall(1, id, object, method, data);
+  sendCall(2, id, object, method, data);
+  syncMethodMutex.lock();
+  syncMethodMutex.unlock();
+  return pendingMessageReturn;
 }
 
 void Messenger::sendCall(uint8_t type, uint id, const char *object,
@@ -52,7 +55,7 @@ void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 }
 
 void Messenger::messageHandler() {
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  syncMethodMutex.lock();
   while (true) {
     uint32_t messageLength;
     if (read(messageReadFD, &messageLength, 4) == 0) {
@@ -67,21 +70,32 @@ void Messenger::messageHandler() {
     handleMessage(message);
 
     free(messageBinary);
-    delete message;
   }
 }
 
 void Messenger::handleMessage(const Message *message) {
   switch (message->type()) {
-  case 0:
+  case 0: {
     fputs(message->error()->c_str(), stderr);
-    break;
-  case 1:
-  case 2:
-    scenegraph->executeMethod(message->object()->str(),
-                              message->method()->str(),
-                              message->data_flexbuffer_root());
-    break;
+  } break;
+  case 1: {
+    scenegraph->sendSignal(message->object()->str(), message->method()->str(),
+                           message->data_flexbuffer_root());
+  } break;
+  case 2: {
+    std::vector<uint8_t> returnValue = scenegraph->executeMethod(
+        message->object()->str(), message->method()->str(),
+        message->data_flexbuffer_root());
+    sendCall(3, 0, message->object()->c_str(), message->method()->c_str(),
+             returnValue);
+  } break;
+  case 3: {
+    if (message->id() == pendingMessageID) {
+      pendingMessageReturn = message->data_flexbuffer_root();
+      syncMethodMutex.unlock();
+      syncMethodMutex.lock();
+    }
+  }
   }
 }
 
