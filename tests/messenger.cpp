@@ -25,7 +25,15 @@ void client(int readFD, int writeFD) {
   fbb.Finish();
   std::vector<uint8_t> flexbuffer = fbb.GetBuffer();
 
-  messenger.sendSignal("/test", "echo", flexbuffer);
+  std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+  messenger.executeRemoteMethod("/test", "echo", flexbuffer);
+  std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+
+  printf("Method took %f seconds round trip\n",
+         std::chrono::duration_cast<std::chrono::duration<double, std::micro>>(
+             t2 - t1)
+             .count());
+
   std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 }
 
