@@ -16,7 +16,7 @@ uint Messenger::generateMessageID() { return 0; }
 
 void Messenger::sendSignal(const char *object, const char *method,
                            std::vector<uint8_t> &data) {
-  sendCall(3, 0, object, method, data);
+  sendCall(1, 0, object, method, data);
 }
 
 flexbuffers::Reference
