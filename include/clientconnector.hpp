@@ -16,7 +16,7 @@
 
 namespace StardustXR {
 
-static void SendFD(int socket, int fd);
+void SendFD(int socket, int fd);
 
 bool ConnectClient(std::string path, int &read, int &write);
 

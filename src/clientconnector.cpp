@@ -2,7 +2,7 @@
 
 namespace StardustXR {
 
-static void SendFD(int socket, int fd) {
+void SendFD(int socket, int fd) {
   struct msghdr msg = {0};
   char buf[CMSG_SPACE(sizeof(fd))];
   memset(buf, '\0', sizeof(buf));
