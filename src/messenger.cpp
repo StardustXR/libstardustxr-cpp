@@ -26,6 +26,7 @@ Messenger::executeRemoteMethod(const char *object, const char *method,
   sendCall(2, id, object, method, data);
   syncMethodMutex.lock();
   syncMethodMutex.unlock();
+  relockMutex = true;
   return pendingMessageReturn;
 }
 
@@ -57,6 +58,11 @@ void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 void Messenger::messageHandler() {
   syncMethodMutex.lock();
   while (true) {
+    if (relockMutex) {
+      syncMethodMutex.lock();
+      relockMutex = false;
+    }
+
     uint32_t messageLength;
     if (read(messageReadFD, &messageLength, 4) == 0) {
       printf("Pipe broke!\n");
@@ -90,11 +96,8 @@ void Messenger::handleMessage(const Message *message) {
              returnValue);
   } break;
   case 3: {
-    if (message->id() == pendingMessageID) {
-      pendingMessageReturn = message->data_flexbuffer_root();
-      syncMethodMutex.unlock();
-      syncMethodMutex.lock();
-    }
+    pendingMessageReturn = message->data_flexbuffer_root();
+    syncMethodMutex.unlock();
   }
   }
 }

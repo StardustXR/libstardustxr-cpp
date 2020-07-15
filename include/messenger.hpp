@@ -46,6 +46,7 @@ private:
   uint32_t pendingMessageID;
   flexbuffers::Reference pendingMessageReturn;
   std::mutex syncMethodMutex;
+  bool relockMutex = false;
   std::thread handlerThread;
 
   void messageHandler();
