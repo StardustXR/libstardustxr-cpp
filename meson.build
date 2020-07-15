@@ -9,9 +9,6 @@ incdir = include_directories('include')
 commonheaders = ['include/message.hpp', 'include/messenger.hpp', 'include/scenegraph.hpp']
 install_headers(commonheaders, subdir: 'stardustxr')
 
-
-# install_headers(
-
 # Client library
 clientheaders = ['include/client/clientconnector.hpp']
 clientsrc = ['src/messenger.cpp', 'src/clientconnector.cpp']
