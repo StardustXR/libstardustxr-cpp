@@ -13,9 +13,15 @@ int main(int argc, char *argv[]) {
   StardustXR::BlankScenegraph scenegraph;
   StardustXR::Messenger messenger(readFD, writeFD, &scenegraph);
 
-  std::vector<uint8_t> blankVector;
+  flexbuffers::Builder fbb;
+  fbb.String("Hello Universe!");
+  fbb.Finish();
+  std::vector<uint8_t> data = fbb.GetBuffer();
 
-  messenger.sendSignal("/test", "echo", blankVector);
+  const char *echo =
+      messenger.executeRemoteMethod("/test", "echo", data).AsString().c_str();
+
+  printf("Got back echo '%s'\n", echo);
 
   std::this_thread::sleep_for(std::chrono::seconds(300));
 
