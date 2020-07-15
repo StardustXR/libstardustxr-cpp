@@ -1,8 +1,8 @@
 #ifndef STARDUSTXR_MESSENGER_MANAGER_H
 #define STARDUSTXR_MESSENGER_MANAGER_H
 
-#include "messenger.hpp"
-#include "scenegraph.hpp"
+#include "../messenger.hpp"
+#include "../scenegraph.hpp"
 
 #include <fcntl.h>
 #include <list>
