@@ -1,5 +1,5 @@
 #include "../blank_scenegraph.hpp"
-#include "messengermanager.hpp"
+#include "server/messengermanager.hpp"
 
 int main(int argc, char *argv[]) {
   printf("Server starting...\n");

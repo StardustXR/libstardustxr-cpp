@@ -1,5 +1,5 @@
 #include "../blank_scenegraph.hpp"
-#include "clientconnector.hpp"
+#include "client/clientconnector.hpp"
 #include "messenger.hpp"
 
 int main(int argc, char *argv[]) {
