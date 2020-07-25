@@ -1,5 +1,5 @@
 #include "messenger.hpp"
-#include "blank_scenegraph.hpp"
+#include "dummy/blank_scenegraph.hpp"
 #include <chrono>
 #include <iostream>
 

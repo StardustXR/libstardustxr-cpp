@@ -1,3 +1,6 @@
+#ifndef STARDUSTXR_BLANK_SCENEGRAPH_H
+#define STARDUSTXR_BLANK_SCENEGRAPH_H
+
 #include "scenegraph.hpp"
 #include <stdio.h>
 
@@ -43,3 +46,5 @@ public:
 };
 
 } // namespace StardustXR
+
+#endif

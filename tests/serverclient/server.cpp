@@ -1,4 +1,4 @@
-#include "../blank_scenegraph.hpp"
+#include "dummy/blank_scenegraph.hpp"
 #include "server/messengermanager.hpp"
 
 int main(int argc, char *argv[]) {

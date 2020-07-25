@@ -1,4 +1,4 @@
-# libstardust
+# libstardustxr
 Stardust C++ library for server implementations and clients
 
 ## Prerequisites
@@ -14,7 +14,7 @@ ninja
 
 ## Install
 ```bash
-sudo ninja install
+ninja install
 ```
 
 ## Client
@@ -23,8 +23,9 @@ sudo ninja install
 
 ### Example
 ```cpp
-#include "stardustxr/client/clientconnector.hpp"
 #include "stardustxr/messenger.hpp"
+#include "stardustxr/dummy/blank_scenegraph.hpp"
+#include "stardustxr/client/clientconnector.hpp"
 
 int main(int argc, char *argv[]) {
   printf("Client starting...\n");
@@ -50,7 +51,8 @@ int main(int argc, char *argv[]) {
 ### Example
 ```cpp
 #include "stardustxr/messenger.hpp"
-#include "server/messengermanager.hpp"
+#include "stardustxr/dummy/blank_scenegraph.hpp"
+#include "stardustxr/server/messengermanager.hpp"
 
 int main(int argc, char *argv[]) {
   printf("Server starting...\n");
@@ -63,3 +65,4 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 ```
+z

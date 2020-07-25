@@ -1,4 +1,4 @@
-#include "../blank_scenegraph.hpp"
+#include "dummy/blank_scenegraph.hpp"
 #include "client/clientconnector.hpp"
 #include "messenger.hpp"
 
