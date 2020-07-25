@@ -1,6 +1,10 @@
 # libstardust
 Stardust C++ library for server implementations and clients
 
+## Prerequisites
+1. Flatbuffers v1.12.0
+2. Meson
+
 ## Build
 ```bash
 meson build

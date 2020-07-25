@@ -9,7 +9,7 @@ Messenger::Messenger(int readFD, int writeFD, Scenegraph *scenegraph) {
   this->builder = flatbuffers::FlatBufferBuilder(1024);
 
   this->handlerThread =
-      std::thread(&StardustXR::Messenger::messageHandler, this);
+    std::thread(&StardustXR::Messenger::messageHandler, this);
 }
 
 uint Messenger::generateMessageID() { return 0; }
