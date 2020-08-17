@@ -1,7 +1,7 @@
 #ifndef STARDUSTXR_BLANK_SCENEGRAPH_H
 #define STARDUSTXR_BLANK_SCENEGRAPH_H
 
-#include "scenegraph.hpp"
+#include "../scenegraph.hpp"
 #include <stdio.h>
 
 namespace StardustXR {
