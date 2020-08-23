@@ -12,9 +12,12 @@ install_headers(commonheaders, subdir: 'stardustxr')
 dummyheaders = ['include/dummy/blank_scenegraph.hpp']
 install_headers(dummyheaders, subdir: 'stardustxr/dummy')
 
+scenegraphheaders = ['include/stardust_scenegraph/stardust_scenegraph.hpp', 'include/stardust_scenegraph/node.hpp']
+install_headers(scenegraphheaders, subdir: 'stardustxr/stardust_scenegraph')
+
 # Client library
 clientheaders = ['include/client/clientconnector.hpp']
-clientsrc = ['src/messenger.cpp', 'src/clientconnector.cpp']
+clientsrc = ['src/stardust_scenegraph.cpp', 'src/messenger.cpp', 'src/clientconnector.cpp']
 
 clientlib = library('stardustxr', clientsrc, include_directories: incdir, dependencies: [threads], version: '0.1.0', soversion: '0', install: true)
 
@@ -23,7 +26,7 @@ pkg.generate(clientlib, filebase: 'stardustxr', name: 'stardustxr', url: 'https:
 
 # Server library
 serverheaders = ['include/server/messengermanager.hpp']
-serversrc = ['src/messenger.cpp', 'src/messengermanager.cpp']
+serversrc = ['src/stardust_scenegraph.cpp', 'src/messenger.cpp', 'src/messengermanager.cpp']
 
 serverlib = library('stardustxr-server', serversrc, include_directories: incdir, dependencies: [threads], version: '0.1.0', soversion: '0', install: true)
 
