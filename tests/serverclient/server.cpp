@@ -1,13 +1,33 @@
-#include "dummy/blank_scenegraph.hpp"
+#include "stardust_scenegraph/stardust_scenegraph.hpp"
 #include "server/messengermanager.hpp"
 
+class TestNode : public StardustXR::Node {
+public:
+	explicit TestNode() {
+		STARDUSTXR_NODE_METHOD("echo", &TestNode::echo)
+	}
+
+	std::vector<uint8_t> echo(flexbuffers::Reference stringVariant, bool returnValue) {
+		const char *string = stringVariant.AsString().c_str();
+		printf("Echoing back \"%s\"\n", string);
+		if(returnValue) {
+			flexbuffers::Builder fbb;
+			fbb.String(string);
+			fbb.Finish();
+			return fbb.GetBuffer();
+		}
+		return std::vector<uint8_t>();
+	}
+};
+
 int main(int argc, char *argv[]) {
-  printf("Server starting...\n");
+	printf("Server starting...\n");
 
-  StardustXR::BlankScenegraph scenegraph;
-  StardustXR::MessengerManager messengerManager(&scenegraph);
+	StardustXR::StardustScenegraph scenegraph;
+	scenegraph.addNode("/test", new TestNode());
 
-  std::this_thread::sleep_for(std::chrono::seconds(300));
+	StardustXR::MessengerManager messengerManager(&scenegraph);
 
-  return 0;
+	std::this_thread::sleep_for(std::chrono::seconds(300));
+	return 0;
 }
