@@ -1,13 +1,13 @@
 #ifndef STARDUSTXR_NODE_H
 #define STARDUSTXR_NODE_H
+#define STARDUSTXR_NODE_METHOD(method_name, method_ref) methods.push_back(method_name, std::bind(method_name, this, std::placeholders::_1, std::placeholders::_2));
 
 #include "flatbuffers/flexbuffers.h"
 #include <unistd.h>
 
 namespace StardustXR {
 
-class Node;	
-typedef std::vector<uint8_t> (Node::*Method)(flexbuffers::Reference ref, bool returnValue);
+typedef std::function<std::vector<uint8_t>(flexbuffers::Reference, bool)> Method;
 
 class Node {
 public:

@@ -16,7 +16,8 @@ public:
 	void createNode(std::string path, Node *node);
 protected:
 	Node root;
-	void onPathStep(std::string path, void (*pathStepFunction)(std::string pathStep));
+	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue);
+	void onPathStep(std::string path, std::function<void(std::string)> pathStepFunction);
 };
 
 } // namespace StardustXR
