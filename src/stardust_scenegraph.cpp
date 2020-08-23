@@ -37,7 +37,7 @@ std::vector<uint8_t> StardustScenegraph::executeMethod(std::string path, std::st
 	return (currentNode->methods[method])(args, returnValue);
 }
 
-void StardustScenegraph::createNode(std::string path, Node *node) {
+void StardustScenegraph::addNode(std::string path, Node *node) {
 	//Get the name of the node to create
 	std::string lastNodeName = path.substr(path.find_last_of("/")+1);
 	Node *currentNode = &root;

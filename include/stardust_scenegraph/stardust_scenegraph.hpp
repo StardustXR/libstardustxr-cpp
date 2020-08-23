@@ -13,7 +13,7 @@ public:
 	void sendSignal(std::string path, std::string method, flexbuffers::Reference data);
 	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args);
 
-	void createNode(std::string path, Node *node);
+	void addNode(std::string path, Node *node);
 protected:
 	Node root;
 	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue);
