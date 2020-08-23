@@ -12,6 +12,10 @@ typedef std::function<std::vector<uint8_t>(flexbuffers::Reference, bool)> Method
 class Node {
 public:
 	Node() {}
+	~Node() {
+		for(Node *node : children)
+			delete node;
+	}
 
 	std::map<std::string, Method> methods;
 	std::map<std::string, Node *> children;
