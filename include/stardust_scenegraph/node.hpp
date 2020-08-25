@@ -13,8 +13,8 @@ class Node {
 public:
 	Node() {}
 	~Node() {
-		for(Node *node : children)
-			delete node;
+		for(const auto &node : children)
+			delete node.second;
 	}
 
 	std::map<std::string, Method> methods;
