@@ -21,9 +21,7 @@ MessengerManager::RecieveFDReturn MessengerManager::recieveFD(int socket) {
   msg.msg_controllen = sizeof(c_buffer);
 
   RecieveFDReturn ret = {0};
-  strcpy(
-      ret.buf,
-      m_buffer); // should be ret.buf = m_buffer, but not modifiable l-value :(
+  strcpy(ret.buf, m_buffer); // should be ret.buf = m_buffer, but not modifiable l-value :(
   if (recvmsg(socket, &msg, 0) < 0) {
     // printf("Didn't get a FD\n");
     ret.fd = -1;
