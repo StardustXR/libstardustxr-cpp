@@ -2,7 +2,7 @@
 #define STARDUSTXR_SERVER_MESSENGER_H
 
 #include "../messenger.hpp"
-#include "scenegraph.hpp"
+#include "../scenegraph.hpp"
 #include <map>
 #include <mutex>
 #include <thread>
