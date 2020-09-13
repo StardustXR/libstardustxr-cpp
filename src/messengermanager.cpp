@@ -4,8 +4,13 @@ namespace StardustXR {
 
 MessengerManager::MessengerManager(Scenegraph *scenegraph) {
   this->scenegraph = scenegraph;
-  this->socketThread =
-      std::thread(&StardustXR::MessengerManager::socketLoop, this);
+  this->socketThread = std::thread(&StardustXR::MessengerManager::socketLoop, this);
+}
+MessengerManager::~MessengerManager() {
+	std::map<int, Messenger*>::iterator itr;
+	for(itr = messengers.begin(); itr != messengers.end(); ++itr) {
+		delete itr->second;
+	}
 }
 
 MessengerManager::RecieveFDReturn MessengerManager::recieveFD(int socket) {
@@ -39,8 +44,7 @@ MessengerManager::RecieveFDReturn MessengerManager::recieveFD(int socket) {
 }
 
 void MessengerManager::socketLoop() {
-  printf("socketLoop: loop starting, trying to make a socket at %s .\n",
-         SD_SOCK_PATH);
+  printf("socketLoop: loop starting, trying to make a socket at %s .\n", SD_SOCK_PATH);
   int s, s2;
   struct sockaddr_un local, remote;
   if ((s = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1) {
@@ -78,8 +82,7 @@ void MessengerManager::socketLoop() {
     if ((s2 = accept(s, (struct sockaddr *)&remote, &len)) ==
         -1) { // Usually blocking. Not a problem.
       perror("accept");
-      continue; // Probably should be replaced with exit() or something. This is
-                // a very fatal condition
+      continue; // Probably should be replaced with exit() or something. This is a very fatal condition
     }
     printf("socketLoop: client connected on %s .\n", SD_SOCK_PATH);
     usleep(1000);
@@ -103,7 +106,9 @@ void MessengerManager::socketLoop() {
     usleep(1000);
     // std::queue <int> q = *fd_queue;
     if (i != 100) {
-      messengers.emplace_back(in.fd, out.fd, scenegraph);
+	  Messenger *newMessenger = new Messenger(in.fd, out.fd, scenegraph);
+      messengers[messengerCount] = newMessenger;
+	  messengerCount++;
       printf("socketLoop: Client provided fd's. in: %d, out: %d\n", in.fd,
              out.fd);
     } else {

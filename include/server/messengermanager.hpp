@@ -25,7 +25,9 @@ namespace StardustXR {
 class MessengerManager {
 public:
   explicit MessengerManager(Scenegraph *scenegraph);
-  std::list<ServerMessenger> messengers;
+  ~MessengerManager();
+  std::map<int, Messenger*> messengers;
+  int messengerCount = 0;
   Scenegraph *scenegraph;
 
 private:
