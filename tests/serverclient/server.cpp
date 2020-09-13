@@ -1,5 +1,5 @@
-#include "stardust_scenegraph/server_stardust_scenegraph.hpp"
 #include "server/messengermanager.hpp"
+#include "server/stardust_scenegraph.hpp"
 
 class TestNode : public StardustXR::ServerNode {
 public:

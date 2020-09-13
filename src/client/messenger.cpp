@@ -1,4 +1,4 @@
-#include "client/client_messenger.hpp"
+#include "client/messenger.hpp"
 
 namespace StardustXR {
 

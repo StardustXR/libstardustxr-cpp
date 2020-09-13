@@ -1,4 +1,4 @@
-#include "stardust_scenegraph/client_stardust_scenegraph.hpp"
+#include "client/stardust_scenegraph.hpp"
 
 namespace StardustXR {
 

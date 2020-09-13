@@ -1,7 +1,7 @@
 #ifndef STARDUSTXR_MESSENGER_MANAGER_H
 #define STARDUSTXR_MESSENGER_MANAGER_H
 
-#include "server_messenger.hpp"
+#include "messenger.hpp"
 
 #include <fcntl.h>
 #include <list>

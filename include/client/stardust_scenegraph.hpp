@@ -1,8 +1,8 @@
 #ifndef STARDUSTXR_CLIENT_STARDUST_SCENEGRAPH_H
 #define STARDUSTXR_CLIENT_STARDUST_SCENEGRAPH_H
 
-#include "../client/client_scenegraph.hpp"
-#include "client_node.hpp"
+#include "scenegraph.hpp"
+#include "node.hpp"
 
 namespace StardustXR {
 

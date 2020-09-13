@@ -1,4 +1,4 @@
-#include "client/clientconnector.hpp"
+#include "client/connector.hpp"
 
 namespace StardustXR {
 
