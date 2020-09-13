@@ -9,9 +9,11 @@
 
 namespace StardustXR {
 
+class MessengerManager;
+
 class ServerMessenger : public Messenger {
 public:
-	explicit ServerMessenger(int sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph);
+	explicit ServerMessenger(int sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager);
 
 	void sendSignal(const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
@@ -27,6 +29,7 @@ protected:
 
 	int sessionID;
 	ServerScenegraph *scenegraph;
+	MessengerManager *manager;
 };
 
 } // namespace StardustXR

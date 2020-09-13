@@ -29,6 +29,8 @@ public:
   int messengerCount = 0;
   ServerScenegraph *scenegraph;
 
+  void removeMessenger(int sessionID);
+
 private:
   typedef struct {
     int fd;

@@ -13,6 +13,11 @@ MessengerManager::~MessengerManager() {
 	}
 }
 
+void MessengerManager::removeMessenger(int sessionID) {
+	delete messengers[sessionID];
+	messengers.erase(sessionID);
+}
+
 MessengerManager::RecieveFDReturn MessengerManager::recieveFD(int socket) {
   struct msghdr msg = {0};
 
@@ -106,7 +111,7 @@ void MessengerManager::socketLoop() {
     usleep(1000);
     // std::queue <int> q = *fd_queue;
     if (i != 100) {
-	  ServerMessenger *newMessenger = new ServerMessenger(messengerCount, in.fd, out.fd, scenegraph);
+	  ServerMessenger *newMessenger = new ServerMessenger(messengerCount, in.fd, out.fd, scenegraph, this);
       messengers[messengerCount] = newMessenger;
 	  messengerCount++;
       printf("socketLoop: Client provided fd's. in: %d, out: %d\n", in.fd,
