@@ -9,7 +9,7 @@ incdir = include_directories('include')
 commonheaders = ['include/message.hpp', 'include/messenger.hpp']
 install_headers(commonheaders, subdir: 'stardustxr')
 
-scenegraphheaders = ['include/stardust_scenegraph/client_stardust_scenegraph.hpp', 'include/stardust_scenegraph/server_stardust_scenegraph.hpp', 'include/stardust_scenegraph/node.hpp']
+scenegraphheaders = ['include/stardust_scenegraph/client_stardust_scenegraph.hpp', 'include/stardust_scenegraph/server_stardust_scenegraph.hpp', 'include/stardust_scenegraph/client_node.hpp', 'include/stardust_scenegraph/server_node.hpp']
 install_headers(scenegraphheaders, subdir: 'stardustxr/stardust_scenegraph')
 
 # Client library

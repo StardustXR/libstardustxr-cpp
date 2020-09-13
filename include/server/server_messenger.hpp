@@ -11,7 +11,7 @@ namespace StardustXR {
 
 class ServerMessenger : public Messenger {
 public:
-	explicit ServerMessenger(int readFD, int writeFD, ServerScenegraph *scenegraph);
+	explicit ServerMessenger(int sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph);
 
 	void sendSignal(const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
@@ -25,6 +25,7 @@ protected:
 	void messageHandler();
 	void handleMessage(const Message *message);
 
+	int sessionID;
 	ServerScenegraph *scenegraph;
 };
 

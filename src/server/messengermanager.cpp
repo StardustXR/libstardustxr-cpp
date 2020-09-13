@@ -8,8 +8,8 @@ MessengerManager::MessengerManager(ServerScenegraph *scenegraph) {
 }
 MessengerManager::~MessengerManager() {
 	std::map<int, ServerMessenger*>::iterator itr;
-	for(itr = messengers.begin(); itr != messengers.end(); ++itr) {
-		delete itr->second;
+	for(const auto &messenger : messengers) {
+		delete messenger.second;
 	}
 }
 
@@ -106,7 +106,7 @@ void MessengerManager::socketLoop() {
     usleep(1000);
     // std::queue <int> q = *fd_queue;
     if (i != 100) {
-	  ServerMessenger *newMessenger = new ServerMessenger(in.fd, out.fd, scenegraph);
+	  ServerMessenger *newMessenger = new ServerMessenger(messengerCount, in.fd, out.fd, scenegraph);
       messengers[messengerCount] = newMessenger;
 	  messengerCount++;
       printf("socketLoop: Client provided fd's. in: %d, out: %d\n", in.fd,

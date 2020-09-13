@@ -1,13 +1,13 @@
 #include "stardust_scenegraph/server_stardust_scenegraph.hpp"
 #include "server/messengermanager.hpp"
 
-class TestNode : public StardustXR::Node {
+class TestNode : public StardustXR::ServerNode {
 public:
 	explicit TestNode() {
 		STARDUSTXR_NODE_METHOD("echo", &TestNode::echo)
 	}
 
-	std::vector<uint8_t> echo(flexbuffers::Reference stringVariant, bool returnValue) {
+	std::vector<uint8_t> echo(int sessionID, flexbuffers::Reference stringVariant, bool returnValue) {
 		const char *string = stringVariant.AsString().c_str();
 		printf("Echoing back \"%s\"\n", string);
 		if(returnValue) {
