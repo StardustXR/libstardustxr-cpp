@@ -1,15 +1,15 @@
-#ifndef STARDUSTXR_SCENEGRAPH_H
-#define STARDUSTXR_SCENEGRAPH_H
+#ifndef STARDUSTXR_SERVER_SCENEGRAPH_H
+#define STARDUSTXR_SERVER_SCENEGRAPH_H
 
 #include "flatbuffers/flexbuffers.h"
 #include <unistd.h>
 
 namespace StardustXR {
 
-class Scenegraph {
+class ServerScenegraph {
 public:
-	Scenegraph(){};
-	virtual ~Scenegraph(){};
+	ServerScenegraph(){};
+	virtual ~ServerScenegraph(){};
 
 	virtual void sendSignal(std::string path, std::string method, flexbuffers::Reference data) {
 		executeMethod(path, method, data);
@@ -19,4 +19,4 @@ public:
 
 } // namespace StardustXR
 
-#endif // STARDUSTXR_SCENEGRAPH_H
+#endif // STARDUSTXR_SERVER_SCENEGRAPH_H

@@ -2,7 +2,7 @@
 #define STARDUSTXR_CLIENT_MESSENGER_H
 
 #include "../messenger.hpp"
-#include "../scenegraph.hpp"
+#include "client_scenegraph.hpp"
 #include <map>
 #include <mutex>
 #include <thread>
@@ -11,7 +11,7 @@ namespace StardustXR {
 
 class ClientMessenger : public Messenger {
 public:
-	explicit ClientMessenger(int readFD, int writeFD, Scenegraph *scenegraph);
+	explicit ClientMessenger(int readFD, int writeFD, ClientScenegraph *scenegraph);
 
 	void sendSignal(const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
@@ -24,6 +24,8 @@ public:
 protected:
 	void messageHandler();
 	void handleMessage(const Message *message);
+
+	ClientScenegraph *scenegraph;
 };
 
 } // namespace StardustXR

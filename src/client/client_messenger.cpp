@@ -2,8 +2,9 @@
 
 namespace StardustXR {
 
-ClientMessenger::ClientMessenger(int readFD, int writeFD, Scenegraph *scenegraph) : Messenger(readFD, writeFD, scenegraph) {
+ClientMessenger::ClientMessenger(int readFD, int writeFD, ClientScenegraph *scenegraph) : Messenger(readFD, writeFD) {
 	this->handlerThread = std::thread(&StardustXR::ClientMessenger::messageHandler, this);
+	this->scenegraph = scenegraph;
 }
 
 void ClientMessenger::sendSignal(const char *object, const char *method, std::vector<uint8_t> &data) {

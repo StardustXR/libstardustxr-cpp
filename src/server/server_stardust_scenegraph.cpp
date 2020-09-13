@@ -1,8 +1,8 @@
-#include "stardust_scenegraph/stardust_scenegraph.hpp"
+#include "stardust_scenegraph/server_stardust_scenegraph.hpp"
 
 namespace StardustXR {
 
-void StardustScenegraph::onPathStep(std::string path, std::function<void(std::string)> pathStepFunction) {
+void ServerStardustScenegraph::onPathStep(std::string path, std::function<void(std::string)> pathStepFunction) {
 	std::istringstream stream(path);
 	stream.get(); //Remove beginning slash
 
@@ -12,14 +12,14 @@ void StardustScenegraph::onPathStep(std::string path, std::function<void(std::st
 	}
 }
 
-void StardustScenegraph::sendSignal(std::string path, std::string method, flexbuffers::Reference data) {
+void ServerStardustScenegraph::sendSignal(std::string path, std::string method, flexbuffers::Reference data) {
 	this->executeMethod(path, method, data, false);
 }
-std::vector<uint8_t> StardustScenegraph::executeMethod(std::string path, std::string method, flexbuffers::Reference args) {
+std::vector<uint8_t> ServerStardustScenegraph::executeMethod(std::string path, std::string method, flexbuffers::Reference args) {
 	return this->executeMethod(path, method, args, true);
 }
 
-std::vector<uint8_t> StardustScenegraph::executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue) {
+std::vector<uint8_t> ServerStardustScenegraph::executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue) {
 	//Find the node referenced by the path string
 	Node *currentNode = &root;
 	this->onPathStep(path, [&](std::string pathStep) {
@@ -37,7 +37,7 @@ std::vector<uint8_t> StardustScenegraph::executeMethod(std::string path, std::st
 	return (currentNode->methods[method])(args, returnValue);
 }
 
-void StardustScenegraph::addNode(std::string path, Node *node) {
+void ServerStardustScenegraph::addNode(std::string path, Node *node) {
 	//Get the name of the node to create
 	std::string lastNodeName = path.substr(path.find_last_of("/")+1);
 	Node *currentNode = &root;

@@ -2,12 +2,12 @@
 
 namespace StardustXR {
 
-MessengerManager::MessengerManager(Scenegraph *scenegraph) {
+MessengerManager::MessengerManager(ServerScenegraph *scenegraph) {
   this->scenegraph = scenegraph;
   this->socketThread = std::thread(&StardustXR::MessengerManager::socketLoop, this);
 }
 MessengerManager::~MessengerManager() {
-	std::map<int, Messenger*>::iterator itr;
+	std::map<int, ServerMessenger*>::iterator itr;
 	for(itr = messengers.begin(); itr != messengers.end(); ++itr) {
 		delete itr->second;
 	}
@@ -106,7 +106,7 @@ void MessengerManager::socketLoop() {
     usleep(1000);
     // std::queue <int> q = *fd_queue;
     if (i != 100) {
-	  Messenger *newMessenger = new Messenger(in.fd, out.fd, scenegraph);
+	  ServerMessenger *newMessenger = new ServerMessenger(in.fd, out.fd, scenegraph);
       messengers[messengerCount] = newMessenger;
 	  messengerCount++;
       printf("socketLoop: Client provided fd's. in: %d, out: %d\n", in.fd,

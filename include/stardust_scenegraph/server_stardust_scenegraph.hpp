@@ -1,14 +1,14 @@
-#ifndef STARDUSTXR_STARDUST_SCENEGRAPH_H
-#define STARDUSTXR_STARDUST_SCENEGRAPH_H
+#ifndef STARDUSTXR_SERVER_STARDUST_SCENEGRAPH_H
+#define STARDUSTXR_SERVER_STARDUST_SCENEGRAPH_H
 
-#include "../scenegraph.hpp"
+#include "../server/server_scenegraph.hpp"
 #include "node.hpp"
 
 namespace StardustXR {
 
-class StardustScenegraph : public Scenegraph {
+class ServerStardustScenegraph : public ServerScenegraph {
 public:
-	StardustScenegraph() : Scenegraph() {}
+	ServerStardustScenegraph() : ServerScenegraph() {}
 
 	void sendSignal(std::string path, std::string method, flexbuffers::Reference data);
 	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args);
@@ -22,4 +22,4 @@ protected:
 
 } // namespace StardustXR
 
-#endif
+#endif //STARDUSTXR_SERVER_STARDUST_SCENEGRAPH_H

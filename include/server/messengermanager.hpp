@@ -2,7 +2,6 @@
 #define STARDUSTXR_MESSENGER_MANAGER_H
 
 #include "server_messenger.hpp"
-#include "../scenegraph.hpp"
 
 #include <fcntl.h>
 #include <list>
@@ -24,11 +23,11 @@ namespace StardustXR {
 
 class MessengerManager {
 public:
-  explicit MessengerManager(Scenegraph *scenegraph);
+  explicit MessengerManager(ServerScenegraph *scenegraph);
   ~MessengerManager();
-  std::map<int, Messenger*> messengers;
+  std::map<int, ServerMessenger*> messengers;
   int messengerCount = 0;
-  Scenegraph *scenegraph;
+  ServerScenegraph *scenegraph;
 
 private:
   typedef struct {

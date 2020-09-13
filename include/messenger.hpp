@@ -2,7 +2,6 @@
 #define STARDUSTXR_MESSENGER_H
 
 #include "message.hpp"
-#include "scenegraph.hpp"
 #include <thread>
 #include <mutex>
 
@@ -15,14 +14,12 @@ typedef struct pending_message {
 
 class Messenger {
 public:
-	explicit Messenger(int readFD, int writeFD, Scenegraph *scenegraph);
+	explicit Messenger(int readFD, int writeFD);
 
 protected:
 	int messageReadFD;
 	int messageWriteFD;
 	flatbuffers::FlatBufferBuilder builder;
-
-	Scenegraph *scenegraph;
 
 	uint32_t pendingMessageID;
 	flexbuffers::Reference pendingMessageReturn;

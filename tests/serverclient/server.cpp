@@ -1,4 +1,4 @@
-#include "stardust_scenegraph/stardust_scenegraph.hpp"
+#include "stardust_scenegraph/server_stardust_scenegraph.hpp"
 #include "server/messengermanager.hpp"
 
 class TestNode : public StardustXR::Node {
@@ -23,7 +23,7 @@ public:
 int main(int argc, char *argv[]) {
 	printf("Server starting...\n");
 
-	StardustXR::StardustScenegraph scenegraph;
+	StardustXR::ServerStardustScenegraph scenegraph;
 	scenegraph.addNode("/test", new TestNode());
 
 	StardustXR::MessengerManager messengerManager(&scenegraph);

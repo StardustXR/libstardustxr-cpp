@@ -1,6 +1,6 @@
-#include "dummy/blank_scenegraph.hpp"
 #include "client/clientconnector.hpp"
 #include "client/client_messenger.hpp"
+#include "stardust_scenegraph/client_stardust_scenegraph.hpp"
 
 int main(int argc, char *argv[]) {
 	printf("Client starting...\n");
@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	StardustXR::BlankScenegraph scenegraph;
+	StardustXR::ClientStardustScenegraph scenegraph;
 	StardustXR::ClientMessenger messenger(readFD, writeFD, &scenegraph);
 
 	flexbuffers::Builder fbb;
