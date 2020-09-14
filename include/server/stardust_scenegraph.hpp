@@ -10,13 +10,13 @@ class ServerStardustScenegraph : public ServerScenegraph {
 public:
 	ServerStardustScenegraph() : ServerScenegraph() {}
 
-	void sendSignal(std::string path, std::string method, flexbuffers::Reference data);
-	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args);
+	void sendSignal(int sessionID, std::string path, std::string method, flexbuffers::Reference data);
+	std::vector<uint8_t> executeMethod(int sessionID, std::string path, std::string method, flexbuffers::Reference args);
 
 	void addNode(std::string path, ServerNode *node);
 protected:
 	ServerNode root;
-	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue);
+	std::vector<uint8_t> executeMethod(int sessionID, std::string path, std::string method, flexbuffers::Reference args, bool returnValue);
 	void onPathStep(std::string path, std::function<void(std::string)> pathStepFunction);
 };
 

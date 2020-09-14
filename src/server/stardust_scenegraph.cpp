@@ -12,14 +12,14 @@ void ServerStardustScenegraph::onPathStep(std::string path, std::function<void(s
 	}
 }
 
-void ServerStardustScenegraph::sendSignal(std::string path, std::string method, flexbuffers::Reference data) {
-	this->executeMethod(path, method, data, false);
+void ServerStardustScenegraph::sendSignal(int sessionID, std::string path, std::string method, flexbuffers::Reference data) {
+	this->executeMethod(sessionID, path, method, data, false);
 }
-std::vector<uint8_t> ServerStardustScenegraph::executeMethod(std::string path, std::string method, flexbuffers::Reference args) {
-	return this->executeMethod(path, method, args, true);
+std::vector<uint8_t> ServerStardustScenegraph::executeMethod(int sessionID, std::string path, std::string method, flexbuffers::Reference args) {
+	return this->executeMethod(sessionID, path, method, args, true);
 }
 
-std::vector<uint8_t> ServerStardustScenegraph::executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue) {
+std::vector<uint8_t> ServerStardustScenegraph::executeMethod(int sessionID, std::string path, std::string method, flexbuffers::Reference args, bool returnValue) {
 	//Find the node referenced by the path string
 	ServerNode *currentNode = &root;
 	this->onPathStep(path, [&](std::string pathStep) {
@@ -34,7 +34,7 @@ std::vector<uint8_t> ServerStardustScenegraph::executeMethod(std::string path, s
 		printf("Method %s on node %s not found", method.c_str(), path.c_str());
 		return std::vector<uint8_t>();
 	}
-	return (currentNode->methods[method])(0, args, returnValue);
+	return (currentNode->methods[method])(sessionID, args, returnValue);
 }
 
 void ServerStardustScenegraph::addNode(std::string path, ServerNode *node) {

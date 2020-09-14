@@ -9,7 +9,7 @@ public:
 
 	std::vector<uint8_t> echo(int sessionID, flexbuffers::Reference stringVariant, bool returnValue) {
 		const char *string = stringVariant.AsString().c_str();
-		printf("Echoing back \"%s\"\n", string);
+		printf("Echoing back \"%s\" on client with sessionID of %i\n", string, sessionID);
 		if(returnValue) {
 			flexbuffers::Builder fbb;
 			fbb.String(string);

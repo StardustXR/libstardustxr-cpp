@@ -77,10 +77,10 @@ void ServerMessenger::handleMessage(const Message *message) {
 		fputs(message->error()->c_str(), stderr);
 	} break;
 	case 1: {
-		scenegraph->sendSignal(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
+		scenegraph->sendSignal(sessionID, message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
 	} break;
 	case 2: {
-		std::vector<uint8_t> returnValue = scenegraph->executeMethod(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
+		std::vector<uint8_t> returnValue = scenegraph->executeMethod(sessionID, message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
 		sendCall(3, 0, message->object()->c_str(), message->method()->c_str(), returnValue);
 	} break;
 	case 3: {
