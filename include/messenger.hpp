@@ -16,6 +16,9 @@ class Messenger {
 public:
 	explicit Messenger(int readFD, int writeFD);
 
+	typedef std::function<void(flexbuffers::Builder&)> ArgsConstructor;
+	typedef std::function<void(flexbuffers::Reference)> Callback;
+
 protected:
 	int messageReadFD;
 	int messageWriteFD;

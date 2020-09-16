@@ -7,10 +7,6 @@ ClientMessenger::ClientMessenger(int readFD, int writeFD, ClientScenegraph *scen
 	this->scenegraph = scenegraph;
 }
 
-void ClientMessenger::sendSignal(const char *object, const char *method, std::vector<uint8_t> &data) {
-	sendCall(1, 0, object, method, data);
-}
-
 flexbuffers::Reference ClientMessenger::executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data) {
 	uint id = generateMessageID();
 	sendCall(2, id, object, method, data);
