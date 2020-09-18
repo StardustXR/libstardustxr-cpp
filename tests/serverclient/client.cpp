@@ -13,12 +13,9 @@ int main(int argc, char *argv[]) {
 	StardustXR::ClientStardustScenegraph scenegraph;
 	StardustXR::ClientMessenger messenger(readFD, writeFD, &scenegraph);
 
-	flexbuffers::Builder fbb;
-	fbb.String("Hello Universe!");
-	fbb.Finish();
-	std::vector<uint8_t> data = fbb.GetBuffer();
-
-	messenger.executeRemoteMethod("/test", "echo", data, [&](flexbuffers::Reference data) {
+	messenger.executeRemoteMethod("/test", "echo", [](flexbuffers::Builder &fbb) {
+		fbb.String("Hello Universe!");
+	}, [](flexbuffers::Reference data) {
 		const char *echo = data.AsString().c_str();
 		printf("Got back echo \"%s\"\n", echo);
 	});
