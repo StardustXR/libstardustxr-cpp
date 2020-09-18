@@ -18,9 +18,10 @@ int main(int argc, char *argv[]) {
 	fbb.Finish();
 	std::vector<uint8_t> data = fbb.GetBuffer();
 
-	// const char *echo = messenger.executeRemoteMethod("/test", "echo", data).AsString().c_str();
-
-	// printf("Got back echo \"%s\"\n", echo);
+	messenger.executeRemoteMethod("/test", "echo", data, [&](flexbuffers::Reference data) {
+		const char *echo = data.AsString().c_str();
+		printf("Got back echo \"%s\"\n", echo);
+	});
 
 	std::this_thread::sleep_for(std::chrono::seconds(300));
 

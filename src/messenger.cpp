@@ -9,7 +9,18 @@ Messenger::Messenger(int readFD, int writeFD) {
 }
 Messenger::~Messenger() {}
 
-uint Messenger::generateMessageID() { return 0; }
+uint Messenger::generateMessageID() {
+	uint id = 0;
+	while(pendingCallbacks.count(id)) //Increment up until a free spot is found for the message ID
+		id++;
+	return id;
+}
+
+void Messenger::executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback) {
+	uint id = generateMessageID();
+	pendingCallbacks[id] = callback;
+	sendCall(2, id, object, method, data);
+}
 
 void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
 	builder.Clear();

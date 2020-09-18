@@ -30,16 +30,19 @@ public:
 	void executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback);
 
 protected:
+	// General variables
 	int messageReadFD;
 	int messageWriteFD;
-	flatbuffers::FlatBufferBuilder builder;
 
+	// Message handling specific
 	std::thread handlerThread;
-
+	flatbuffers::FlatBufferBuilder builder;
+	std::map<uint, Callback> pendingCallbacks;
 	uint generateMessageID();
 	virtual void messageHandler() = 0;
 	virtual void handleMessage(const Message *message) = 0;
 
+	// Message sending specific
 	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendMessage(uint8_t *buffer, uint size);
 
