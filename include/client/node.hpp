@@ -3,7 +3,7 @@
 #define STARDUSTXR_NODE_METHOD(method_name, method_ref) methods[method_name] = std::bind(method_ref, this, std::placeholders::_1, std::placeholders::_2);
 
 #include "flatbuffers/flexbuffers.h"
-#include <unistd.h>
+#include <functional>
 
 namespace StardustXR {
 

@@ -4,6 +4,7 @@
 #include "message.hpp"
 #include <thread>
 #include <mutex>
+#include <functional>
 
 namespace StardustXR {
 
