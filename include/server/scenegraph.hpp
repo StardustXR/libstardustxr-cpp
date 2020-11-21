@@ -1,5 +1,5 @@
-#ifndef STARDUSTXR_SERVER_SCENEGRAPH_H
-#define STARDUSTXR_SERVER_SCENEGRAPH_H
+#ifndef LIBSTARDUSTXR_SERVER_SCENEGRAPH_H
+#define LIBSTARDUSTXR_SERVER_SCENEGRAPH_H
 
 #include "flatbuffers/flexbuffers.h"
 #include <unistd.h>
@@ -19,4 +19,4 @@ public:
 
 } // namespace StardustXR
 
-#endif // STARDUSTXR_SERVER_SCENEGRAPH_H
+#endif // LIBSTARDUSTXR_SERVER_SCENEGRAPH_H

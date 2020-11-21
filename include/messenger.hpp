@@ -1,5 +1,5 @@
-#ifndef STARDUSTXR_MESSENGER_H
-#define STARDUSTXR_MESSENGER_H
+#ifndef LIBSTARDUSTXR_MESSENGER_H
+#define LIBSTARDUSTXR_MESSENGER_H
 
 #include "message.hpp"
 #include <thread>
@@ -57,4 +57,4 @@ protected:
 
 }
 
-#endif // STARDUSTXR_SCENEGRAPH_H
+#endif // LIBSTARDUSTXR_SCENEGRAPH_H
