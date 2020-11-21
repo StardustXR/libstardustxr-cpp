@@ -12,7 +12,7 @@ typedef std::function<std::vector<uint8_t>(int, flexbuffers::Reference, bool)> S
 class ServerNode {
 public:
 	ServerNode() {}
-	~ServerNode() {
+	virtual ~ServerNode() {
 		for(const auto &node : children)
 			delete node.second;
 	}
