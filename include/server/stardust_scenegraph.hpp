@@ -14,8 +14,8 @@ public:
 	std::vector<uint8_t> executeMethod(int sessionID, std::string path, std::string method, flexbuffers::Reference args);
 
 	void addNode(std::string path, ServerNode *node);
-protected:
 	ServerNode root;
+protected:
 	std::vector<uint8_t> executeMethod(int sessionID, std::string path, std::string method, flexbuffers::Reference args, bool returnValue);
 	void onPathStep(std::string path, std::function<void(std::string)> pathStepFunction);
 };
