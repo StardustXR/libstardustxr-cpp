@@ -6,7 +6,7 @@ threads = dependency('threads')
 # Headers
 incdir = include_directories('include')
 
-commonheaders = ['include/message.hpp', 'include/messenger.hpp']
+commonheaders = ['include/message.hpp', 'include/messenger.hpp', 'include/util.hpp']
 install_headers(commonheaders, subdir: 'stardustxr')
 
 # Client library
