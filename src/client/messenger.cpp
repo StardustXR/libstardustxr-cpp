@@ -12,6 +12,7 @@ void ClientMessenger::messageHandler() {
 		uint32_t messageLength;
 		if (read(messageReadFD, &messageLength, 4) == 0) {
 			printf("Pipe broke!\n");
+			pipeBroke = true;
 			return;
 		}
 
@@ -38,7 +39,7 @@ void ClientMessenger::handleMessage(const Message *message) {
 	case 2: {
 		// Method was called, so execute the local scenegraph method and send back the result
 		std::vector<uint8_t> returnValue = scenegraph->executeMethod(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
-		sendCall(3, message->id(), message->object()->c_str(), message->method()->c_str(), returnValue);
+		sendCall(handlerBuilder, 3, message->id(), message->object()->c_str(), message->method()->c_str(), returnValue);
 	} break;
 	case 3: {
 		//Method return, so execute the callback method if it exists and remove it from the pending map

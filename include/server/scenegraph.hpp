@@ -15,6 +15,8 @@ public:
 		executeMethod(sessionID, path, method, data);
 	}
 	virtual std::vector<uint8_t> executeMethod(int sessionID, std::string path, std::string method, flexbuffers::Reference args) = 0;
+
+	virtual void handleMessengerDeletion(uint sessionID) {}
 };
 
 } // namespace StardustXR

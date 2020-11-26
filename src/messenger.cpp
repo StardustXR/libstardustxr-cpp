@@ -5,9 +5,12 @@ namespace StardustXR {
 Messenger::Messenger(int readFD, int writeFD) {
 	this->messageReadFD = readFD;
 	this->messageWriteFD = writeFD;
-	this->builder = flatbuffers::FlatBufferBuilder(1024);
+	this->handlerBuilder = flatbuffers::FlatBufferBuilder(1024);
+	this->senderBuilder = flatbuffers::FlatBufferBuilder(1024);
 }
-Messenger::~Messenger() {}
+Messenger::~Messenger() {
+	handlerThread.detach();
+}
 
 uint Messenger::generateMessageID() {
 	uint id = 0;
@@ -17,12 +20,14 @@ uint Messenger::generateMessageID() {
 }
 
 void Messenger::executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback) {
+	if(checkPipeBroken()) return;
 	uint id = generateMessageID();
 	pendingCallbacks[id] = callback;
-	sendCall(2, id, object, method, data);
+	sendCall(senderBuilder, 2, id, object, method, data);
 }
 
-void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
+void Messenger::sendCall(flatbuffers::FlatBufferBuilder &builder, uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
+	if(checkPipeBroken()) return;
 	builder.Clear();
 
 	auto objectPath = builder.CreateString(object);
@@ -42,6 +47,7 @@ void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *
 }
 
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
+	if(checkPipeBroken()) return;
 	write(messageWriteFD, &size, 4);
 	write(messageWriteFD, buffer, size);
 }

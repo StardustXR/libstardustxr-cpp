@@ -5,6 +5,7 @@
 #include "scenegraph.hpp"
 #include <map>
 #include <mutex>
+#include <signal.h>
 #include <thread>
 
 namespace StardustXR {
@@ -13,13 +14,16 @@ class MessengerManager;
 
 class ServerMessenger : public Messenger {
 public:
-	explicit ServerMessenger(int sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager);
+	explicit ServerMessenger(uint sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager);
 
 protected:
 	void messageHandler();
 	void handleMessage(const Message *message);
 
-	int sessionID;
+	virtual void onPipeBreak() {
+		scenegraph->handleMessengerDeletion(sessionID);
+	}
+	uint sessionID;
 	ServerScenegraph *scenegraph;
 	MessengerManager *manager;
 };

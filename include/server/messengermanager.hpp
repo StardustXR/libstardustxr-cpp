@@ -26,7 +26,7 @@ public:
   explicit MessengerManager(ServerScenegraph *scenegraph);
   ~MessengerManager();
   std::map<int, ServerMessenger*> messengers;
-  int messengerCount = 1;
+  uint messengerCount = 1;
   ServerScenegraph *scenegraph;
 
   void removeMessenger(int sessionID);

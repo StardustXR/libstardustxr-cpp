@@ -3,7 +3,7 @@
 
 namespace StardustXR {
 
-ServerMessenger::ServerMessenger(int sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager) : Messenger(readFD, writeFD) {
+ServerMessenger::ServerMessenger(uint sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager) : Messenger(readFD, writeFD) {
 	this->handlerThread = std::thread(&StardustXR::ServerMessenger::messageHandler, this);
 	this->scenegraph = scenegraph;
 	this->manager = manager;
@@ -11,11 +11,12 @@ ServerMessenger::ServerMessenger(int sessionID, int readFD, int writeFD, ServerS
 }
 
 void ServerMessenger::messageHandler() {
-	while (true) {
+	while (!pipeBroke) {
 		uint32_t messageLength;
 		if (read(messageReadFD, &messageLength, 4) == 0) {
 			printf("Pipe broke!\n");
-			return;
+			pipeBroke = true;
+			continue;
 		}
 
 		void *messageBinary = malloc(messageLength);
@@ -26,6 +27,8 @@ void ServerMessenger::messageHandler() {
 
 		free(messageBinary);
 	}
+
+	onPipeBreak();
 }
 
 void ServerMessenger::handleMessage(const Message *message) {
@@ -41,7 +44,7 @@ void ServerMessenger::handleMessage(const Message *message) {
 	case 2: {
 		// Method was called, so execute the local scenegraph method and send back the result
 		std::vector<uint8_t> returnValue = scenegraph->executeMethod(sessionID, message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
-		sendCall(3, message->id(), message->object()->c_str(), message->method()->c_str(), returnValue);
+		sendCall(handlerBuilder, 3, message->id(), message->object()->c_str(), message->method()->c_str(), returnValue);
 	} break;
 	case 3: {
 		//Method return, so execute the callback method if it exists and remove it from the pending map
