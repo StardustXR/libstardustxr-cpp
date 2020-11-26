@@ -33,3 +33,5 @@
 
 # Build directory
 build/
+
+meson.build.user
