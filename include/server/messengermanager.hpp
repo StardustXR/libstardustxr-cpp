@@ -26,15 +26,15 @@ public:
   explicit MessengerManager(ServerScenegraph *scenegraph);
   ~MessengerManager();
   std::map<int, ServerMessenger*> messengers;
-  int messengerCount = 0;
+  int messengerCount = 1;
   ServerScenegraph *scenegraph;
 
   void removeMessenger(int sessionID);
 
 private:
   typedef struct {
-    int fd;
-    char buf[256];
+	int fd;
+	char buf[256];
   } RecieveFDReturn;
 
   std::thread socketThread;

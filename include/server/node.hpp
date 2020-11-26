@@ -7,7 +7,7 @@
 
 namespace StardustXR {
 
-typedef std::function<std::vector<uint8_t>(int, flexbuffers::Reference, bool)> ServerMethod;
+typedef std::function<std::vector<uint8_t>(uint, flexbuffers::Reference, bool)> ServerMethod;
 
 class ServerNode {
 public:
