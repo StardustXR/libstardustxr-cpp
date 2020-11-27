@@ -51,16 +51,15 @@ void Messenger::sendCall(flatbuffers::FlatBufferBuilder &builder, uint8_t type, 
 
 
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
-    // setup signal handler
-    struct sigaction fuckyou = {SIG_IGN};
-    sigaction(SIGPIPE, &fuckyou, nullptr);
+	// setup signal handler
+	struct sigaction sigact = {SIG_IGN};
+	sigaction(SIGPIPE, &sigact, nullptr);
 
 	ssize_t rc;
 	rc = write(messageWriteFD, &size, 4);
 	if (rc == -1 && errno == EPIPE) {
-        printf("pipebrokefuckyou\n");
-		 pipeBroke = true;
-		 checkPipeBroken();
+		pipeBroke = true;
+		checkPipeBroken();
 	}
 
 	write(messageWriteFD, buffer, size);
