@@ -1,4 +1,6 @@
 #include "messenger.hpp"
+#include <signal.h>
+#include <unistd.h>
 
 namespace StardustXR {
 
@@ -47,8 +49,15 @@ void Messenger::sendCall(flatbuffers::FlatBufferBuilder &builder, uint8_t type, 
 }
 
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
-	if(checkPipeBroken()) return;
-	write(messageWriteFD, &size, 4);
+	signal(SIGPIPE, SIG_IGN);
+
+	ssize_t rc;
+	rc = write(messageWriteFD, &size, 4);
+	if (rc == -1 && errno == EPIPE) {
+		 pipeBroke = true;
+		 checkPipeBroken();
+	}
+
 	write(messageWriteFD, buffer, size);
 }
 
