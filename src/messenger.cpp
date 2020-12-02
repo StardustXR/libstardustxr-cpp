@@ -9,6 +9,10 @@ Messenger::Messenger(int readFD, int writeFD) {
 	this->messageWriteFD = writeFD;
 	this->handlerBuilder = flatbuffers::FlatBufferBuilder(1024);
 	this->senderBuilder = flatbuffers::FlatBufferBuilder(1024);
+
+	// setup signal handler
+	struct sigaction sigact = {SIG_IGN};
+	sigaction(SIGPIPE, &sigact, nullptr);
 }
 Messenger::~Messenger() {
 	handlerThread.detach();
@@ -48,13 +52,8 @@ void Messenger::sendCall(flatbuffers::FlatBufferBuilder &builder, uint8_t type, 
 	sendMessage(builder.GetBufferPointer(), builder.GetSize());
 }
 
-
-
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 	// setup signal handler
-	struct sigaction sigact = {SIG_IGN};
-	sigaction(SIGPIPE, &sigact, nullptr);
-
 	ssize_t rc;
 	rc = write(messageWriteFD, &size, 4);
 	if (rc == -1 && errno == EPIPE) {
