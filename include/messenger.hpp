@@ -4,7 +4,6 @@
 #include "util.hpp"
 #include "message.hpp"
 #include <thread>
-#include <mutex>
 #include <functional>
 
 namespace StardustXR {
@@ -54,6 +53,7 @@ protected:
 
 	// Message sending specific
 	flatbuffers::FlatBufferBuilder senderBuilder;
+	pthread_mutex_t sendLock;
 	void sendCall(flatbuffers::FlatBufferBuilder &builder, uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendMessage(uint8_t *buffer, uint size);
 };
