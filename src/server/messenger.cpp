@@ -4,10 +4,13 @@
 namespace StardustXR {
 
 ServerMessenger::ServerMessenger(uint sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager) : Messenger(readFD, writeFD) {
-	this->handlerThread = std::thread(&StardustXR::ServerMessenger::messageHandler, this);
 	this->scenegraph = scenegraph;
 	this->manager = manager;
 	this->sessionID = sessionID;
+}
+
+void ServerMessenger::startHandler() {
+	this->handlerThread = std::thread(&StardustXR::ServerMessenger::messageHandler, this);
 }
 
 void ServerMessenger::messageHandler() {

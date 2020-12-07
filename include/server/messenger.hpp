@@ -16,6 +16,8 @@ class ServerMessenger : public Messenger {
 public:
 	explicit ServerMessenger(uint sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager);
 
+	void startHandler();
+
 protected:
 	void messageHandler();
 	void handleMessage(const Message *message);

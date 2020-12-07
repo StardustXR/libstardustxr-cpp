@@ -13,6 +13,8 @@ class ClientMessenger : public Messenger {
 public:
 	explicit ClientMessenger(int readFD, int writeFD, ClientScenegraph *scenegraph);
 
+	void startHandler();
+
 protected:
 	void messageHandler();
 	void handleMessage(const Message *message);
