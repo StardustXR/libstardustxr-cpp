@@ -31,7 +31,8 @@
 *.out
 *.app
 
-# Build directory
+# Build stuff
 build/
+.buildconfig
 
 meson.build.user
