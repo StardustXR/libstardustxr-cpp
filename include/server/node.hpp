@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_SERVER_NODE_H
-#define LIBSTARDUSTXR_SERVER_NODE_H
+#pragma once
 #define STARDUSTXR_NODE_METHOD(method_name, method_ref) methods[method_name] = std::bind(method_ref, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
 #include "flatbuffers/flexbuffers.h"
@@ -22,5 +21,3 @@ public:
 };
 
 } // namespace StardustXR
-
-#endif //LIBSTARDUSTXR_SERVER_NODE_H

@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_CLIENT_SCENEGRAPH_H
-#define LIBSTARDUSTXR_CLIENT_SCENEGRAPH_H
+#pragma once
 
 #include "flatbuffers/flexbuffers.h"
 #include <unistd.h>
@@ -18,5 +17,3 @@ public:
 };
 
 } // namespace StardustXR
-
-#endif // LIBSTARDUSTXR_CLIENT_SCENEGRAPH_H

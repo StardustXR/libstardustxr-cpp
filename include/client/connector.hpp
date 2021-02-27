@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_CLIENT_CONNECTOR_H
-#define LIBSTARDUSTXR_CLIENT_CONNECTOR_H
+#pragma once
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -21,5 +20,3 @@ void SendFD(int socket, int fd);
 bool ConnectClient(std::string path, int &read, int &write);
 
 } // namespace StardustXR
-
-#endif

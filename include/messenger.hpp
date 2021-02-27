@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_MESSENGER_H
-#define LIBSTARDUSTXR_MESSENGER_H
+#pragma once
 
 #include "util.hpp"
 #include "message.hpp"
@@ -59,5 +58,3 @@ protected:
 };
 
 }
-
-#endif // LIBSTARDUSTXR_SCENEGRAPH_H

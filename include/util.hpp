@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_UTIL_H
-#define LIBSTARDUSTXR_UTIL_H
+#pragma once
 
 #include "flatbuffers/flexbuffers.h"
 #include <functional>
@@ -17,5 +16,3 @@ static std::vector<uint8_t> FlexbufferFromArguments(ArgsConstructor argsConstruc
 }
 
 } // namespace StardustXR
-
-#endif //LIBSTARDUSTXR_UTIL_H

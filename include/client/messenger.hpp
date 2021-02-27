@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_CLIENT_MESSENGER_H
-#define LIBSTARDUSTXR_CLIENT_MESSENGER_H
+#pragma once
 
 #include "../messenger.hpp"
 #include "scenegraph.hpp"
@@ -23,5 +22,3 @@ protected:
 };
 
 } // namespace StardustXR
-
-#endif // LIBSTARDUSTXR_CLIENT_MESSENGER_H

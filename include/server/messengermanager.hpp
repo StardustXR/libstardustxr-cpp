@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_MESSENGER_MANAGER_H
-#define LIBSTARDUSTXR_MESSENGER_MANAGER_H
+#pragma once
 
 #include "messenger.hpp"
 
@@ -44,5 +43,3 @@ private:
 };
 
 } // namespace StardustXR
-
-#endif

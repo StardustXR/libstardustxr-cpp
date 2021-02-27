@@ -1,5 +1,4 @@
-#ifndef LIBSTARDUSTXR_CLIENT_STARDUST_SCENEGRAPH_H
-#define LIBSTARDUSTXR_CLIENT_STARDUST_SCENEGRAPH_H
+#pragma once
 
 #include "scenegraph.hpp"
 #include "node.hpp"
@@ -21,5 +20,3 @@ protected:
 };
 
 } // namespace StardustXR
-
-#endif //LIBSTARDUSTXR_CLIENT_STARDUST_SCENEGRAPH_H
