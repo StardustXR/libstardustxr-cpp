@@ -4,13 +4,13 @@ pkg = import('pkgconfig')
 threads = dependency('threads')
 
 # Headers
-incdir = include_directories('include')
+incdir = include_directories('src')
 
-commonheaders = ['include/message.hpp', 'include/messenger.hpp', 'include/util.hpp']
+commonheaders = ['src/message.hpp', 'src/messenger.hpp', 'src/util.hpp']
 install_headers(commonheaders, subdir: 'stardustxr')
 
 # Client library
-clientheaders = ['include/client/connector.hpp', 'include/client/messenger.hpp', 'include/client/scenegraph.hpp', 'include/client/node.hpp', 'include/client/stardust_scenegraph.hpp']
+clientheaders = ['src/client/connector.hpp', 'src/client/messenger.hpp', 'src/client/scenegraph.hpp', 'src/client/node.hpp', 'src/client/stardust_scenegraph.hpp']
 clientsrc = ['src/client/stardust_scenegraph.cpp', 'src/messenger.cpp', 'src/client/messenger.cpp', 'src/client/connector.cpp']
 
 clientlib = library('stardustxr', clientsrc, include_directories: incdir, dependencies: [threads], version: '0.1.0', soversion: '0', install: true)
@@ -19,7 +19,7 @@ install_headers(clientheaders, subdir: 'stardustxr/client')
 pkg.generate(clientlib, filebase: 'stardustxr', name: 'stardustxr', url: 'https://github.com/technobaboo/libstardustxr')
 
 # Server library
-serverheaders = ['include/server/messengermanager.hpp', 'include/server/messenger.hpp', 'include/server/scenegraph.hpp', 'include/server/node.hpp']
+serverheaders = ['src/server/messengermanager.hpp', 'src/server/messenger.hpp', 'src/server/scenegraph.hpp', 'src/server/node.hpp']
 serversrc = ['src/messenger.cpp', 'src/server/messenger.cpp', 'src/server/messengermanager.cpp']
 
 serverlib = library('stardustxr-server', serversrc, include_directories: incdir, dependencies: [threads], version: '0.1.0', soversion: '0', install: true)
