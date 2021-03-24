@@ -24,3 +24,4 @@ common = declare_dependency(
 
 subdir('client')
 subdir('server')
+subdir('fusion')
