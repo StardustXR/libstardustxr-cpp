@@ -1,18 +1,18 @@
 #pragma once
 
-#include "../spatialnode.hpp"
+#include "../spatial.hpp"
 #include "../../sk_math.hpp"
 
 namespace StardustXRFusion {
 
-class Field : public SpatialNode {
+class Field : public Spatial {
 public:
 	explicit Field();
 	~Field();
 
-	void distance		(SpatialNode *space, SKMath::vec3 point, std::function<void (float)> callback);
-	void normal			(SpatialNode *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback);
-	void closestPoint	(SpatialNode *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback);
+	void distance		(Spatial *space, SKMath::vec3 point, std::function<void (float)> callback);
+	void normal			(Spatial *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback);
+	void closestPoint	(Spatial *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback);
 };
 
 } // namespace StardustXRFusion

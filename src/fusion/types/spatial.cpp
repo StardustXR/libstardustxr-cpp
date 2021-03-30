@@ -1,14 +1,14 @@
 #include "../libstardustxr.hpp"
 #include "../flex.hpp"
 
-#include "spatialnode.hpp"
+#include "spatial.hpp"
 
 namespace StardustXRFusion {
 
-SpatialNode::SpatialNode() {}
-SpatialNode::~SpatialNode() {}
+Spatial::Spatial() {}
+Spatial::~Spatial() {}
 
-void SpatialNode::setOrigin(SKMath::vec3 origin) {
+void Spatial::setOrigin(SKMath::vec3 origin) {
 	StardustXRFusion::messenger->sendSignal(
 		getNodePath().c_str(),
 		"setOrigin",
@@ -18,7 +18,7 @@ void SpatialNode::setOrigin(SKMath::vec3 origin) {
 	);
 }
 
-void SpatialNode::setOrientation(SKMath::quat orientation) {
+void Spatial::setOrientation(SKMath::quat orientation) {
 	StardustXRFusion::messenger->sendSignal(
 		getNodePath().c_str(),
 		"setOrientation",
@@ -28,7 +28,7 @@ void SpatialNode::setOrientation(SKMath::quat orientation) {
 	);
 }
 
-void SpatialNode::setScale(SKMath::vec3 scale) {
+void Spatial::setScale(SKMath::vec3 scale) {
 	StardustXRFusion::messenger->sendSignal(
 		getNodePath().c_str(),
 		"setScale",
@@ -38,7 +38,7 @@ void SpatialNode::setScale(SKMath::vec3 scale) {
 	);
 }
 
-void SpatialNode::setPose(SKMath::pose_t pose) {
+void Spatial::setPose(SKMath::pose_t pose) {
 	StardustXRFusion::messenger->sendSignal(
 		getNodePath().c_str(),
 		"setPose",

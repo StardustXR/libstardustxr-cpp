@@ -8,7 +8,7 @@ namespace StardustXRFusion {
 Field::Field() {}
 Field::~Field() {}
 
-void Field::distance(SpatialNode *space, vec3 point, std::function<void(float distance)> callback) {
+void Field::distance(Spatial *space, vec3 point, std::function<void(float distance)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
@@ -23,7 +23,7 @@ void Field::distance(SpatialNode *space, vec3 point, std::function<void(float di
 	);
 }
 
-void Field::normal(SpatialNode *space, vec3 point, std::function<void (SKMath::vec3)> callback) {
+void Field::normal(Spatial *space, vec3 point, std::function<void (SKMath::vec3)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
@@ -38,7 +38,7 @@ void Field::normal(SpatialNode *space, vec3 point, std::function<void (SKMath::v
 	);
 }
 
-void Field::closestPoint(SpatialNode *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback) {
+void Field::closestPoint(Spatial *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),

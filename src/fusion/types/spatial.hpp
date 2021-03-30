@@ -5,10 +5,10 @@
 
 namespace StardustXRFusion {
 
-class SpatialNode : public Node {
+class Spatial : public Node {
 public:
-	explicit SpatialNode();
-	~SpatialNode();
+	explicit Spatial();
+	~Spatial();
 
 	void setOrigin(SKMath::vec3 origin);
 	void setOrientation(SKMath::quat orientation);
