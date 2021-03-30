@@ -1,25 +1,24 @@
 #include "../../libstardustxr.hpp"
 #include "../../flex.hpp"
 
-#include "boxfield.hpp"
+#include "spherefield.hpp"
 
 namespace StardustXRFusion {
 
-BoxField::BoxField(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size) {
+SphereField::SphereField(SKMath::vec3 origin, float radius) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(
 		"/field",
-		"createBoxField",
+		"createSphereField",
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
 			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
-			FLEX_VEC3(size)
+			FLEX_FLOAT(radius)
 		)
 	);
 }
 
-BoxField::~BoxField() {}
+SphereField::~SphereField() {}
 
 } // namespace StardustXRFusion

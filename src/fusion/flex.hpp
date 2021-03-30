@@ -31,6 +31,8 @@ namespace StardustXR::Fusion {
 		});
 	#define FLEX_STRING(str) \
 		fbb.String(str.c_str());
+	#define FLEX_FLOAT(flt) \
+		fbb.Float(flt);
 
 	///////////////////////////////////////////
 	// Special Flexbuffer type macros
