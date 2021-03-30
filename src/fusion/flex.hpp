@@ -48,4 +48,19 @@ namespace StardustXR::Fusion {
 			fbb.Float(quat.y);\
 			fbb.Float(quat.z);\
 		});
+
+	///////////////////////////////////////////
+	// Conversion from flex to SKMath
+
+	#define SK_VEC3(vec) {\
+		vec[0].AsFloat(),\
+		vec[1].AsFloat(),\
+		vec[2].AsFloat()\
+	}
+	#define SK_QUAT(quat) {\
+		quat[0].AsFloat(),\
+		quat[1].AsFloat(),\
+		quat[2].AsFloat(),\
+		quat[3].AsFloat()\
+	}
 }
