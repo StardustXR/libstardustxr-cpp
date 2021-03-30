@@ -2,7 +2,8 @@ fusion_includes = include_directories('.')
 
 install_headers(
 	[
-		# 'messenger.hpp',
+		'fusion.hpp',
+		'sk_math.hpp',
 	],
 	subdir: 'stardustxr/fusion'
 )
@@ -10,7 +11,7 @@ install_headers(
 lib_fusion = library(
 	'stardustxr-fusion',
 	files(
-		# 'messenger.cpp',
+		 'fusion.cpp',
 	),
 	include_directories: [fusion_includes],
 	dependencies: [client],
