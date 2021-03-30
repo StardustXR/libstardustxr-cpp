@@ -4,6 +4,7 @@ install_headers(
 	[
 		'boxfield.hpp',
 		'field.hpp',
+		'roundedboxfield.hpp',
 		'spherefield.hpp',
 	],
 	subdir: 'stardustxr/fusion/types/fields'
@@ -14,6 +15,7 @@ lib_fusion_fields = static_library(
 	files(
 		'boxfield.cpp',
 		'field.cpp',
+		'roundedboxfield.cpp',
 		'spherefield.cpp',
 	),
 	include_directories: [fusion_fields_includes],
