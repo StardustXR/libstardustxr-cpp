@@ -4,3 +4,4 @@ pkg = import('pkgconfig')
 threads = dependency('threads')
 
 subdir('src')
+subdir('tests')
