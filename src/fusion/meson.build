@@ -1,3 +1,5 @@
+subdir('types')
+
 fusion_includes = include_directories('.')
 
 install_headers(
@@ -14,7 +16,7 @@ lib_fusion = library(
 		 'fusion.cpp',
 	),
 	include_directories: [fusion_includes],
-	dependencies: [client],
+	dependencies: [client, fusion_types],
 	version: '0.1.0',
 	soversion: '0',
 	install: true
