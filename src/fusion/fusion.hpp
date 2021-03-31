@@ -2,6 +2,6 @@
 
 namespace StardustXRFusion {
 
-static bool Setup();
+extern bool Setup();
 
 } // namespace StardustXRFusion
