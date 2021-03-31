@@ -5,6 +5,7 @@ fusion_types_includes = include_directories('.')
 install_headers(
 	[
 		 'node.hpp',
+		 'spatial.hpp',
 	],
 	subdir: 'stardustxr/fusion/types'
 )
@@ -13,6 +14,7 @@ lib_fusion_types = static_library(
 	'fusion_types',
 	files(
 		 'node.cpp',
+		 'spatial.cpp',
 	),
 	include_directories: [fusion_types_includes],
 	dependencies: [fusion_fields, client]
