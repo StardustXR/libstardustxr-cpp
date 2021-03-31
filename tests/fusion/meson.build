@@ -6,3 +6,10 @@ executable(
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+
+#executable(
+#	'fields',
+#	'fields.cpp',
+#	include_directories: [fusion_tests_includes],
+#	dependencies: [fusion],
+#)
