@@ -1,6 +1,8 @@
-subdir('types')
-
 fusion_includes = include_directories('.')
+
+fusion_static_libs = []
+
+subdir('types')
 
 install_headers(
 	[
@@ -16,7 +18,9 @@ lib_fusion = library(
 		 'fusion.cpp',
 	),
 	include_directories: [fusion_includes],
-	dependencies: [client, fusion_types],
+	link_whole: fusion_static_libs,
+	link_args: '-lflatbuffers',
+	dependencies: [client],
 	version: '0.1.0',
 	soversion: '0',
 	install: true

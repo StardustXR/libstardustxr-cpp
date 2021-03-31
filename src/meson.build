@@ -14,7 +14,7 @@ lib_common = static_library(
 	files(
 		'messenger.cpp',
 	),
-	include_directories: [common_includes]
+	include_directories: [common_includes],
 )
 
 common = declare_dependency(

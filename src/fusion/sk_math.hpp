@@ -1,9 +1,9 @@
+#pragma once
+
 #include "DirectXMath/DirectXMath.h"
 #include <math.h>
 
 using namespace DirectX;
-
-#pragma once
 
 namespace SKMath {
 
@@ -188,7 +188,7 @@ static inline float math_ease_hop      (float a, float peak, float t) { return a
 
 ///////////////////////////////////////////
 
-matrix matrix_trs(const vec3 &position, const quat &orientation, const vec3 &scale) {
+static inline matrix matrix_trs(const vec3 &position, const quat &orientation, const vec3 &scale) {
 	XMMATRIX mat = XMMatrixAffineTransformation(
 		XMLoadFloat3((XMFLOAT3 *)& scale), DirectX::g_XMZero,
 		XMLoadFloat4((XMFLOAT4 *)& orientation),
@@ -200,7 +200,7 @@ matrix matrix_trs(const vec3 &position, const quat &orientation, const vec3 &sca
 
 ///////////////////////////////////////////
 
-void matrix_trs_out(matrix &out_result, const vec3 &position, const quat &orientation, const vec3 &scale) {
+static inline void matrix_trs_out(matrix &out_result, const vec3 &position, const quat &orientation, const vec3 &scale) {
 	XMMATRIX mat = XMMatrixAffineTransformation(
 		XMLoadFloat3((XMFLOAT3 *)& scale), DirectX::g_XMZero,
 		XMLoadFloat4((XMFLOAT4 *)& orientation),

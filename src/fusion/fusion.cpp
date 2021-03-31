@@ -3,7 +3,7 @@
 #include <stardustxr/client/connector.hpp>
 #include <stardustxr/client/messenger.hpp>
 
-bool StardustXRFusion::Setup() {
+extern bool StardustXRFusion::Setup() {
 	printf("Client starting...\n");
 	int readFD, writeFD;
 	if (!StardustXR::ConnectClient("/tmp/stardust.sock", readFD, writeFD)) {
