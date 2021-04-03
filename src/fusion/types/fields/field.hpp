@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "../spatial.hpp"
 #include "../../sk_math.hpp"
 

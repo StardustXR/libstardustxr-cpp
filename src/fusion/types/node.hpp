@@ -1,11 +1,10 @@
 #pragma once
 
 #include <string>
-#include "../../client/node.hpp"
 
 namespace StardustXRFusion {
 
-class Node : public StardustXR::ClientNode {
+class Node {
 public:
 	explicit Node();
 	~Node();
