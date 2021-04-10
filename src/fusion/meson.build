@@ -2,6 +2,7 @@ fusion_includes = include_directories('.')
 
 fusion_static_libs = []
 
+subdir('interfaces')
 subdir('types')
 
 install_headers(
@@ -16,6 +17,7 @@ lib_fusion = library(
 	'stardustxr-fusion',
 	files(
 		 'fusion.cpp',
+		 'scenegraph.cpp',
 	),
 	include_directories: [fusion_includes],
 	link_whole: fusion_static_libs,
