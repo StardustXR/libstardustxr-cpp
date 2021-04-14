@@ -2,6 +2,7 @@ fusion_includes = include_directories('.')
 
 fusion_static_libs = []
 
+subdir('DirectXMath')
 subdir('interfaces')
 subdir('types')
 
