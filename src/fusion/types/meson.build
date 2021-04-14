@@ -4,7 +4,7 @@ install_headers(
 	[
 		'model.hpp',
 		'node.hpp',
-		'spatial.cpp',
+		'spatial.hpp',
 	],
 	subdir: 'stardustxr/fusion/types'
 )
