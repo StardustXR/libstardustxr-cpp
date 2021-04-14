@@ -3,7 +3,7 @@
 #include <linux/limits.h>
 
 #include "../flex.hpp"
-#include "../fusion.hpp"
+#include "../fusion_internal.hpp"
 
 #include "model.hpp"
 

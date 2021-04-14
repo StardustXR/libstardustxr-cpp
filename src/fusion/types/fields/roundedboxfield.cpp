@@ -1,4 +1,4 @@
-#include "../../fusion.hpp"
+#include "../../fusion_internal.hpp"
 #include "../../flex.hpp"
 
 #include "roundedboxfield.hpp"

@@ -1,7 +1,7 @@
 #include "lifecycleinterface.hpp"
 
 #include "../flex.hpp"
-#include "../fusion.hpp"
+#include "../fusion_internal.hpp"
 
 namespace StardustXRFusion {
 

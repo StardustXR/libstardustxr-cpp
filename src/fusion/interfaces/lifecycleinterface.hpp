@@ -1,7 +1,8 @@
 #pragma once
 
+#include <functional>
+#include <flatbuffers/flexbuffers.h>
 #include "../types/node.hpp"
-#include "../scenegraph.hpp"
 
 namespace StardustXRFusion {
 

@@ -1,4 +1,5 @@
 #include "fusion.hpp"
+#include "fusion_internal.hpp"
 #include "../client/connector.hpp"
 
 namespace StardustXRFusion {
