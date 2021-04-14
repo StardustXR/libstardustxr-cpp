@@ -16,7 +16,7 @@ LifeCycleInterface::LifeCycleInterface() {
 			FLEX_STRING(std::string(""))
 			FLEX_STRING(std::string("logicStep"))
 		)
-				);
+	);
 }
 
 void LifeCycleInterface::onLogicStep(LogicStepMethod method) {

@@ -23,3 +23,4 @@ lib_fusion_types = static_library(
 fusion_static_libs += lib_fusion_types
 
 subdir('fields')
+subdir('input')
