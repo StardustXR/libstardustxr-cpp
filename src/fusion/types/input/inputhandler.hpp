@@ -2,7 +2,6 @@
 
 #include "../spatial.hpp"
 #include "../fields/field.hpp"
-#include "../../scenegraph.hpp"
 
 #include "flatbuffers/Input_generated.h"
 

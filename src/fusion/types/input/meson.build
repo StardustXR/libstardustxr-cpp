@@ -18,3 +18,5 @@ lib_fusion_input = static_library(
 )
 
 fusion_static_libs += lib_fusion_input
+
+subdir('flatbuffers')

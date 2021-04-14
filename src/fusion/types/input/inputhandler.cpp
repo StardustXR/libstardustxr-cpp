@@ -1,5 +1,6 @@
 #include "../../fusion_internal.hpp"
 #include "../../flex.hpp"
+#include "../../scenegraph.hpp"
 
 #include "inputhandler.hpp"
 

@@ -17,11 +17,13 @@ Model::Model(std::string relativePath, SKMath::vec3 origin, SKMath::quat orienta
 		path = dirname(result);
 	}
 
+	nodePath = "/model";
+	nodeName = GenerateID();
 	messenger->sendSignal(
 		"/model",
 		"createFromFile",
 		FLEX_ARGS(
-			FLEX_STRING(GenerateID())
+			FLEX_STRING(nodeName)
 			FLEX_STRING(std::string(path) + "/" + relativePath)
 			FLEX_VEC3(origin)
 			FLEX_QUAT(orientation)
