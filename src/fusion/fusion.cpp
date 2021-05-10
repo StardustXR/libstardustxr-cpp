@@ -11,7 +11,7 @@ LifeCycleInterface *lifeCycle = nullptr;
 
 std::string GenerateID() {
 	char id[32];
-	sprintf(id, "%ld", time(nullptr));
+	sprintf(id, "%d", rand());
 	return std::string(id);
 }
 
