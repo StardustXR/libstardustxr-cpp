@@ -10,6 +10,6 @@ using namespace SKMath;
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
-	Model model("../../../res/dome.glb", vec3_zero, quat_identity, vec3_one);
+	Model model("../../../res/stardust_icon.glb", vec3_zero, quat_identity, vec3_one);
 	std::this_thread::sleep_for(std::chrono::seconds(3600));
 }
