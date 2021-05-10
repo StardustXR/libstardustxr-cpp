@@ -36,3 +36,10 @@ executable(
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+
+executable(
+	'spatial',
+	'spatial.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
+)
