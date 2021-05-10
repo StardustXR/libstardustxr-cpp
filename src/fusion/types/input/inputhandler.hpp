@@ -11,7 +11,7 @@ typedef std::function<bool(const StardustXR::InputData *)> InputHandlerMethod;
 
 class InputHandler : public Spatial {
 public:
-	explicit InputHandler(Spatial *space, Field *field, SKMath::vec3 origin, SKMath::quat orientation, InputHandlerMethod handlerMethod);
+	explicit InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation, InputHandlerMethod handlerMethod);
 
 private:
 	InputHandlerMethod handlerMethod;

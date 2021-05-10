@@ -6,7 +6,7 @@
 
 namespace StardustXRFusion {
 
-InputHandler::InputHandler(Spatial *space, Field *field, SKMath::vec3 origin, SKMath::quat orientation, InputHandlerMethod handlerMethod) {
+InputHandler::InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation, InputHandlerMethod handlerMethod) {
 	nodeName = GenerateID();
 	nodePath = "/input/handler";
 
@@ -16,7 +16,7 @@ InputHandler::InputHandler(Spatial *space, Field *field, SKMath::vec3 origin, SK
 		"registerInputHandler",
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
-			FLEX_STRING(field->getNodePath())
+			FLEX_STRING(field.getNodePath())
 //			FLEX_STRING(space ? space->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
 			FLEX_QUAT(orientation)

@@ -69,7 +69,7 @@ int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
 	BoxField field(SKMath::vec3_zero, SKMath::quat_identity, SKMath::vec3_one);
-	InputHandler handler(nullptr, &field, SKMath::vec3_zero, SKMath::quat_identity, [](const InputData *data) {
+	InputHandler handler(nullptr, field, SKMath::vec3_zero, SKMath::quat_identity, [](const InputData *data) {
 		PrintInputData(data);
 		return true;
 	});

@@ -13,4 +13,3 @@ public:
 };
 
 } // namespace StardustXRFusion
-
