@@ -30,7 +30,7 @@ int main(int, char *[]) {
 		double rotation = 360*time/rotationSeconds;
 
 		gyroRoot.setOrigin(vec3_up * std::sin(rotation*deg2rad) * 0.1f);
-		gyroRoot.setScale(vec3_one * (1.0f + std::sin(rotation*deg2rad*2) * 0.25f));
+		gem.setScale(vec3_one * (1.0f + std::sin(rotation*deg2rad*2) * 0.25f));
 
 		outsideRing.setOrientation(quat_from_angles(0, 0, rotation));
 		middleRing.setOrientation(quat_from_angles(rotation, 0, 0));
