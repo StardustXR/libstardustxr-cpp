@@ -2,6 +2,7 @@ fusion_interfaces_includes = include_directories('.')
 
 install_headers(
 	[
+		'environmentinterface.hpp',
 		'lifecycleinterface.hpp',
 	],
 	subdir: 'stardustxr/fusion/interfaces'
@@ -10,6 +11,7 @@ install_headers(
 lib_fusion_interfaces = static_library(
 	'fusion_interfaces',
 	files(
+		'environmentinterface.cpp',
 		'lifecycleinterface.cpp',
 	),
 	include_directories: [fusion_interfaces_includes],

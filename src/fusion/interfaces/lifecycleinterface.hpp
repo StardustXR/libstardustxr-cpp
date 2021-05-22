@@ -2,13 +2,12 @@
 
 #include <functional>
 #include <flatbuffers/flexbuffers.h>
-#include "../types/node.hpp"
 
 namespace StardustXRFusion {
 
 typedef std::function<void(double, double)> LogicStepMethod;
 
-class LifeCycleInterface : public Node {
+class LifeCycleInterface {
 public:
 	explicit LifeCycleInterface();
 

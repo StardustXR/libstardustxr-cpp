@@ -10,4 +10,6 @@ extern StardustXR::ClientMessenger *messenger;
 
 extern std::string GenerateID();
 
+extern std::string ConvertExeRelativePath(std::string exeRelativePath);
+
 } // namespace StardustXRFusion

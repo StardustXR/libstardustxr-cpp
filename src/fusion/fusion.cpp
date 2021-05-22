@@ -1,12 +1,16 @@
 #include "fusion.hpp"
 #include "fusion_internal.hpp"
 #include "../client/connector.hpp"
+#include <linux/limits.h>
+#include <libgen.h>
+#include <unistd.h>
 
 namespace StardustXRFusion {
 
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
 StardustXR::ClientMessenger *messenger = nullptr;
 
+EnvironmentInterface *environment = nullptr;
 LifeCycleInterface *lifeCycle = nullptr;
 
 std::string GenerateID() {
@@ -34,6 +38,22 @@ LifeCycleInterface *LifeCycle() {
 	if(!lifeCycle)
 		lifeCycle = new LifeCycleInterface();
 	return lifeCycle;
+}
+
+EnvironmentInterface *Environment() {
+	if(!environment)
+		environment = new EnvironmentInterface();
+	return environment;
+}
+
+std::string ConvertExeRelativePath(std::string exeRelativePath) {
+	char result[PATH_MAX];
+	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+	const char *exePath;
+	if (count != -1) {
+		exePath = dirname(result);
+	}
+	return std::string(exePath) + "/" + exeRelativePath;
 }
 
 }
