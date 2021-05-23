@@ -14,11 +14,13 @@ StardustXR::ClientMessenger *messenger = nullptr;
 EnvironmentInterface *environment = nullptr;
 LifeCycleInterface *lifeCycle = nullptr;
 
-int urandom;
-
 std::string GenerateID() {
 	char id[32];
+
+	int urandom = open("/proc/sys/kernel/random/uuid", O_RDONLY);
 	read(urandom, id, sizeof id);
+	close(urandom);
+
 	return std::string(id);
 }
 
@@ -33,8 +35,6 @@ bool Setup() {
 	scenegraph = new FusionScenegraph();
 	messenger = new StardustXR::ClientMessenger(readFD, writeFD, scenegraph);
 	messenger->startHandler();
-
-	urandom = open("/dev/urandom", O_RDONLY);
 
 	return true;
 }
