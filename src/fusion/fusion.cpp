@@ -3,6 +3,7 @@
 #include "../client/connector.hpp"
 #include <linux/limits.h>
 #include <libgen.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 namespace StardustXRFusion {
@@ -13,9 +14,11 @@ StardustXR::ClientMessenger *messenger = nullptr;
 EnvironmentInterface *environment = nullptr;
 LifeCycleInterface *lifeCycle = nullptr;
 
+int urandom;
+
 std::string GenerateID() {
 	char id[32];
-	sprintf(id, "%d", rand());
+	read(urandom, id, sizeof id);
 	return std::string(id);
 }
 
@@ -30,6 +33,8 @@ bool Setup() {
 	scenegraph = new FusionScenegraph();
 	messenger = new StardustXR::ClientMessenger(readFD, writeFD, scenegraph);
 	messenger->startHandler();
+
+	urandom = open("/dev/urandom", O_RDONLY);
 
 	return true;
 }
