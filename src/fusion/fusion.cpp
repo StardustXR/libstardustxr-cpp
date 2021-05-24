@@ -15,18 +15,18 @@ EnvironmentInterface *environment = nullptr;
 LifeCycleInterface *lifeCycle = nullptr;
 
 std::string GenerateID() {
-	char id[32];
+	std::string alcoholism = "xxxxxxxxxxxxxxxx";
+	for(char &c : alcoholism) {
+		c = 'a' + rand() % 26;
+	}
 
-	int urandom = open("/proc/sys/kernel/random/uuid", O_RDONLY);
-	read(urandom, id, sizeof id);
-	close(urandom);
-
-	return std::string(id);
+	return alcoholism;
 }
 
 bool Setup() {
 	printf("Client starting...\n");
 	int readFD, writeFD;
+	srand(time(nullptr));
 	if (!StardustXR::ConnectClient("/tmp/stardust.sock", readFD, writeFD)) {
 		perror("Client failed to connect to server");
 		return false;
