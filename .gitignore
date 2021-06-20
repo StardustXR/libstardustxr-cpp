@@ -35,7 +35,7 @@
 build/
 .buildconfig
 
-meson.build.user
+meson.build.*
 
 *.blend1
 
