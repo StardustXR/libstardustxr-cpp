@@ -38,3 +38,5 @@ build/
 meson.build.user
 
 *.blend1
+
+.vscode/
