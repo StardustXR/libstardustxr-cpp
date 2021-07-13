@@ -21,10 +21,7 @@ protected:
 	void messageHandler();
 	void handleMessage(const Message *message);
 
-	virtual void onPipeBreak() {
-		scenegraph->handleMessengerDeletion(sessionID);
-	}
-	uint sessionID;
+	virtual void onPipeBreak() = 0;
 	ServerScenegraph *scenegraph;
 	MessengerManager *manager;
 };
