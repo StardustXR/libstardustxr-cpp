@@ -21,7 +21,7 @@ std::vector<uint8_t> ClientStardustScenegraph::executeMethod(std::string path, s
 
 std::vector<uint8_t> ClientStardustScenegraph::executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue) {
 	//Find the node referenced by the path string
-	ClientNode *currentNode = &root;
+	Node *currentNode = &root;
 	this->onPathStep(path, [&](std::string pathStep) {
 		currentNode = currentNode->children[pathStep];
 		if(currentNode == nullptr) {
@@ -37,15 +37,15 @@ std::vector<uint8_t> ClientStardustScenegraph::executeMethod(std::string path, s
 	return (currentNode->methods[method])(args, returnValue);
 }
 
-void ClientStardustScenegraph::addNode(std::string path, ClientNode *node) {
+void ClientStardustScenegraph::addNode(std::string path, Node *node) {
 	//Get the name of the node to create
 	std::string lastNodeName = path.substr(path.find_last_of("/")+1);
-	ClientNode *currentNode = &root;
+	Node *currentNode = &root;
 	this->onPathStep(path, [&](std::string pathStep) {
 		if(pathStep == lastNodeName)
 			currentNode->children[pathStep] = node;
 		else if(currentNode->children[pathStep] == nullptr)
-			currentNode->children[pathStep] = new ClientNode();
+			currentNode->children[pathStep] = new Node();
 		currentNode = currentNode->children[pathStep];
 	});
 }

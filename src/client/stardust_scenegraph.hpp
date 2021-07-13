@@ -12,9 +12,9 @@ public:
 	void sendSignal(std::string path, std::string method, flexbuffers::Reference data);
 	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args);
 
-	void addNode(std::string path, ClientNode *node);
+	void addNode(std::string path, Node *node);
 protected:
-	ClientNode root;
+	Node root;
 	std::vector<uint8_t> executeMethod(std::string path, std::string method, flexbuffers::Reference args, bool returnValue);
 	void onPathStep(std::string path, std::function<void(std::string)> pathStepFunction);
 };

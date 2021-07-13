@@ -6,18 +6,18 @@
 
 namespace StardustXR {
 
-typedef std::function<std::vector<uint8_t>(flexbuffers::Reference, bool)> ClientMethod;
+typedef std::function<std::vector<uint8_t>(flexbuffers::Reference, bool)> NodeMethod;
 
-class ClientNode {
+class Node {
 public:
-	ClientNode() {}
-	~ClientNode() {
+	Node() {}
+	~Node() {
 		for(const auto &node : children)
 			delete node.second;
 	}
 
-	std::map<std::string, ClientMethod> methods;
-	std::map<std::string, ClientNode *> children;
+	std::map<std::string, NodeMethod> methods;
+	std::map<std::string, Node *> children;
 };
 
 } // namespace StardustXR

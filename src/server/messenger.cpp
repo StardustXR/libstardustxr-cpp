@@ -3,10 +3,9 @@
 
 namespace StardustXR {
 
-ServerMessenger::ServerMessenger(uint sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager) : Messenger(readFD, writeFD) {
+ServerMessenger::ServerMessenger(int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager) : Messenger(readFD, writeFD) {
 	this->scenegraph = scenegraph;
 	this->manager = manager;
-	this->sessionID = sessionID;
 }
 
 void ServerMessenger::startHandler() {
@@ -42,11 +41,11 @@ void ServerMessenger::handleMessage(const Message *message) {
 	} break;
 	case 1: {
 		// Signal, so execute the local scenegraph method
-		scenegraph->sendSignal(sessionID, message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
+		scenegraph->sendSignal(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
 	} break;
 	case 2: {
 		// Method was called, so execute the local scenegraph method and send back the result
-		std::vector<uint8_t> returnValue = scenegraph->executeMethod(sessionID, message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
+		std::vector<uint8_t> returnValue = scenegraph->executeMethod(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
 		sendCall(handlerBuilder, 3, message->id(), message->object()->c_str(), message->method()->c_str(), returnValue);
 	} break;
 	case 3: {

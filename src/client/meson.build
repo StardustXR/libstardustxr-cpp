@@ -4,7 +4,6 @@ install_headers(
 	[
 		'connector.hpp',
 		'messenger.hpp',
-		'node.hpp',
 		'scenegraph.hpp',
 		'stardust_scenegraph.hpp'
 	],

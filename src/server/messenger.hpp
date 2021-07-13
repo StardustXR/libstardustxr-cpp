@@ -13,7 +13,7 @@ class MessengerManager;
 
 class ServerMessenger : public Messenger {
 public:
-	explicit ServerMessenger(uint sessionID, int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager);
+	explicit ServerMessenger(int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager);
 
 	void startHandler();
 
