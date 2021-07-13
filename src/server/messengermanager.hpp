@@ -16,19 +16,17 @@
 #include <iostream>
 #include <time.h>
 #include <unistd.h>
-#define SD_SOCK_PATH "/tmp/stardust.sock"
 
 namespace StardustXR {
 
 class MessengerManager {
 public:
-  explicit MessengerManager(ServerScenegraph *scenegraph);
-  ~MessengerManager();
-  std::map<int, ServerMessenger*> messengers;
-  uint messengerCount = 1;
-  ServerScenegraph *scenegraph;
+  explicit MessengerManager(const char *socketPath = "/tmp/stardust.sock");
+  virtual ~MessengerManager();
 
-  void removeMessenger(int sessionID);
+protected:
+  virtual void clientConnected(int inFD, int outFD) = 0;
+  const char *socketPath;
 
 private:
   typedef struct {

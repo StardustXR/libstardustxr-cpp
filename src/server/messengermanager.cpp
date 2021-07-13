@@ -2,21 +2,11 @@
 
 namespace StardustXR {
 
-MessengerManager::MessengerManager(ServerScenegraph *scenegraph) {
-  this->scenegraph = scenegraph;
+MessengerManager::MessengerManager(const char *socketPath) {
+  this->socketPath = socketPath;
   this->socketThread = std::thread(&StardustXR::MessengerManager::socketLoop, this);
 }
-MessengerManager::~MessengerManager() {
-	std::map<int, ServerMessenger*>::iterator itr;
-	for(const auto &messenger : messengers) {
-		delete messenger.second;
-	}
-}
-
-void MessengerManager::removeMessenger(int sessionID) {
-	delete messengers[sessionID];
-	messengers.erase(sessionID);
-}
+MessengerManager::~MessengerManager() {}
 
 MessengerManager::RecieveFDReturn MessengerManager::recieveFD(int socket) {
   struct msghdr msg = {0};
@@ -49,7 +39,7 @@ MessengerManager::RecieveFDReturn MessengerManager::recieveFD(int socket) {
 }
 
 void MessengerManager::socketLoop() {
-  printf("socketLoop: loop starting, trying to make a socket at %s .\n", SD_SOCK_PATH);
+  printf("socketLoop: loop starting, trying to make a socket at %s .\n", socketPath);
   int s, s2;
   struct sockaddr_un local, remote;
   if ((s = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1) {
@@ -58,7 +48,7 @@ void MessengerManager::socketLoop() {
   };
 
   local.sun_family = AF_UNIX; /* local is declared before socket() ^ */
-  strcpy(local.sun_path, SD_SOCK_PATH);
+  strcpy(local.sun_path, socketPath);
   unlink(local.sun_path);
   int len1 = strlen(local.sun_path) + sizeof(local.sun_family);
 
@@ -89,7 +79,7 @@ void MessengerManager::socketLoop() {
 	  perror("accept");
 	  continue; // Probably should be replaced with exit() or something. This is a very fatal condition
 	}
-	printf("socketLoop: client connected on %s .\n", SD_SOCK_PATH);
+	printf("socketLoop: client connected on %s .\n", socketPath);
 	usleep(1000);
 	MessengerManager::RecieveFDReturn in = {-1, 0};
 	MessengerManager::RecieveFDReturn out = {-1, 0};
@@ -111,12 +101,9 @@ void MessengerManager::socketLoop() {
 	usleep(1000);
 	// std::queue <int> q = *fd_queue;
 	if (i != 100) {
-	  ServerMessenger *newMessenger = new ServerMessenger(messengerCount, in.fd, out.fd, scenegraph, this);
-	  messengers[messengerCount] = newMessenger;
-	  messengerCount++;
-	  newMessenger->startHandler();
 	  printf("socketLoop: Client provided fd's. in: %d, out: %d\n", in.fd,
 			 out.fd);
+	  clientConnected(in.fd, out.fd);
 	} else {
 	  printf("socketLoop: Client failed to provide fd's\n");
 	}
