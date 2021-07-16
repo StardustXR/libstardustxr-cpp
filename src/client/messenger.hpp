@@ -17,6 +17,7 @@ public:
 protected:
 	void messageHandler();
 	void handleMessage(const Message *message);
+	void onPipeBreak() {}
 
 	ClientScenegraph *scenegraph;
 };

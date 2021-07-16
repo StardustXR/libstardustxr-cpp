@@ -30,7 +30,7 @@ public:
 	}
 	void executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback);
 
-	virtual void onPipeBreak() {}
+	virtual void onPipeBreak() = 0;
 	bool checkPipeBroken() {
 		if(pipeBroke)
 			onPipeBreak();
