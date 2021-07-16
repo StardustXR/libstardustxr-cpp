@@ -16,7 +16,6 @@ Messenger::Messenger(int readFD, int writeFD) {
 }
 Messenger::~Messenger() {
 	pthread_mutex_destroy(&sendLock);
-	handlerThread.detach();
 }
 
 uint Messenger::generateMessageID() {

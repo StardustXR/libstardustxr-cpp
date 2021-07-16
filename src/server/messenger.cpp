@@ -10,6 +10,7 @@ ServerMessenger::ServerMessenger(int readFD, int writeFD, ServerScenegraph *scen
 
 void ServerMessenger::startHandler() {
 	this->handlerThread = std::thread(&StardustXR::ServerMessenger::messageHandler, this);
+	this->handlerThread.detach();
 }
 
 void ServerMessenger::messageHandler() {

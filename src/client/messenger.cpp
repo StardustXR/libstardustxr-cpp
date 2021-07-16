@@ -8,6 +8,7 @@ ClientMessenger::ClientMessenger(int readFD, int writeFD, ClientScenegraph *scen
 
 void ClientMessenger::startHandler() {
 	this->handlerThread = std::thread(&StardustXR::ClientMessenger::messageHandler, this);
+	this->handlerThread.detach();
 }
 
 void ClientMessenger::messageHandler() {
