@@ -1,4 +1,5 @@
 #include "messenger.hpp"
+#include <flatbuffers/flatbuffers.h>
 #include <signal.h>
 #include <unistd.h>
 
@@ -7,8 +8,6 @@ namespace StardustXR {
 Messenger::Messenger(int readFD, int writeFD) {
 	this->messageReadFD = readFD;
 	this->messageWriteFD = writeFD;
-	this->handlerBuilder = flatbuffers::FlatBufferBuilder(1024);
-	this->senderBuilder = flatbuffers::FlatBufferBuilder(1024);
 	pthread_mutex_init(&sendLock, nullptr);
 
 	// setup signal handler
@@ -31,12 +30,12 @@ void Messenger::executeRemoteMethod(const char *object, const char *method, std:
 	if(checkPipeBroken()) return;
 	uint id = generateMessageID();
 	pendingCallbacks[id] = callback;
-	sendCall(senderBuilder, 2, id, object, method, data);
+	sendCall(2, id, object, method, data);
 }
 
-void Messenger::sendCall(flatbuffers::FlatBufferBuilder &builder, uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
+void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
 	if(checkPipeBroken()) return;
-	builder.Clear();
+	flatbuffers::FlatBufferBuilder builder;
 
 	auto objectPath = builder.CreateString(object);
 	auto methodName = builder.CreateString(method);
