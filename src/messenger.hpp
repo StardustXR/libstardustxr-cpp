@@ -3,6 +3,7 @@
 #include "util.hpp"
 #include "message.hpp"
 #include <thread>
+#include <atomic>
 #include <functional>
 
 namespace StardustXR {
@@ -40,7 +41,7 @@ protected:
 	// General variables
 	int messageReadFD;
 	int messageWriteFD;
-	bool pipeBroke = false;
+	std::atomic<bool> pipeBroke{false};
 
 	// Message handling specific
 	std::thread handlerThread;
