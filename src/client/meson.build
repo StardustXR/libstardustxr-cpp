@@ -4,7 +4,6 @@ install_headers(
 	[
 		'connector.hpp',
 		'messenger.hpp',
-		'scenegraph.hpp',
 	],
 	subdir: 'stardustxr/client'
 )

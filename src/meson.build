@@ -5,7 +5,8 @@ install_headers(
 		'message.hpp',
 		'messenger.hpp',
 		'node.hpp',
-		'util.hpp'
+		'util.hpp',
+		'scenegraph.hpp',
 	],
 	subdir: 'stardustxr'
 )

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../messenger.hpp"
-#include "scenegraph.hpp"
+#include "../scenegraph.hpp"
 #include <map>
 #include <mutex>
 #include <signal.h>
@@ -13,7 +13,7 @@ class MessengerManager;
 
 class ServerMessenger : public Messenger {
 public:
-	explicit ServerMessenger(int readFD, int writeFD, ServerScenegraph *scenegraph, MessengerManager *manager);
+	explicit ServerMessenger(int readFD, int writeFD, Scenegraph *scenegraph, MessengerManager *manager);
 
 	void startHandler();
 
@@ -22,7 +22,7 @@ protected:
 	void handleMessage(const Message *message);
 
 	virtual void onPipeBreak() = 0;
-	ServerScenegraph *scenegraph;
+	Scenegraph *scenegraph;
 	MessengerManager *manager;
 };
 

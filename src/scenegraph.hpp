@@ -5,10 +5,10 @@
 
 namespace StardustXR {
 
-class ServerScenegraph {
+class Scenegraph {
 public:
-	ServerScenegraph(){};
-	virtual ~ServerScenegraph(){};
+	Scenegraph(){};
+	virtual ~Scenegraph(){};
 
 	virtual void sendSignal(std::string path, std::string method, flexbuffers::Reference data) {
 		executeMethod(path, method, data);

@@ -2,7 +2,7 @@
 
 #include <functional>
 #include <map>
-#include "../client/scenegraph.hpp"
+#include "../scenegraph.hpp"
 
 #define FUSION_SCENEGRAPH_METHOD(method_name, method_ref) scenegraph->methods[method_name] = std::bind(method_ref, this, std::placeholders::_1, std::placeholders::_2);
 
@@ -10,7 +10,7 @@ namespace StardustXRFusion {
 
 typedef std::function<std::vector<uint8_t>(flexbuffers::Reference, bool)> Method;
 
-class FusionScenegraph : public StardustXR::ClientScenegraph {
+class FusionScenegraph : public StardustXR::Scenegraph {
 public:
 	explicit FusionScenegraph();
 

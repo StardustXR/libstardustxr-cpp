@@ -2,7 +2,7 @@
 
 namespace StardustXR {
 
-ClientMessenger::ClientMessenger(int readFD, int writeFD, ClientScenegraph *scenegraph) : Messenger(readFD, writeFD) {
+ClientMessenger::ClientMessenger(int readFD, int writeFD, Scenegraph *scenegraph) : Messenger(readFD, writeFD) {
 	this->scenegraph = scenegraph;
 }
 
