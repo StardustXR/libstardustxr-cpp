@@ -13,7 +13,7 @@ class MessengerManager;
 
 class ServerMessenger : public Messenger {
 public:
-	explicit ServerMessenger(int readFD, int writeFD, Scenegraph *scenegraph, MessengerManager *manager);
+	explicit ServerMessenger(int readFD, int writeFD, Scenegraph *scenegraph);
 
 	void startHandler();
 
@@ -23,7 +23,6 @@ protected:
 
 	virtual void onPipeBreak() = 0;
 	Scenegraph *scenegraph;
-	MessengerManager *manager;
 };
 
 } // namespace StardustXR

@@ -3,9 +3,8 @@
 
 namespace StardustXR {
 
-ServerMessenger::ServerMessenger(int readFD, int writeFD, Scenegraph *scenegraph, MessengerManager *manager) : Messenger(readFD, writeFD) {
+ServerMessenger::ServerMessenger(int readFD, int writeFD, Scenegraph *scenegraph) : Messenger(readFD, writeFD) {
 	this->scenegraph = scenegraph;
-	this->manager = manager;
 }
 
 void ServerMessenger::startHandler() {
