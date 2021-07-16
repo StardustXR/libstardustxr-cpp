@@ -5,7 +5,6 @@ install_headers(
 		'connector.hpp',
 		'messenger.hpp',
 		'scenegraph.hpp',
-		'stardust_scenegraph.hpp'
 	],
 	subdir: 'stardustxr/client'
 )
@@ -15,7 +14,6 @@ lib_client = library(
 	files(
 		'connector.cpp',
 		'messenger.cpp',
-		'stardust_scenegraph.cpp',
 	),
 	include_directories: [client_includes],
 	dependencies: [common, threads],
