@@ -1,11 +1,8 @@
 #pragma once
 
-#include <functional>
-#include <flatbuffers/flexbuffers.h>
+#include <string>
 
 namespace StardustXRFusion {
-
-typedef std::function<void(double, double)> LogicStepMethod;
 
 class EnvironmentInterface {
 public:
