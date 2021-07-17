@@ -23,7 +23,7 @@ lib_fusion = library(
 	include_directories: [fusion_includes],
 	link_whole: fusion_static_libs,
 	link_args: '-lflatbuffers',
-	dependencies: [client],
+	dependencies: [common, client, threads],
 	version: '0.1.0',
 	soversion: '0',
 	install: true

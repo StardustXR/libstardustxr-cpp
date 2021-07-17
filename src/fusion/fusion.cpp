@@ -9,7 +9,7 @@
 namespace StardustXRFusion {
 
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
-StardustXR::ClientMessenger *messenger = nullptr;
+StardustXR::Messenger *messenger = nullptr;
 
 EnvironmentInterface *environment = nullptr;
 LifeCycleInterface *lifeCycle = nullptr;
@@ -33,7 +33,7 @@ bool Setup() {
 	}
 
 	scenegraph = new FusionScenegraph();
-	messenger = new StardustXR::ClientMessenger(readFD, writeFD, scenegraph);
+	messenger = new StardustXR::Messenger(readFD, writeFD, scenegraph);
 	messenger->startHandler();
 
 	return true;

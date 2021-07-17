@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../client/messenger.hpp"
+#include "../messenger.hpp"
 #include "scenegraph.hpp"
 
 namespace StardustXRFusion {
 
 extern StardustXRFusion::FusionScenegraph *scenegraph;
-extern StardustXR::ClientMessenger *messenger;
+extern StardustXR::Messenger *messenger;
 
 extern std::string GenerateID();
 

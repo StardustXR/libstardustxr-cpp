@@ -10,8 +10,11 @@ typedef std::function<std::vector<uint8_t>(flexbuffers::Reference, bool)> NodeMe
 
 class Node {
 public:
-	Node() {}
+	Node() {
+		printf("[StardustXR] Created node %p\n", this);
+	}
 	~Node() {
+		printf("[StardustXR] Deleted node %p\n", this);
 		for(const auto &node : children)
 			delete node.second;
 	}

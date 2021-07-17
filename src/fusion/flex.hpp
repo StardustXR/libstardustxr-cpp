@@ -1,13 +1,11 @@
-#include <../client/messenger.hpp>
-#include <unistd.h>
+#include "../flex.hpp"
 #include "sk_math.hpp"
 
 #pragma once
 
-using namespace std;
 using namespace SKMath;
 
-namespace StardustXR::Fusion {
+namespace StardustXRFusion {
 	///////////////////////////////////////////
 	// Core Flexbuffer macros
 

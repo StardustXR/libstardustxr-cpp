@@ -1,17 +1,20 @@
 #pragma once
 
-#include "util.hpp"
-#include "message.hpp"
 #include <thread>
 #include <atomic>
-#include <functional>
+
+#include "flex.hpp"
+#include "message.hpp"
+#include "scenegraph.hpp"
 
 namespace StardustXR {
 
 class Messenger {
 public:
-	explicit Messenger(int readFD, int writeFD);
+	explicit Messenger(int readFD, int writeFD, Scenegraph *scenegraph);
 	virtual ~Messenger();
+
+	void startHandler();
 
 	void sendSignal(const char *object, const char *method, ArgsConstructor argsConstructor) {
 		if(checkPipeBroken()) return;
@@ -30,30 +33,33 @@ public:
 	}
 	void executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback);
 
-	virtual void onPipeBreak() = 0;
-	bool checkPipeBroken() {
-		if(pipeBroke)
-			onPipeBreak();
-		return pipeBroke;
-	}
 
 protected:
 	// General variables
 	int messageReadFD;
 	int messageWriteFD;
 	std::atomic<bool> pipeBroke{false};
+	Scenegraph *scenegraph;
 
 	// Message handling specific
 	std::thread handlerThread;
 	std::map<uint, Callback> pendingCallbacks;
 	uint generateMessageID();
-	virtual void messageHandler() = 0;
-	virtual void handleMessage(const Message *message) = 0;
+	void messageHandler();
+	void handleMessage(const Message *message);
 
 	// Message sending specific
 	pthread_mutex_t sendLock;
 	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendMessage(uint8_t *buffer, uint size);
+
+	// Pipe
+	virtual void onPipeBreak() {}
+	bool checkPipeBroken() {
+		if(pipeBroke)
+			onPipeBreak();
+		return pipeBroke;
+	}
 };
 
 }

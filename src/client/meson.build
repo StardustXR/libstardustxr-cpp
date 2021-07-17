@@ -3,7 +3,6 @@ client_includes = include_directories('.')
 install_headers(
 	[
 		'connector.hpp',
-		'messenger.hpp',
 	],
 	subdir: 'stardustxr/client'
 )
@@ -12,7 +11,6 @@ lib_client = library(
 	'stardustxr',
 	files(
 		'connector.cpp',
-		'messenger.cpp',
 	),
 	include_directories: [client_includes],
 	dependencies: [common, threads],

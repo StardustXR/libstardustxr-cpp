@@ -2,10 +2,10 @@ common_includes = include_directories('.')
 
 install_headers(
 	[
+		'flex.hpp',
 		'message.hpp',
 		'messenger.hpp',
 		'node.hpp',
-		'util.hpp',
 		'scenegraph.hpp',
 	],
 	subdir: 'stardustxr'

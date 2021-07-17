@@ -1,11 +1,13 @@
 #pragma once
 
+#define PAL_STDCPP_COMPAT
 #include "DirectXMath/DirectXMath.h"
+#undef PAL_STDCPP_COMPAT
 #include <math.h>
 
-using namespace DirectX;
-
 namespace SKMath {
+
+using namespace DirectX;
 
 typedef int32_t bool32_t;
 typedef struct vec2 {
@@ -105,6 +107,8 @@ static inline vec3  vec3_abs         (const ref(vec3) a) { vec3 result = { fabsf
 
 static inline vec2  vec2_lerp        (const ref(vec2) a, const ref(vec2) b, float t) { vec2 result = {a->x + (b->x - a->x)*t, a->y + (b->y - a->y)*t}; return result; }
 #endif
+#undef ref
+#undef ref_arr
 
 static const float pi = 3.1415926535898f;
 static const float deg2rad = 0.01745329252f;

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "messenger.hpp"
-
 #include <fcntl.h>
 #include <list>
 #include <queue>

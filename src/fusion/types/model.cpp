@@ -1,7 +1,7 @@
+#include "model.hpp"
+
 #include "../flex.hpp"
 #include "../fusion_internal.hpp"
-
-#include "model.hpp"
 
 namespace StardustXRFusion {
 

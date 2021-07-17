@@ -1,7 +1,7 @@
 #pragma once
 
 #include "flatbuffers/flexbuffers.h"
-#include <unistd.h>
+#include <string.h>
 
 namespace StardustXR {
 

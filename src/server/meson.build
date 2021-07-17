@@ -2,7 +2,6 @@ server_includes = include_directories('.')
 
 install_headers(
 	[
-		'messenger.hpp',
 		'messengermanager.hpp',
 	],
 	subdir: 'stardustxr/server'
@@ -11,11 +10,11 @@ install_headers(
 lib_server = library(
 	'stardustxr-server',
 	files(
-		'messenger.cpp',
 		'messengermanager.cpp',
 	),
-	include_directories: [server_includes],
-	dependencies: [common, threads],
+	include_directories: [common_includes, server_includes],
+	dependencies: [threads],
+	link_whole: [lib_common],
 	version: '0.1.0',
 	soversion: '0',
 	install: true
