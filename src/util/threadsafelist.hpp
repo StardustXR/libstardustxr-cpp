@@ -1,7 +1,6 @@
 #pragma once
 
-#include "threadsafe.hpp"
-
+#include <mutex>
 #include <pthread.h>
 #include <functional>
 #include <stddef.h>
@@ -11,13 +10,14 @@
 namespace StardustXR {
 
 template <class T>
-class ThreadSafeList : public ThreadSafe<T> {
+class ThreadSafeList {
 public:
 	ThreadSafeList() {}
 	~ThreadSafeList() {}
 
 	uint32_t length() {
-		this->tryLock();
+		const std::lock_guard<std::mutex> lock(mutex);
+
 		if(!lengthDirty)
 			return listLength;
 
@@ -30,6 +30,8 @@ public:
 		return listLength;
 	}
 	bool exists(int index) {
+		const std::lock_guard<std::mutex> lock(mutex);
+		
 		return (index >= 0) ? index+1 : -index > length();
 	}
 
@@ -37,13 +39,13 @@ public:
 		return at(i);
 	}
 	T &at(int i) {
-		this->tryLock();
+		const std::lock_guard<std::mutex> lock(mutex);
 		return *get(i)->value;
 	}
 
 	typedef std::function<void(uint32_t, T &)> ForEachFunction;
 	void forEach(ForEachFunction function) {
-		this->tryLock();
+		const std::lock_guard<std::mutex> lock(mutex);
 
 		uint32_t i = 0;
 		ListItem *currentItem = begin;
@@ -56,7 +58,8 @@ public:
 	}
 
 	void pushFront(const T &object) {
-		this->tryLock();
+		const std::lock_guard<std::mutex> lock(mutex);
+
 		lengthDirty = true;
 		ListItem *newItem = new ListItem();
 		newItem->value = new T(object);
@@ -68,7 +71,8 @@ public:
 			end = begin;
 	}
 	void pushBack(const T &object) {
-		this->tryLock();
+		const std::lock_guard<std::mutex> lock(mutex);
+		
 		lengthDirty = true;
 		ListItem *newItem = new ListItem();
 		newItem->value = new T(object);
@@ -80,7 +84,8 @@ public:
 			begin = end;
 	}
 	void erase(int index) {
-		this->tryLock();
+		const std::lock_guard<std::mutex> lock(mutex);
+
 		lengthDirty = true;
 		ListItem *item = get(index);
 
@@ -99,6 +104,7 @@ public:
 	}
 
 protected:
+	std::mutex mutex;
 
 	struct ListItem {
 		struct ListItem *previous;
@@ -113,8 +119,6 @@ protected:
 	uint32_t listLength;
 	bool lengthDirty;
 	ListItem *get(int index) {
-		this->tryLock();
-
 		int iMax = (index >= 0) ? index : length() + index;
 		ListItem *currentItem = begin;
 
