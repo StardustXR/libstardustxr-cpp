@@ -40,3 +40,5 @@ meson.build.*
 *.blend1
 
 .vscode/
+
+.cache/
