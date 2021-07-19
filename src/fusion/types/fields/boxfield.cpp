@@ -22,4 +22,14 @@ BoxField::BoxField(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 s
 
 BoxField::~BoxField() {}
 
+void BoxField::setSize(SKMath::vec3 size) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setSize",
+		FLEX_ARG(
+			FLEX_VEC3(size)
+		)
+	);
+}
+
 } // namespace StardustXRFusion
