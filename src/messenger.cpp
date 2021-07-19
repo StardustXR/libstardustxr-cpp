@@ -1,5 +1,6 @@
 #include "messenger.hpp"
 #include <flatbuffers/flatbuffers.h>
+#include <mutex>
 #include <signal.h>
 #include <unistd.h>
 
@@ -10,16 +11,12 @@ Messenger::Messenger(int readFD, int writeFD, Scenegraph *scenegraph) {
 	this->messageWriteFD = writeFD;
 	this->scenegraph = scenegraph;
 
-	pthread_mutex_init(&sendLock, nullptr);
-
 	// setup signal handler
 	struct sigaction sigact = {SIG_IGN};
 	sigaction(SIGPIPE, &sigact, nullptr);
 }
 
-Messenger::~Messenger() {
-	pthread_mutex_destroy(&sendLock);
-}
+Messenger::~Messenger() {}
 
 void Messenger::startHandler() {
 	this->handlerThread = std::thread(&StardustXR::Messenger::messageHandler, this);
@@ -61,7 +58,8 @@ void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *
 }
 
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
-	pthread_mutex_lock(&sendLock);
+	const std::lock_guard<std::mutex> lock(sendMutex);
+
 	ssize_t rc;
 	rc = write(messageWriteFD, &size, 4);
 	if (rc == -1 && errno == EPIPE) {
@@ -70,7 +68,6 @@ void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 	}
 
 	write(messageWriteFD, buffer, size);
-	pthread_mutex_unlock(&sendLock);
 }
 
 void Messenger::messageHandler() {

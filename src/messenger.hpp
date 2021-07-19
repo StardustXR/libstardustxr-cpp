@@ -1,7 +1,8 @@
 #pragma once
 
-#include <thread>
 #include <atomic>
+#include <mutex>
+#include <thread>
 
 #include "flex.hpp"
 #include "message.hpp"
@@ -49,7 +50,7 @@ protected:
 	void handleMessage(const Message *message);
 
 	// Message sending specific
-	pthread_mutex_t sendLock;
+	std::mutex sendMutex;
 	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendMessage(uint8_t *buffer, uint size);
 
