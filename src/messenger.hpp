@@ -1,6 +1,7 @@
 #pragma once
 
 #include <atomic>
+#include <flatbuffers/flatbuffers.h>
 #include <mutex>
 #include <thread>
 
@@ -44,6 +45,7 @@ protected:
 
 	// Message handling specific
 	std::thread handlerThread;
+	std::mutex pendingCallbacksMutex;
 	std::map<uint, Callback> pendingCallbacks;
 	uint generateMessageID();
 	void messageHandler();
@@ -51,6 +53,7 @@ protected:
 
 	// Message sending specific
 	std::mutex sendMutex;
+	flatbuffers::FlatBufferBuilder fbb;
 	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
 	void sendMessage(uint8_t *buffer, uint size);
 

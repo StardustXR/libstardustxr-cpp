@@ -24,6 +24,8 @@ void Messenger::startHandler() {
 }
 
 uint Messenger::generateMessageID() {
+	const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
+
 	uint id = 0;
 	while(pendingCallbacks.count(id)) //Increment up until a free spot is found for the message ID
 		id++;
@@ -32,20 +34,25 @@ uint Messenger::generateMessageID() {
 
 void Messenger::executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback) {
 	if(checkPipeBroken()) return;
+
 	uint id = generateMessageID();
-	pendingCallbacks[id] = callback;
+	{
+		const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
+		pendingCallbacks[id] = callback;
+	}
 	sendCall(2, id, object, method, data);
 }
 
 void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
 	if(checkPipeBroken()) return;
-	flatbuffers::FlatBufferBuilder builder;
 
-	auto objectPath = builder.CreateString(object);
-	auto methodName = builder.CreateString(method);
-	auto dataBuffer = builder.CreateVector<uint8_t>(data);
+	const std::lock_guard<std::mutex> sendLock(sendMutex);
 
-	MessageBuilder messageBuilder(builder);
+	auto objectPath = fbb.CreateString(object);
+	auto methodName = fbb.CreateString(method);
+	auto dataBuffer = fbb.CreateVector<uint8_t>(data);
+
+	MessageBuilder messageBuilder(fbb);
 	messageBuilder.add_type(type);
 	messageBuilder.add_id(id);
 	messageBuilder.add_object(objectPath);
@@ -53,18 +60,18 @@ void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *
 	messageBuilder.add_data(dataBuffer);
 	auto message = messageBuilder.Finish();
 
-	builder.Finish(message);
-	sendMessage(builder.GetBufferPointer(), builder.GetSize());
+	fbb.Finish(message);
+	sendMessage(fbb.GetBufferPointer(), fbb.GetSize());
+	fbb.Clear();
 }
 
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
-	const std::lock_guard<std::mutex> lock(sendMutex);
-
 	ssize_t rc;
 	rc = write(messageWriteFD, &size, 4);
 	if (rc == -1 && errno == EPIPE) {
 		pipeBroke = true;
 		checkPipeBroken();
+		return;
 	}
 
 	write(messageWriteFD, buffer, size);
@@ -73,10 +80,16 @@ void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 void Messenger::messageHandler() {
 	while (!pipeBroke) {
 		uint32_t messageLength;
-		if (read(messageReadFD, &messageLength, 4) == 0) {
-			printf("Pipe broke!\n");
-			pipeBroke = true;
-			continue;
+		switch (read(messageReadFD, &messageLength, 4)) {
+			case 0: {
+				printf("Pipe broke!\n");
+				pipeBroke = true;
+				return;
+			} break;
+			case -1: {
+				printf("Pipe error\n");
+				continue;
+			}
 		}
 
 		void *messageBinary = malloc(messageLength);
@@ -102,19 +115,27 @@ void Messenger::handleMessage(const Message *message) {
 		scenegraph->sendSignal(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
 	} break;
 	case 2: {
+
 		// Method was called, so execute the local scenegraph method and send back the result
 		std::vector<uint8_t> returnValue = scenegraph->executeMethod(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
 		sendCall(3, message->id(), message->object()->c_str(), message->method()->c_str(), returnValue);
 	} break;
 	case 3: {
-		//Method return, so execute the callback method if it exists and remove it from the pending map
-		if(pendingCallbacks.count(message->id())) {
-			pendingCallbacks[message->id()](message->data_flexbuffer_root());
-			pendingCallbacks.erase(message->id());
-		} else {
-			// I have no idea how this would happen but I don't want anything breaking on the slim chance it does...
-			printf("The method callback \"%s\" on object with path \"%s\" and id %i is not pending\n", message->method()->c_str(), message->object()->c_str(), message->id());
+		Callback callback = nullptr;
+		{
+			const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
+			if(pendingCallbacks.count(message->id())) {
+				callback = pendingCallbacks[message->id()];
+				pendingCallbacks.erase(message->id());
+			} else {
+				// I have no idea how this would happen but I don't want anything breaking on the slim chance it does...
+				printf("The method callback \"%s\" on object with path \"%s\" and id %i is not pending\n", message->method()->c_str(), message->object()->c_str(), message->id());
+				return;
+			}
 		}
+
+		//Method return, so execute the callback method if it exists and remove it from the pending map
+		callback(message->data_flexbuffer_root());
 	}
 	}
 }
