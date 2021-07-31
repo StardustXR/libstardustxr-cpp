@@ -49,6 +49,9 @@ typedef struct pose_t {
 	vec3 position;
 	quat orientation;
 } pose_t;
+typedef struct color {
+	float r, g, b, a;
+} color;
 
 ///////////////////////////////////////////
 
@@ -441,6 +444,40 @@ static inline vec3 math_cubemap_corner(int i) {
 		(nx ? neg : ny ? (u?-1:1)*neg : (u?1:-1)*neg),
 		(nx || nz ? (v?1:-1) : neg),
 		(nx ? (u?-1:1)*neg : ny ? (v?1:-1) : neg)
+	};
+}
+
+static inline color color_from_hsva(float h, float s, float v, float a){
+    if(h>360 || h<0 || s>1 || s<0 || v>1 || v<0){
+        return {0,0,0,0};
+    }
+    float C = s*v;
+    float X = C*(1-abs(fmod(h/60.0, 2)-1));
+    float m = v-C;
+    float r,g,b;
+    if(h >= 0 && h < 60){
+        r = C,g = X,b = 0;
+    }
+    else if(h >= 60 && h < 120){
+        r = X,g = C,b = 0;
+    }
+    else if(h >= 120 && h < 180){
+        r = 0,g = C,b = X;
+    }
+    else if(h >= 180 && h < 240){
+        r = 0,g = X,b = C;
+    }
+    else if(h >= 240 && h < 300){
+        r = X,g = 0,b = C;
+    }
+    else{
+        r = C,g = 0,b = X;
+    }
+	return color {
+		r+m,
+		g+m,
+		b+m,
+		a
 	};
 }
 
