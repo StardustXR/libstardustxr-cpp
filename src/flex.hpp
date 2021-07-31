@@ -42,6 +42,8 @@ namespace StardustXR {
 		fbb.Bool(bol);
 	#define FLEX_FLOAT(flt) \
 		fbb.Float(flt);
+	#define FLEX_ADD(var) \
+		fbb.Add(var);
 
 	///////////////////////////////////////////
 	// Special Flexbuffer type macros
@@ -58,6 +60,13 @@ namespace StardustXR {
 			fbb.Float(quat.x);\
 			fbb.Float(quat.y);\
 			fbb.Float(quat.z);\
+		});
+	#define FLEX_COLOR(color) \
+		fbb.TypedVector([&]() {\
+			fbb.Float(color.r);\
+			fbb.Float(color.g);\
+			fbb.Float(color.b);\
+			fbb.Float(color.a);\
 		});
 
 }
