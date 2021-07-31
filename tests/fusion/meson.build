@@ -37,6 +37,15 @@ executable(
 	dependencies: [fusion],
 )
 
+
+executable(
+	'materials',
+	'materials.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
+)
+
+
 executable(
 	'model',
 	'model.cpp',
