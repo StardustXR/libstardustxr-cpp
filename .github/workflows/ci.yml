@@ -11,7 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
-    
+    - name: Caching time
+      uses: actions/cache@v2.1.6
+      with:
+        path: flatbuffers /home/runner/.cache/pip
+        key: wheeeeeee
+
     - name: Install Flatbuffers
       run: |
         git clone https://github.com/google/flatbuffers.git
@@ -27,8 +32,3 @@ jobs:
         directory: build
         meson-version: 0.53.0
         options: -j2
-        
-#     - name: Setup tmate session
-#       uses: mxschmitt/action-tmate@v3
-#       with:
-#         limit-access-to-actor: true
