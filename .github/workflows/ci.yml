@@ -3,6 +3,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-18.04
+    env:
+      CPPFLAGS: -Wno-unknown-pragma
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
@@ -11,7 +13,7 @@ jobs:
       run: |
         git clone https://github.com/google/flatbuffers.git
         cd flatbuffers/
-        cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DFLATBUFFERS_BUILD_TESTS=OFF -DFLATBUFFERS_BUILD_FLATC=OFF -DCMAKE_INSTALL_PREFIX=/usr
+        cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DFLATBUFFERS_BUILD_TESTS=OFF -DFLATBUFFERS_BUILD_FLATC=OFF -DFLATBUFFERS_BUILD_SHAREDLIB=ON -DCMAKE_INSTALL_PREFIX=/usr
         make
         sudo make install
     
