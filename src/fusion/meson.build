@@ -1,3 +1,7 @@
+if not get_option('client')
+	client = dependency('stardustxr')
+endif
+
 install_headers(
 	[
 		'fusion.hpp',
