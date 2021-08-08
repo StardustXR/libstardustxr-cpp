@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     env:
-      CPPFLAGS: -Wno-unknown-pragma
+      CPPFLAGS: -Wno-unknown-pragmas -Wno-unused-variables
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
