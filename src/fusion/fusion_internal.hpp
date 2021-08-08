@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../messenger.hpp"
+#include "../common/messenger.hpp"
 #include "scenegraph.hpp"
 
 namespace StardustXRFusion {

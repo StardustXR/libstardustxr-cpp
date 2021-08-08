@@ -1,4 +1,4 @@
-#include "server/messengermanager.hpp"
+#include "messengermanager.hpp"
 
 namespace StardustXR {
 

@@ -52,6 +52,8 @@ EnvironmentInterface *Environment() {
 }
 
 std::string ConvertExeRelativePath(std::string exeRelativePath) {
+	if(*exeRelativePath.begin() == '/')
+		return exeRelativePath;
 	char result[PATH_MAX];
 	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
 	const char *exePath;

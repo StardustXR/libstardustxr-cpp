@@ -1,28 +1,4 @@
-common_includes = include_directories('.')
-
-install_headers(
-	[
-		'flex.hpp',
-		'message.hpp',
-		'messenger.hpp',
-		'scenegraph.hpp',
-	],
-	subdir: 'stardustxr'
-)
-
-lib_common = static_library(
-	'common',
-	files(
-		'messenger.cpp',
-	),
-	include_directories: [common_includes],
-)
-
-common = declare_dependency(
-	include_directories: common_includes,
-	link_with: lib_common
-)
-
+subdir('common')
 subdir('client')
 subdir('server')
 subdir('fusion')

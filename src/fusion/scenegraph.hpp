@@ -2,7 +2,7 @@
 
 #include <functional>
 #include <map>
-#include "../scenegraph.hpp"
+#include "../common/scenegraph.hpp"
 
 #define FUSION_SCENEGRAPH_METHOD(method_name, method_ref) scenegraph->methods[method_name] = std::bind(method_ref, this, std::placeholders::_1, std::placeholders::_2);
 

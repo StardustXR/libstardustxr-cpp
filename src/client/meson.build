@@ -1,27 +1,23 @@
-client_includes = include_directories('.')
-
 install_headers(
 	[
 		'connector.hpp',
 	],
 	subdir: 'stardustxr/client'
 )
-
+client_files = files(
+	'connector.cpp'
+)
 lib_client = library(
 	'stardustxr',
-	files(
-		'connector.cpp',
-	),
-	include_directories: [client_includes],
-	dependencies: [common, threads],
-	version: '0.1.0',
+	[common_files, client_files],
+	dependencies: [threads],
+	version: '0.1.1',
 	soversion: '0',
 	install: true
 )
-
 pkg.generate(lib_client, filebase: 'stardustxr', name: 'stardustxr', url: 'https://github.com/technobaboo/libstardustxr')
 
 client = declare_dependency(
-	include_directories: client_includes,
-	link_with: lib_client
+	include_directories: include_directories('.'),
+	link_with: lib_client,
 )

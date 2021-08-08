@@ -1,9 +1,6 @@
 #pragma once
 
-#define PAL_STDCPP_COMPAT
-#include "DirectXMath/DirectXMath.h"
-#undef PAL_STDCPP_COMPAT
-#include <math.h>
+#include "sk_math_util.h"
 
 namespace SKMath {
 

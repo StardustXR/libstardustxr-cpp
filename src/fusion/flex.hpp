@@ -1,4 +1,4 @@
-#include "../flex.hpp"
+#include "../common/flex.hpp"
 #include "sk_math.hpp"
 
 #pragma once
