@@ -9,10 +9,9 @@ jobs:
     - name: Meson Build
       uses: BSFishy/meson-build@v1.0.3
       with:
-        # The action to run
         action: install
-        # The directory to build the project to
         directory: "build"
+        meson-version: 0.53.0
         # Additional options to pass to Meson
 #         options: 
         
