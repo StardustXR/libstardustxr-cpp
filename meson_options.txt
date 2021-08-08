@@ -1,0 +1,3 @@
+option('client', type : 'boolean')
+option('server', type : 'boolean')
+option('fusion', type : 'boolean')

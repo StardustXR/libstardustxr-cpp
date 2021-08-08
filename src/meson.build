@@ -1,4 +1,10 @@
 subdir('common')
-subdir('client')
-subdir('server')
-subdir('fusion')
+if get_option('client')
+	subdir('client')
+endif
+if get_option('server')
+	subdir('server')
+endif
+if get_option('fusion')
+	subdir('fusion')
+endif
