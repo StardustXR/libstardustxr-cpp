@@ -1,0 +1,22 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Meson Build
+      uses: BSFishy/meson-build@v1.0.3
+      with:
+        # The action to run
+        action: install
+        # The directory to build the project to
+        directory: "build"
+        # Additional options to pass to Meson
+#         options: 
+        
+#     - name: Setup tmate session
+#       uses: mxschmitt/action-tmate@v3
+#       with:
+#         limit-access-to-actor: true
