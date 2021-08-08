@@ -17,7 +17,7 @@ jobs:
         git clone https://github.com/google/flatbuffers.git
         cd flatbuffers/
         cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DFLATBUFFERS_BUILD_TESTS=OFF -DFLATBUFFERS_BUILD_FLATC=OFF -DFLATBUFFERS_BUILD_FLATHASH=OFF -DFLATBUFFERS_BUILD_SHAREDLIB=ON -DCMAKE_INSTALL_PREFIX=/usr
-        make
+        make -j2
         sudo make install
     
     - name: Meson Build
@@ -26,7 +26,7 @@ jobs:
         action: build
         directory: build
         meson-version: 0.53.0
-#         options: 
+        options: -j2
         
 #     - name: Setup tmate session
 #       uses: mxschmitt/action-tmate@v3
