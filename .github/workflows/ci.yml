@@ -7,7 +7,7 @@ jobs:
       run:
         shell: 'script -q -e -c "bash {0}"'
     env:
-      CPPFLAGS: -Wno-unknown-pragmas -Wno-unused-but-set-variable
+      CPPFLAGS: -Wno-unknown-pragmas -Wno-unused-but-set-variable -Wno-unused-function
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
@@ -23,7 +23,7 @@ jobs:
     - name: Meson Build
       uses: BSFishy/meson-build@v1.0.3
       with:
-        action: install
+        action: build
         directory: build
         meson-version: 0.53.0
 #         options: 
