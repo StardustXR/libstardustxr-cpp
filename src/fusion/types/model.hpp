@@ -14,6 +14,12 @@ public:
 	void setMaterialProperty(uint32_t submesh, std::string propertyName, float value);
 	void setMaterialProperty(uint32_t submesh, std::string propertyName, SKMath::color col);
 	void setMaterialProperty(uint32_t submesh, std::string propertyName, std::string value);
+
+	operator bool()const {
+		return valid;
+	}
+protected:
+	bool valid = false;
 };
 
 } // namespace StardustXRFusion

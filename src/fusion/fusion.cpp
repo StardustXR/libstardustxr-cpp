@@ -51,16 +51,28 @@ EnvironmentInterface *Environment() {
 	return environment;
 }
 
-std::string ConvertExeRelativePath(std::string exeRelativePath) {
-	if(*exeRelativePath.begin() == '/')
-		return exeRelativePath;
+bool FileExists(std::string path) {
+	std::string convertedPath = ConvertExeRelativePath(path);
+	FILE *file = fopen(convertedPath.c_str(), "ro");
+	bool exists = file;
+	if(exists)
+		fclose(file);
+	else
+		printf("File \"%s\" does not exist\n", convertedPath.c_str());
+	fflush(stdout);
+	return exists;
+}
+
+std::string ConvertExeRelativePath(std::string path) {
+	if(*path.begin() == '/')
+		return path;
 	char result[PATH_MAX];
 	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
-	const char *exePath;
+	std::string exePath;
 	if (count != -1) {
 		exePath = dirname(result);
 	}
-	return std::string(exePath) + "/" + exeRelativePath;
+	return std::string(exePath) + "/" + path;
 }
 
 }

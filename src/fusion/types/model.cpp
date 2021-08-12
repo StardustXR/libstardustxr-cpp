@@ -6,6 +6,8 @@
 namespace StardustXRFusion {
 
 Model::Model(std::string relativePath, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) : Spatial() {
+	if(!FileExists(relativePath))
+		return;
 	nodePath = "/model";
 	nodeName = GenerateID();
 	messenger->sendSignal(
@@ -19,6 +21,7 @@ Model::Model(std::string relativePath, SKMath::vec3 origin, SKMath::quat orienta
 			FLEX_VEC3(scale)
 		)
 	);
+	valid = true;
 }
 
 Model::~Model() {}
@@ -48,13 +51,15 @@ void Model::setMaterialProperty(uint32_t submesh, std::string propertyName, colo
 }
 
 void Model::setMaterialProperty(uint32_t submesh, std::string propertyName, std::string value) {
+	if(!FileExists(value))
+		return;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setMaterialProperty",
 		FLEX_ARGS(
 			FLEX_ADD(submesh)
 			FLEX_STRING(propertyName)
-			FLEX_STRING(value)
+			FLEX_STRING(ConvertExeRelativePath(value))
 		)
 	);
 }

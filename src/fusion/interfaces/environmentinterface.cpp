@@ -17,6 +17,8 @@ void EnvironmentInterface::visible(bool visible) {
 }
 
 void EnvironmentInterface::setSkytex(std::string path) {
+	if(!FileExists(path))
+		return;
 	messenger->sendSignal(
 		"/environment",
 		"setSkytex",
@@ -27,6 +29,8 @@ void EnvironmentInterface::setSkytex(std::string path) {
 }
 
 void EnvironmentInterface::setLighting(std::string path) {
+	if(!FileExists(path))
+		return;
 	messenger->sendSignal(
 		"/environment",
 		"setLighting",
