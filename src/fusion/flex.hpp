@@ -10,6 +10,10 @@ namespace StardustXRFusion {
 	///////////////////////////////////////////
 	// Conversion from flex to SKMath
 
+	#define SK_VEC2(vec) {\
+		vec[0].AsFloat(),\
+		vec[1].AsFloat()\
+	}
 	#define SK_VEC3(vec) {\
 		vec[0].AsFloat(),\
 		vec[1].AsFloat(),\

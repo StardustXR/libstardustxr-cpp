@@ -26,7 +26,6 @@ executable(
 	'input.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
-	link_args: '-lflatbuffers',
 )
 
 

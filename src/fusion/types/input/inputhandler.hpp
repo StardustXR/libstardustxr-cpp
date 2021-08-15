@@ -1,20 +1,30 @@
 #pragma once
 
+#include "datamap.hpp"
 #include "../spatial.hpp"
 #include "../fields/field.hpp"
 
-#include "flatbuffers/Input_generated.h"
+namespace flexbuffers {
+	class Reference;
+}
 
 namespace StardustXRFusion {
 
-typedef std::function<bool(const StardustXR::InputData *)> InputHandlerMethod;
+class HandInput;
+class PointerInput;
 
 class InputHandler : public Spatial {
 public:
-	explicit InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation, InputHandlerMethod handlerMethod);
+	explicit InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
+
+	std::function<bool(const PointerInput &, const Datamap &)> pointerHandlerMethod = [](const PointerInput &, const Datamap &) {
+		return false;
+	};
+	std::function<bool(const HandInput &, const Datamap &)> handHandlerMethod = [](const HandInput &, const Datamap &) {
+		return false;
+	};
 
 private:
-	InputHandlerMethod handlerMethod;
 	std::vector<uint8_t> inputEvent(flexbuffers::Reference data, bool);
 };
 
