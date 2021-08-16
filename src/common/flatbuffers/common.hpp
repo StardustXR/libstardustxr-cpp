@@ -36,11 +36,20 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) vec3 FLATBUFFERS_FINAL_CLASS {
   float x() const {
     return flatbuffers::EndianScalar(x_);
   }
+  void mutate_x(float _x) {
+    flatbuffers::WriteScalar(&x_, _x);
+  }
   float y() const {
     return flatbuffers::EndianScalar(y_);
   }
+  void mutate_y(float _y) {
+    flatbuffers::WriteScalar(&y_, _y);
+  }
   float z() const {
     return flatbuffers::EndianScalar(z_);
+  }
+  void mutate_z(float _z) {
+    flatbuffers::WriteScalar(&z_, _z);
   }
 };
 FLATBUFFERS_STRUCT_END(vec3, 12);
@@ -68,14 +77,26 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) quat FLATBUFFERS_FINAL_CLASS {
   float w() const {
     return flatbuffers::EndianScalar(w_);
   }
+  void mutate_w(float _w) {
+    flatbuffers::WriteScalar(&w_, _w);
+  }
   float x() const {
     return flatbuffers::EndianScalar(x_);
+  }
+  void mutate_x(float _x) {
+    flatbuffers::WriteScalar(&x_, _x);
   }
   float y() const {
     return flatbuffers::EndianScalar(y_);
   }
+  void mutate_y(float _y) {
+    flatbuffers::WriteScalar(&y_, _y);
+  }
   float z() const {
     return flatbuffers::EndianScalar(z_);
+  }
+  void mutate_z(float _z) {
+    flatbuffers::WriteScalar(&z_, _z);
   }
 };
 FLATBUFFERS_STRUCT_END(quat, 16);
@@ -97,7 +118,13 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) pose FLATBUFFERS_FINAL_CLASS {
   const StardustXR::vec3 &position() const {
     return position_;
   }
+  StardustXR::vec3 &mutable_position() {
+    return position_;
+  }
   const StardustXR::quat &rotation() const {
+    return rotation_;
+  }
+  StardustXR::quat &mutable_rotation() {
     return rotation_;
   }
 };
@@ -123,11 +150,20 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) joint FLATBUFFERS_FINAL_CLASS {
   const StardustXR::vec3 &position() const {
     return position_;
   }
+  StardustXR::vec3 &mutable_position() {
+    return position_;
+  }
   const StardustXR::quat &rotation() const {
+    return rotation_;
+  }
+  StardustXR::quat &mutable_rotation() {
     return rotation_;
   }
   float radius() const {
     return flatbuffers::EndianScalar(radius_);
+  }
+  void mutate_radius(float _radius) {
+    flatbuffers::WriteScalar(&radius_, _radius);
   }
 };
 FLATBUFFERS_STRUCT_END(joint, 32);

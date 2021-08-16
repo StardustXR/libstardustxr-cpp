@@ -6,7 +6,7 @@
 #include <thread>
 
 #include "flex.hpp"
-#include "message.hpp"
+#include "flatbuffers/message.hpp"
 #include "scenegraph.hpp"
 
 namespace StardustXR {

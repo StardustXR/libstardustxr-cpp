@@ -4,7 +4,7 @@
 #include "types/handinput.hpp"
 #include "types/pointerinput.hpp"
 
-#include "flatbuffers/Input_generated.h"
+#include "../../../common/flatbuffers/Input.hpp"
 
 #include "inputhandler.hpp"
 #include <flatbuffers/flexbuffers.h>

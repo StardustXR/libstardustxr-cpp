@@ -6,7 +6,7 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-#include "common_generated.h"
+#include "common.hpp"
 
 namespace StardustXR {
 
@@ -24,14 +24,26 @@ struct Hand FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::Vector<const StardustXR::joint *> *finger_joints() const {
     return GetPointer<const flatbuffers::Vector<const StardustXR::joint *> *>(VT_FINGER_JOINTS);
   }
+  flatbuffers::Vector<const StardustXR::joint *> *mutable_finger_joints() {
+    return GetPointer<flatbuffers::Vector<const StardustXR::joint *> *>(VT_FINGER_JOINTS);
+  }
   const StardustXR::joint *palm() const {
     return GetStruct<const StardustXR::joint *>(VT_PALM);
+  }
+  StardustXR::joint *mutable_palm() {
+    return GetStruct<StardustXR::joint *>(VT_PALM);
   }
   const StardustXR::joint *wrist() const {
     return GetStruct<const StardustXR::joint *>(VT_WRIST);
   }
+  StardustXR::joint *mutable_wrist() {
+    return GetStruct<StardustXR::joint *>(VT_WRIST);
+  }
   const StardustXR::joint *elbow() const {
     return GetStruct<const StardustXR::joint *>(VT_ELBOW);
+  }
+  StardustXR::joint *mutable_elbow() {
+    return GetStruct<StardustXR::joint *>(VT_ELBOW);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&

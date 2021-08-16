@@ -11,5 +11,4 @@ fusion_files += files(
 	'inputhandler.cpp',
 )
 
-subdir('flatbuffers')
 subdir('types')

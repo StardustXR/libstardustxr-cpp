@@ -6,7 +6,7 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-#include "common_generated.h"
+#include "common.hpp"
 
 namespace StardustXR {
 
@@ -23,11 +23,20 @@ struct Pointer FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const StardustXR::vec3 *origin() const {
     return GetStruct<const StardustXR::vec3 *>(VT_ORIGIN);
   }
+  StardustXR::vec3 *mutable_origin() {
+    return GetStruct<StardustXR::vec3 *>(VT_ORIGIN);
+  }
   const StardustXR::vec3 *direction() const {
     return GetStruct<const StardustXR::vec3 *>(VT_DIRECTION);
   }
+  StardustXR::vec3 *mutable_direction() {
+    return GetStruct<StardustXR::vec3 *>(VT_DIRECTION);
+  }
   float tilt() const {
     return GetField<float>(VT_TILT, 0.0f);
+  }
+  bool mutate_tilt(float _tilt) {
+    return SetField<float>(VT_TILT, _tilt, 0.0f);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&

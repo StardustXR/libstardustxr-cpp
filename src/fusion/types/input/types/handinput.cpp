@@ -1,5 +1,5 @@
 #include "handinput.hpp"
-#include "../flatbuffers/Input_generated.h"
+#include "../../../../common/flatbuffers/Input.hpp"
 
 namespace StardustXRFusion {
 

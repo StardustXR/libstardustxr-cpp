@@ -2,7 +2,6 @@ if get_option('client') or get_option('server')
 	install_headers(
 		[
 			'flex.hpp',
-			'message.hpp',
 			'messenger.hpp',
 			'scenegraph.hpp',
 		],
@@ -10,3 +9,5 @@ if get_option('client') or get_option('server')
 	)
 endif
 common_files += files('messenger.cpp')
+
+subdir('flatbuffers')
