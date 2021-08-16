@@ -22,34 +22,34 @@ const joint_t convertJoint(const StardustXR::joint *joint) {
 	};
 }
 
-const Finger convertFinger(const StardustXR::joint *startJoint) {
-	size_t jointSize = sizeof(StardustXR::joint);
-	std::array<const joint_t, 5> bones = {};
-	for(uint i=0; i<5; ++i) {
-		bones[i] = convertJoint(startJoint+(jointSize*i));
-	}
+const Finger convertFinger(const flatbuffers::Vector<const StardustXR::joint *> &fingerJoints, int startIndex) {
 	return Finger{
-		.bones = bones
+		.bones = {
+			convertJoint(fingerJoints[startIndex]),
+			convertJoint(fingerJoints[startIndex+1]),
+			convertJoint(fingerJoints[startIndex+2]),
+			convertJoint(fingerJoints[startIndex+3]),
+			convertJoint(fingerJoints[startIndex+4])
+		}
 	};
 }
 
-const std::array<const Finger, 5> convertFingers(const StardustXR::joint *startJoint) {
-	size_t jointSize = sizeof(StardustXR::joint);
+const std::array<const Finger, 5> convertFingers(const flatbuffers::Vector<const StardustXR::joint *> &joints) {
 	return {
-		convertFinger(startJoint+(jointSize)),
-		convertFinger(startJoint+(jointSize*5)),
-		convertFinger(startJoint+(jointSize*10)),
-		convertFinger(startJoint+(jointSize*15)),
-		convertFinger(startJoint+(jointSize*20))
+		convertFinger(joints, 0),
+		convertFinger(joints, 5),
+		convertFinger(joints, 10),
+		convertFinger(joints, 15),
+		convertFinger(joints, 20)
 	};
 }
 
 HandInput::HandInput(const StardustXR::InputData *hand) :
 	distance(hand->distance()),
-	fingers(convertFingers((*hand->input_as_Hand()->finger_joints())[0])),
+	fingers(convertFingers(*hand->input_as_Hand()->finger_joints())),
 	palm(convertJoint(hand->input_as_Hand()->palm())),
 	wrist(convertJoint(hand->input_as_Hand()->wrist())),
-	elbow(convertJoint(hand->input_as_Hand()->elbow())) {
+	elbow(hand->input_as_Hand()->elbow() ? convertJoint(hand->input_as_Hand()->elbow()) : joint_t{}) {
 }
 
 }
