@@ -11,7 +11,7 @@ std::vector<std::string> Datamap::keys() const {
 	flexbuffers::TypedVector flexKeys = (*flexDatamap).Keys();
 	std::vector<std::string> keys;
 
-	for(uint i=0; i<keys.size(); ++i) {
+	for(uint i=0; i<flexKeys.size(); ++i) {
 		keys.push_back(flexKeys[i].AsString().str());
 	}
 

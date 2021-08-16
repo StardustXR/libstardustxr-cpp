@@ -18,7 +18,7 @@ void PrintDatamap(const Datamap &datamap) {
 	printf("\tDatamap:\n");
 	std::vector<std::string> keys = datamap.keys();
 	for(std::string key : keys) {
-		printf("\t\t%s", key.c_str());
+		printf("\t\t%s\n", key.c_str());
 	}
 	// for(size_t i=0; i<datamap.size(); ++i) {
 	// 	printf("\t\t%s: ", datamapKeys[i].AsString().c_str());
