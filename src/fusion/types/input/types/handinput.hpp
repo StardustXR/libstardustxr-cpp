@@ -24,11 +24,11 @@ struct Finger {
 		return bones[index];
 	}
 
-	const joint_t &tip          (){return bones[4];}
-	const joint_t &distal       (){return bones[3];}
-	const joint_t &intermediate (){return bones[2];}
-	const joint_t &proximal     (){return bones[1];}
-	const joint_t &metacarpal   (){return bones[0];}
+	const joint_t &tip          () const {return bones[4];}
+	const joint_t &distal       () const {return bones[3];}
+	const joint_t &intermediate () const {return bones[2];}
+	const joint_t &proximal     () const {return bones[1];}
+	const joint_t &metacarpal   () const {return bones[0];}
 };
 
 class HandInput {
@@ -42,11 +42,11 @@ public:
 		return fingers[index];
 	}
 
-	const Finger &thumb  (){return fingers[0];}
-	const Finger &index  (){return fingers[1];}
-	const Finger &middle (){return fingers[2];}
-	const Finger &ring   (){return fingers[3];}
-	const Finger &pinky  (){return fingers[4];}
+	const Finger thumb  () const {return fingers[0];}
+	const Finger index  () const {return fingers[1];}
+	const Finger middle () const {return fingers[2];}
+	const Finger ring   () const {return fingers[3];}
+	const Finger pinky  () const {return fingers[4];}
 	
 	const joint_t palm;
 	const joint_t wrist;

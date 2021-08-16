@@ -18,13 +18,13 @@ std::vector<std::string> Datamap::keys() const {
 	return keys;
 }
 
-bool Datamap::exists(std::string key) {
+bool Datamap::exists(std::string key) const {
 	flexbuffers::Reference value = (*flexDatamap)[key];
 
 	return !value.IsNull();
 }
 
-bool Datamap::getBool(std::string key) {
+bool Datamap::getBool(std::string key) const {
 	flexbuffers::Reference value = (*flexDatamap)[key];
 
 	if(value.IsBool())
@@ -33,7 +33,7 @@ bool Datamap::getBool(std::string key) {
 		return false;
 }
 
-int32_t Datamap::getInt(std::string key) {
+int32_t Datamap::getInt(std::string key) const {
 	flexbuffers::Reference value = (*flexDatamap)[key];
 
 	if(value.IsInt())
@@ -42,7 +42,7 @@ int32_t Datamap::getInt(std::string key) {
 		return 0;
 }
 
-float Datamap::getFloat(std::string key) {
+float Datamap::getFloat(std::string key) const {
 	flexbuffers::Reference value = (*flexDatamap)[key];
 
 	if(value.IsFloat())
@@ -51,7 +51,7 @@ float Datamap::getFloat(std::string key) {
 		return 0.0f;
 }
 
-SKMath::vec2 Datamap::getVec2(std::string key) {
+SKMath::vec2 Datamap::getVec2(std::string key) const {
 	flexbuffers::Reference value = (*flexDatamap)[key];
 
 	if(value.IsTypedVector() && value.AsTypedVector().size() == 2)
@@ -60,7 +60,7 @@ SKMath::vec2 Datamap::getVec2(std::string key) {
 		return vec2_zero;
 }
 
-SKMath::vec3 Datamap::getVec3(std::string key) {
+SKMath::vec3 Datamap::getVec3(std::string key) const {
 	flexbuffers::Reference value = (*flexDatamap)[key];
 
 	if(value.IsTypedVector() && value.AsTypedVector().size() == 3)
