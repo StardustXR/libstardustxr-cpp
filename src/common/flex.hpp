@@ -56,10 +56,10 @@ namespace StardustXR {
 		});
 	#define FLEX_QUAT(quat) \
 		fbb.TypedVector([&]() {\
-			fbb.Float(quat.w);\
 			fbb.Float(quat.x);\
 			fbb.Float(quat.y);\
 			fbb.Float(quat.z);\
+			fbb.Float(quat.w);\
 		});
 	#define FLEX_COLOR(color) \
 		fbb.TypedVector([&]() {\
