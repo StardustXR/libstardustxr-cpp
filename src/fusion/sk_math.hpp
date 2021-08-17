@@ -81,6 +81,9 @@ static inline vec3& operator-=(vec3& a, const vec3& b)     { a.x -= b.x; a.y -= 
 static inline vec3& operator*=(vec3& a, const float b)     { a.x *= b; a.y *= b; a.z *= b; return a; }
 static inline vec3& operator/=(vec3& a, const float b)     { a.x /= b; a.y /= b; a.z /= b; return a; }
 
+static inline bool operator==(const color &a, const color &b) {return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;}
+static inline bool operator!=(const color &a, const color &b) {return !(a == b);}
+
 static quat quat_mul(const quat &a, const quat &b);
 static vec3 quat_mul_vec(const quat &a, const vec3 &b);
 static void matrix_mul(const ref(matrix) a, const ref(matrix) b, ref(matrix) result);
