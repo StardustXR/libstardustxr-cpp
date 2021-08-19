@@ -92,11 +92,14 @@ void Messenger::messageHandler() {
 			}
 		}
 
-		void *messageBinary = malloc(messageLength);
+		uint8_t *messageBinary = (uint8_t *) malloc(messageLength);
 		read(messageReadFD, messageBinary, messageLength);
 
-		const Message *message = GetMessage(messageBinary);
-		handleMessage(message);
+		flatbuffers::Verifier messageVerifier(messageBinary, messageLength);
+		if(VerifyMessageBuffer(messageVerifier)) {
+			const Message *message = GetMessage(messageBinary);
+			handleMessage(message);
+		}
 
 		free(messageBinary);
 	}
