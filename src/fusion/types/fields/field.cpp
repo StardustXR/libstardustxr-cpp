@@ -2,10 +2,11 @@
 #include "../../flex.hpp"
 
 #include "field.hpp"
+#include "sk_math.hpp"
 
 namespace StardustXRFusion {
 
-Field::Field() {}
+Field::Field(SKMath::vec3 origin, SKMath::quat orientation) : Spatial(origin, orientation, vec3_one) {}
 Field::~Field() {}
 
 void Field::distance(Spatial *space, vec3 point, std::function<void(float distance)> callback) {

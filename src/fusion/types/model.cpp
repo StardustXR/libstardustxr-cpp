@@ -5,7 +5,7 @@
 
 namespace StardustXRFusion {
 
-Model::Model(std::string relativePath, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) : Spatial() {
+Model::Model(std::string relativePath, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) : Spatial(origin, orientation, scale) {
 	if(!FileExists(relativePath))
 		return;
 	nodePath = "/model";

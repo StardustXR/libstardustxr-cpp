@@ -5,7 +5,7 @@
 
 namespace StardustXRFusion {
 
-BoxField::BoxField(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size) {
+BoxField::BoxField(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size) : Field(origin, orientation) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(

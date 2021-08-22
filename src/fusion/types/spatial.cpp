@@ -1,18 +1,23 @@
 #include "../fusion_internal.hpp"
 #include "../flex.hpp"
 
+#include "sk_math.hpp"
 #include "spatial.hpp"
 
 using namespace SKMath;
 
 namespace StardustXRFusion {
 
-Spatial::Spatial() {}
+Spatial::Spatial(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) {
+	this->origin = origin;
+	this->orientation = orientation;
+	this->localScale = scale;
+}
 
 Spatial::~Spatial() {}
 
 Spatial Spatial::create(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable) {
-	Spatial spatial;
+	Spatial spatial(origin, orientation, scale);
 	spatial.nodePath = "/spatial";
 	spatial.nodeName = GenerateID();
 	messenger->sendSignal(
@@ -32,6 +37,7 @@ Spatial Spatial::create(SKMath::vec3 origin, SKMath::quat orientation, SKMath::v
 }
 
 void Spatial::move(vec3 position) {
+	origin = origin + position;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"move",
@@ -42,6 +48,7 @@ void Spatial::move(vec3 position) {
 }
 
 void Spatial::rotate(quat rotation) {
+	orientation = orientation * rotation;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"rotate",
@@ -63,6 +70,7 @@ void Spatial::rotateAround(vec3 point, quat rotation) {
 }
 
 void Spatial::scale(float scaleFactor) {
+	this->localScale *= scaleFactor;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"scale",
@@ -73,6 +81,7 @@ void Spatial::scale(float scaleFactor) {
 }
 
 void Spatial::setOrigin(vec3 origin) {
+	this->origin = origin;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setOrigin",
@@ -83,6 +92,7 @@ void Spatial::setOrigin(vec3 origin) {
 }
 
 void Spatial::setOrientation(quat orientation) {
+	this->orientation = orientation;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setOrientation",
@@ -93,6 +103,7 @@ void Spatial::setOrientation(quat orientation) {
 }
 
 void Spatial::setScale(vec3 scale) {
+	localScale = scale;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setScale",
@@ -103,6 +114,8 @@ void Spatial::setScale(vec3 scale) {
 }
 
 void Spatial::setPose(pose_t pose) {
+	origin = pose.position;
+	orientation = pose.orientation;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setPose",
@@ -121,6 +134,23 @@ void Spatial::setSpatialParent(Spatial *space) {
 			FLEX_STRING(space ? space->getNodePath() : std::string(""))
 		)
 	);
+}
+
+
+SKMath::vec3 Spatial::getOrigin() {
+	return origin;
+}
+SKMath::quat Spatial::getOrientation() {
+	return orientation;
+}
+SKMath::vec3 Spatial::getScale() {
+	return localScale;
+}
+SKMath::pose_t Spatial::getPose() {
+	return pose_t{
+		getOrigin(),
+		getOrientation()
+	};
 }
 
 } // namespace StardustXRFusion

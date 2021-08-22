@@ -9,7 +9,7 @@ namespace StardustXRFusion {
 
 class Field : public Spatial {
 public:
-	explicit Field();
+	explicit Field(SKMath::vec3 origin, SKMath::quat orientation);
 	~Field();
 
 	void distance		(Spatial *space, SKMath::vec3 point, std::function<void (float)> callback);

@@ -2,10 +2,11 @@
 #include "../../flex.hpp"
 
 #include "roundedboxfield.hpp"
+#include "types/fields/boxfield.hpp"
 
 namespace StardustXRFusion {
 
-RoundedBoxField::RoundedBoxField(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size) {
+RoundedBoxField::RoundedBoxField(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size) : Field(origin, orientation) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(
