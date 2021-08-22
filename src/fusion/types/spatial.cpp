@@ -58,17 +58,6 @@ void Spatial::rotate(quat rotation) {
 	);
 }
 
-void Spatial::rotateAround(vec3 point, quat rotation) {
-	messenger->sendSignal(
-		getNodePath().c_str(),
-		"rotateAround",
-		FLEX_ARGS(
-			FLEX_VEC3(point)
-			FLEX_QUAT(rotation)
-		)
-	);
-}
-
 void Spatial::scale(float scaleFactor) {
 	this->localScale *= scaleFactor;
 	messenger->sendSignal(

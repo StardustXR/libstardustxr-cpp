@@ -14,7 +14,6 @@ public:
 
 	void move(SKMath::vec3 position);
 	void rotate(SKMath::quat rotation);
-	void rotateAround(SKMath::vec3 point, SKMath::quat rotation);
 	void scale(float scaleFactor);
 
 	void setOrigin(SKMath::vec3 origin);
