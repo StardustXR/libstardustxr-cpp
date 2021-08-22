@@ -56,29 +56,23 @@ FLATBUFFERS_STRUCT_END(vec3, 12);
 
 FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) quat FLATBUFFERS_FINAL_CLASS {
  private:
-  float w_;
   float x_;
   float y_;
   float z_;
+  float w_;
 
  public:
   quat()
-      : w_(0),
-        x_(0),
+      : x_(0),
         y_(0),
-        z_(0) {
+        z_(0),
+        w_(0) {
   }
-  quat(float _w, float _x, float _y, float _z)
-      : w_(flatbuffers::EndianScalar(_w)),
-        x_(flatbuffers::EndianScalar(_x)),
+  quat(float _x, float _y, float _z, float _w)
+      : x_(flatbuffers::EndianScalar(_x)),
         y_(flatbuffers::EndianScalar(_y)),
-        z_(flatbuffers::EndianScalar(_z)) {
-  }
-  float w() const {
-    return flatbuffers::EndianScalar(w_);
-  }
-  void mutate_w(float _w) {
-    flatbuffers::WriteScalar(&w_, _w);
+        z_(flatbuffers::EndianScalar(_z)),
+        w_(flatbuffers::EndianScalar(_w)) {
   }
   float x() const {
     return flatbuffers::EndianScalar(x_);
@@ -97,6 +91,12 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) quat FLATBUFFERS_FINAL_CLASS {
   }
   void mutate_z(float _z) {
     flatbuffers::WriteScalar(&z_, _z);
+  }
+  float w() const {
+    return flatbuffers::EndianScalar(w_);
+  }
+  void mutate_w(float _w) {
+    flatbuffers::WriteScalar(&w_, _w);
   }
 };
 FLATBUFFERS_STRUCT_END(quat, 16);
