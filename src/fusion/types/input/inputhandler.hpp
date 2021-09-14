@@ -16,6 +16,7 @@ class PointerInput;
 class InputHandler : public Spatial {
 public:
 	explicit InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
+	explicit InputHandler(Spatial *space, SKMath::vec3 origin, SKMath::quat orientation);
 
 	void setField(Field *field);
 

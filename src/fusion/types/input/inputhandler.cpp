@@ -34,6 +34,26 @@ InputHandler::InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SK
 	);
 }
 
+InputHandler::InputHandler(Spatial *space, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(origin, orientation, vec3_one) {
+	nodeName = GenerateID();
+	nodePath = "/input/handler";
+
+	scenegraph->methods[nodeName] = std::bind(&InputHandler::inputEvent, this, std::placeholders::_1, std::placeholders::_2);
+	messenger->sendSignal(
+		"/input",
+		"registerInputHandler",
+		FLEX_ARGS(
+			FLEX_STRING(nodeName)
+			FLEX_STRING(std::string(""))
+//			FLEX_STRING(space ? space->getNodePath() : std::string(""))
+			FLEX_VEC3(origin)
+			FLEX_QUAT(orientation)
+			FLEX_STRING(std::string(""))
+			FLEX_STRING(nodeName)
+		)
+	);
+}
+
 void InputHandler::setField(Field *field) {
 	messenger->sendSignal(
 		getNodePath().c_str(),
