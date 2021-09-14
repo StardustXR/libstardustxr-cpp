@@ -11,8 +11,8 @@ public:
 
 	std::string getNodePath();
 protected:
-	std::string nodeName;
-	std::string nodePath;
+	std::string nodeName = "";
+	std::string nodePath = "";
 };
 
 } // namespace StardustXRFusion
