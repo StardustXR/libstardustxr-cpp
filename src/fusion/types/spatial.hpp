@@ -7,7 +7,7 @@ namespace StardustXRFusion {
 
 class Spatial : public Node {
 public:
-	explicit Spatial(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale);
+	explicit Spatial(SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity, SKMath::vec3 scale = SKMath::vec3_one);
 	~Spatial();
 
 	static Spatial create(SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity, SKMath::vec3 scale = SKMath::vec3_one, bool translatable = true, bool rotatable = true, bool scalable = true);
@@ -26,12 +26,15 @@ public:
 	SKMath::vec3 getScale();
 	SKMath::pose_t getPose();
 
+	Spatial *getSpatialParent();
 	void setSpatialParent(Spatial *space);
+	void setSpatialParentInPlace(Spatial *space);
 
 protected:
 	SKMath::vec3 origin;
 	SKMath::quat orientation;
 	SKMath::vec3 localScale;
+	Spatial *parent;
 };
 
 } // namespace StardustXRFusion

@@ -115,7 +115,13 @@ void Spatial::setPose(pose_t pose) {
 	);
 }
 
+
+Spatial *Spatial::getSpatialParent() {
+	return parent;
+}
+
 void Spatial::setSpatialParent(Spatial *space) {
+	parent = space;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setSpatialParent",
@@ -125,6 +131,16 @@ void Spatial::setSpatialParent(Spatial *space) {
 	);
 }
 
+void Spatial::setSpatialParentInPlace(Spatial *space) {
+	parent = space;
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setSpatialParentInPlace",
+		FLEX_ARG(
+			FLEX_STRING(space ? space->getNodePath() : std::string(""))
+		)
+	);
+}
 
 SKMath::vec3 Spatial::getOrigin() {
 	return origin;
