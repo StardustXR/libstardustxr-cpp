@@ -17,6 +17,8 @@ class InputHandler : public Spatial {
 public:
 	explicit InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
 
+	void setField(Field *field);
+
 	std::function<bool(const PointerInput &, const Datamap &)> pointerHandlerMethod = [](const PointerInput &, const Datamap &) {
 		return false;
 	};

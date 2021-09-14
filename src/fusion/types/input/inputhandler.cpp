@@ -34,6 +34,16 @@ InputHandler::InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SK
 	);
 }
 
+void InputHandler::setField(Field *field) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setField",
+		FLEX_ARG(
+			FLEX_STRING(field == nullptr ? std::string("") : field->getNodePath())
+		)
+	);
+}
+
 std::vector<uint8_t> InputHandler::inputEvent(flexbuffers::Reference data, bool) {
 	const StardustXR::InputData *inputData = StardustXR::GetInputData(data.AsBlob().data());
 	const flexbuffers::Map flexDatamap = inputData->datamap_flexbuffer_root().AsMap();
