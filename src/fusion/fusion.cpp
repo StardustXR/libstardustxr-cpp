@@ -39,6 +39,16 @@ bool Setup() {
 	return true;
 }
 
+void Shutdown() {
+	messenger->sendSignal(
+		"/client",
+		"disconnect",
+		FLEX_ARG(FLEX_NULL)
+	);
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+	std::exit(0);
+}
+
 LifeCycleInterface *LifeCycle() {
 	if(!lifeCycle)
 		lifeCycle = new LifeCycleInterface();

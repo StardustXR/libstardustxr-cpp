@@ -8,6 +8,7 @@
 namespace StardustXRFusion {
 
 extern bool Setup();
+extern void Shutdown();
 
 extern EnvironmentInterface *Environment();
 extern LifeCycleInterface *LifeCycle();
