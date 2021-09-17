@@ -8,6 +8,7 @@
 namespace StardustXRFusion {
 
 extern bool Setup();
+extern void ShutdownAfterInput();
 extern void Shutdown();
 
 extern EnvironmentInterface *Environment();

@@ -1,6 +1,8 @@
 #include "fusion.hpp"
 #include "fusion_internal.hpp"
 #include "../client/connector.hpp"
+
+#include <iostream>
 #include <linux/limits.h>
 #include <libgen.h>
 #include <sys/types.h>
@@ -37,6 +39,11 @@ bool Setup() {
 	messenger->startHandler();
 
 	return true;
+}
+
+void ShutdownAfterInput() {
+	std::cin.get();
+	Shutdown();
 }
 
 void Shutdown() {
