@@ -20,5 +20,5 @@ int main(int, char *[]) {
 		);
 		model.setMaterialProperty(0, "color", gemColor);
 	});
-	StardustXRFusion::ShutdownAfterInput();
+	StardustXRFusion::StallMainThread();
 }

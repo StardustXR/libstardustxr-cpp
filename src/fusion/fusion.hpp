@@ -8,8 +8,8 @@
 namespace StardustXRFusion {
 
 extern bool Setup();
-extern void ShutdownAfterInput();
-extern void Shutdown();
+extern void StallMainThread();
+extern void Shutdown(int signal);
 
 extern EnvironmentInterface *Environment();
 extern LifeCycleInterface *LifeCycle();

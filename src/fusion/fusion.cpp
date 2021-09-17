@@ -2,6 +2,7 @@
 #include "fusion_internal.hpp"
 #include "../client/connector.hpp"
 
+#include <csignal>
 #include <iostream>
 #include <linux/limits.h>
 #include <libgen.h>
@@ -38,21 +39,23 @@ bool Setup() {
 	messenger = new StardustXR::Messenger(readFD, writeFD, scenegraph);
 	messenger->startHandler();
 
+	signal(SIGINT, Shutdown);
+
 	return true;
 }
 
-void ShutdownAfterInput() {
-	std::cin.get();
-	Shutdown();
+void StallMainThread() {
+	while(1) {
+		std::this_thread::sleep_for(std::chrono::seconds(3600));
+	}
 }
 
-void Shutdown() {
+void Shutdown(int signal) {
 	messenger->sendSignal(
 		"/client",
 		"disconnect",
 		FLEX_ARG(FLEX_NULL)
 	);
-	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	std::exit(0);
 }
 

@@ -67,5 +67,5 @@ int main(int, char *[]) {
 		PrintDatamap(datamap);
 		return false;
 	};
-	StardustXRFusion::ShutdownAfterInput();
+	StardustXRFusion::StallMainThread();
 }

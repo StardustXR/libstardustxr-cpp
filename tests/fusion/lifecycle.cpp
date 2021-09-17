@@ -7,5 +7,5 @@ int main(int, char *[]) {
 	LifeCycle()->onLogicStep([&](double delta, double timeToRender) {
 		printf("Frame delta is %f ms\n", delta);
 	});
-	StardustXRFusion::ShutdownAfterInput();
+	StardustXRFusion::StallMainThread();
 }
