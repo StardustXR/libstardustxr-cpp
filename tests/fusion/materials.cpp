@@ -1,8 +1,4 @@
-#include <chrono>
 #include <cmath>
-#include <cstdint>
-#include <iostream>
-#include <thread>
 
 #include "fusion/fusion.hpp"
 #include "fusion/types/model.hpp"
@@ -24,5 +20,5 @@ int main(int, char *[]) {
 		);
 		model.setMaterialProperty(0, "color", gemColor);
 	});
-	std::this_thread::sleep_for(std::chrono::seconds(3600));
+	StardustXRFusion::ShutdownAfterInput();
 }

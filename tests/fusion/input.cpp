@@ -67,6 +67,5 @@ int main(int, char *[]) {
 		PrintDatamap(datamap);
 		return false;
 	};
-
-	std::this_thread::sleep_for(std::chrono::seconds(3600));
+	StardustXRFusion::ShutdownAfterInput();
 }

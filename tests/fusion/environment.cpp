@@ -1,7 +1,3 @@
-#include <chrono>
-#include <iostream>
-#include <thread>
-
 #include "fusion/fusion.hpp"
 
 using namespace StardustXRFusion;

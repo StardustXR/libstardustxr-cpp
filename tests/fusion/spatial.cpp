@@ -1,7 +1,3 @@
-#include <chrono>
-#include <iostream>
-#include <thread>
-
 #include "fusion/fusion.hpp"
 #include "fusion/types/model.hpp"
 
@@ -36,5 +32,5 @@ int main(int, char *[]) {
 		middleRing.setOrientation(quat_from_angles(rotation, 0, 0));
 		insideRing.setOrientation(quat_from_angles(0, 0, rotation));
 	});
-	std::this_thread::sleep_for(std::chrono::seconds(3600));
+	StardustXRFusion::ShutdownAfterInput();
 }

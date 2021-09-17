@@ -4,4 +4,5 @@ using namespace StardustXRFusion;
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
+	StardustXRFusion::ShutdownAfterInput();
 }
