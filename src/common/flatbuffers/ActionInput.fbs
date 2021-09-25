@@ -1,0 +1,6 @@
+include "common.fbs";
+namespace StardustXR;
+
+table Action {
+	name: string;
+}

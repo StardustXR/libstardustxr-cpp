@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cstdio>
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -47,7 +48,13 @@ int main(int, char *[]) {
 
 	BoxField field(SKMath::vec3_zero, SKMath::quat_identity, SKMath::vec3_one);
 	InputHandler handler(nullptr, field, SKMath::vec3_zero, SKMath::quat_identity);
-	handler.pointerHandlerMethod = [](const StardustXRFusion::PointerInput &pointer, const Datamap &datamap) {
+
+	handler.actions["test"] = [&]() {
+		printf("Action test successful\n");
+	};
+	handler.updateActions();
+
+	handler.pointerHandlerMethod = [&](const StardustXRFusion::PointerInput &pointer, const Datamap &datamap) {
 		printf("Input event:\n");
 		printf("\tdistance:    %f\n", pointer.distance);
 		printf("\tPointer:\n");
@@ -67,5 +74,18 @@ int main(int, char *[]) {
 		PrintDatamap(datamap);
 		return false;
 	};
+
+	InputHandler::getInputHandlers(&handler, [&](std::vector<InputActions> &basics) {
+		printf("Input Handlers:\n");
+		for(InputActions &basic : basics) {
+			printf("\t%s: (%f, %f, %f)\n", basic.uuid.c_str(), basic.position.x, basic.position.y, basic.position.z);
+			basic.getActions([](std::vector<std::string> &actions) {
+				for(std::string &action : actions) {
+					printf("\t\t%s", action.c_str());
+				}
+			});
+		}
+		handler.runAction("test");
+	});
 	StardustXRFusion::StallMainThread();
 }

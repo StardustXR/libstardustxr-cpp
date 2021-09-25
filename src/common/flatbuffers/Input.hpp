@@ -8,6 +8,7 @@
 #include "flatbuffers/flexbuffers.h"
 
 #include "PointerInput.hpp"
+#include "ActionInput.hpp"
 #include "HandInput.hpp"
 #include "common.hpp"
 
@@ -20,31 +21,34 @@ enum InputDataRaw : uint8_t {
   InputDataRaw_NONE = 0,
   InputDataRaw_Pointer = 1,
   InputDataRaw_Hand = 2,
+  InputDataRaw_Action = 3,
   InputDataRaw_MIN = InputDataRaw_NONE,
-  InputDataRaw_MAX = InputDataRaw_Hand
+  InputDataRaw_MAX = InputDataRaw_Action
 };
 
-inline const InputDataRaw (&EnumValuesInputDataRaw())[3] {
+inline const InputDataRaw (&EnumValuesInputDataRaw())[4] {
   static const InputDataRaw values[] = {
     InputDataRaw_NONE,
     InputDataRaw_Pointer,
-    InputDataRaw_Hand
+    InputDataRaw_Hand,
+    InputDataRaw_Action
   };
   return values;
 }
 
 inline const char * const *EnumNamesInputDataRaw() {
-  static const char * const names[4] = {
+  static const char * const names[5] = {
     "NONE",
     "Pointer",
     "Hand",
+    "Action",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameInputDataRaw(InputDataRaw e) {
-  if (flatbuffers::IsOutRange(e, InputDataRaw_NONE, InputDataRaw_Hand)) return "";
+  if (flatbuffers::IsOutRange(e, InputDataRaw_NONE, InputDataRaw_Action)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesInputDataRaw()[index];
 }
@@ -59,6 +63,10 @@ template<> struct InputDataRawTraits<StardustXR::Pointer> {
 
 template<> struct InputDataRawTraits<StardustXR::Hand> {
   static const InputDataRaw enum_value = InputDataRaw_Hand;
+};
+
+template<> struct InputDataRawTraits<StardustXR::Action> {
+  static const InputDataRaw enum_value = InputDataRaw_Action;
 };
 
 bool VerifyInputDataRaw(flatbuffers::Verifier &verifier, const void *obj, InputDataRaw type);
@@ -84,6 +92,9 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   const StardustXR::Hand *input_as_Hand() const {
     return input_type() == StardustXR::InputDataRaw_Hand ? static_cast<const StardustXR::Hand *>(input()) : nullptr;
+  }
+  const StardustXR::Action *input_as_Action() const {
+    return input_type() == StardustXR::InputDataRaw_Action ? static_cast<const StardustXR::Action *>(input()) : nullptr;
   }
   void *mutable_input() {
     return GetPointer<void *>(VT_INPUT);
@@ -121,6 +132,10 @@ template<> inline const StardustXR::Pointer *InputData::input_as<StardustXR::Poi
 
 template<> inline const StardustXR::Hand *InputData::input_as<StardustXR::Hand>() const {
   return input_as_Hand();
+}
+
+template<> inline const StardustXR::Action *InputData::input_as<StardustXR::Action>() const {
+  return input_as_Action();
 }
 
 struct InputDataBuilder {
@@ -191,6 +206,10 @@ inline bool VerifyInputDataRaw(flatbuffers::Verifier &verifier, const void *obj,
     }
     case InputDataRaw_Hand: {
       auto ptr = reinterpret_cast<const StardustXR::Hand *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case InputDataRaw_Action: {
+      auto ptr = reinterpret_cast<const StardustXR::Action *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return true;

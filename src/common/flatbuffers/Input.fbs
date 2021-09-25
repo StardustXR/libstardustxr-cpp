@@ -1,10 +1,12 @@
+include "ActionInput.fbs";
 include "PointerInput.fbs";
 include "HandInput.fbs";
 namespace StardustXR;
 
 union InputDataRaw {
 	Pointer,
-	Hand
+	Hand,
+	Action
 }
 
 table InputData {
