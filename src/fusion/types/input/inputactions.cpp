@@ -12,7 +12,7 @@ InputActions::InputActions(std::string uuid, SKMath::vec3 position, Spatial *rel
 	this->relativeSpace = relativeSpace;
 
 	this->nodeName = uuid;
-	this->nodePath = "/input/global_handlers/";
+	this->nodePath = "/input/global_handler";
 }
 
 void InputActions::getActions(std::function<void(std::vector<std::string> &)> callback) {
