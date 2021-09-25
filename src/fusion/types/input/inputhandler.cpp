@@ -55,13 +55,14 @@ InputHandler::InputHandler(Spatial *space, SKMath::vec3 origin, SKMath::quat ori
 	);
 }
 
-void InputHandler::getInputHandlers(Spatial *space, std::function<void(std::vector<InputActions> &)> callback) {
+void InputHandler::getInputHandlers(Spatial *space, bool excludeSelf, std::function<void(std::vector<InputActions> &)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
 	messenger->executeRemoteMethod(
 		"/input",
 		"getInputHandlers",
-		FLEX_ARG(
+		FLEX_ARGS(
 			FLEX_STRING(spacePath)
+			FLEX_BOOL(excludeSelf)
 		),
 		[callback, space](flexbuffers::Reference data) {
 			std::vector<InputActions> basics;

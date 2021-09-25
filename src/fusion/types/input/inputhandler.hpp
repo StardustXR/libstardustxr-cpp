@@ -22,7 +22,7 @@ public:
 	explicit InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
 	explicit InputHandler(Spatial *space, SKMath::vec3 origin, SKMath::quat orientation);
 
-	static void getInputHandlers(Spatial *space, std::function<void(std::vector<InputActions> &)> callback);
+	static void getInputHandlers(Spatial *space, bool excludeSelf, std::function<void(std::vector<InputActions> &)> callback);
 
 	void setField(Field *field);
 

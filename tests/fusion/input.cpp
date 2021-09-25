@@ -75,7 +75,7 @@ int main(int, char *[]) {
 		return false;
 	};
 
-	InputHandler::getInputHandlers(&handler, [&](std::vector<InputActions> &basics) {
+	InputHandler::getInputHandlers(&handler, true, [&](std::vector<InputActions> &basics) {
 		printf("Input Handlers:\n");
 		for(InputActions &basic : basics) {
 			printf("\t%s: (%f, %f, %f)\n", basic.uuid.c_str(), basic.position.x, basic.position.y, basic.position.z);
