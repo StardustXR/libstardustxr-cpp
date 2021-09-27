@@ -8,11 +8,11 @@ namespace StardustXRFusion {
 Model::Model(Spatial *parent, std::string relativePath, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) : Spatial(parent, origin, orientation, scale) {
 	if(!FileExists(relativePath))
 		return;
-	nodePath = "/model";
+	nodePath = "/drawable/model";
 	nodeName = GenerateID();
 	messenger->sendSignal(
-		"/model",
-		"createFromFile",
+		"/drawable",
+		"createModelFromFile",
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
 			FLEX_STRING(ConvertExeRelativePath(relativePath))
