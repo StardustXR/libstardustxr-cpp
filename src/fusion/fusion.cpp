@@ -52,7 +52,7 @@ void StallMainThread() {
 
 void Shutdown(int signal) {
 	messenger->sendSignal(
-		"/client",
+		"/",
 		"disconnect",
 		FLEX_ARG(FLEX_NULL)
 	);
