@@ -6,7 +6,7 @@
 
 namespace StardustXRFusion {
 
-SphereField::SphereField(SKMath::vec3 origin, float radius) : Field(origin, quat_identity) {
+SphereField::SphereField(Spatial *parent, SKMath::vec3 origin, float radius) : Field(parent, origin, quat_identity) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(
@@ -14,12 +14,11 @@ SphereField::SphereField(SKMath::vec3 origin, float radius) : Field(origin, quat
 		"createSphereField",
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
+			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
 			FLEX_FLOAT(radius)
 		)
 	);
 }
-
-SphereField::~SphereField() {}
 
 } // namespace StardustXRFusion

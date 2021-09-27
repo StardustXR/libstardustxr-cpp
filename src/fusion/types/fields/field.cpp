@@ -6,8 +6,7 @@
 
 namespace StardustXRFusion {
 
-Field::Field(SKMath::vec3 origin, SKMath::quat orientation) : Spatial(origin, orientation, vec3_one) {}
-Field::~Field() {}
+Field::Field(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {}
 
 void Field::distance(Spatial *space, vec3 point, std::function<void(float distance)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";

@@ -10,16 +10,11 @@ int main(int, char *[]) {
 	double time = 0;
 	double rotationSeconds = 5;
 
-	Spatial gyroRoot = Spatial::create();
-	Model outsideRing("../../../res/gyro_outside.glb");
-	Model middleRing("../../../res/gyro_middle.glb");
-	Model insideRing("../../../res/gyro_inside.glb");
-	Model gem("../../../res/gyro_gem.glb");
-
-	outsideRing.setSpatialParent(&gyroRoot);
-	middleRing.setSpatialParent(&outsideRing);
-	insideRing.setSpatialParent(&middleRing);
-	gem.setSpatialParent(&gyroRoot);
+	Spatial gyroRoot = Spatial::create(nullptr);
+	Model outsideRing(&gyroRoot, "../../../res/gyro_outside.glb");
+	Model middleRing(&outsideRing, "../../../res/gyro_middle.glb");
+	Model insideRing(&middleRing, "../../../res/gyro_inside.glb");
+	Model gem(&gyroRoot, "../../../res/gyro_gem.glb");
 
 	LifeCycle()->onLogicStep([&](double delta, double) {
 		time += delta;

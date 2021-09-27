@@ -15,7 +15,7 @@
 
 namespace StardustXRFusion {
 
-InputHandler::InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(origin, orientation, vec3_one) {
+InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
 	nodeName = GenerateID();
 	nodePath = "/input/handler";
 
@@ -26,7 +26,7 @@ InputHandler::InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SK
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
 			FLEX_STRING(field.getNodePath())
-//			FLEX_STRING(space ? space->getNodePath() : std::string(""))
+			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
 			FLEX_QUAT(orientation)
 			FLEX_STRING(std::string(""))
@@ -35,7 +35,7 @@ InputHandler::InputHandler(Spatial *space, Field &field, SKMath::vec3 origin, SK
 	);
 }
 
-InputHandler::InputHandler(Spatial *space, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(origin, orientation, vec3_one) {
+InputHandler::InputHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
 	nodeName = GenerateID();
 	nodePath = "/input/handler";
 
@@ -46,7 +46,7 @@ InputHandler::InputHandler(Spatial *space, SKMath::vec3 origin, SKMath::quat ori
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
 			FLEX_STRING(std::string(""))
-//			FLEX_STRING(space ? space->getNodePath() : std::string(""))
+			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
 			FLEX_QUAT(orientation)
 			FLEX_STRING(std::string(""))

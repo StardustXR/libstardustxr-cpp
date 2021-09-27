@@ -10,6 +10,7 @@
 #include "fusion/types/input/inputhandler.hpp"
 #include "fusion/types/input/types/handinput.hpp"
 #include "fusion/types/input/types/pointerinput.hpp"
+#include "sk_math.hpp"
 
 using namespace SKMath;
 using namespace StardustXRFusion;
@@ -46,8 +47,9 @@ void PrintDatamap(const Datamap &datamap) {
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
-	BoxField field(SKMath::vec3_zero, SKMath::quat_identity, SKMath::vec3_one);
-	InputHandler handler(nullptr, field, SKMath::vec3_zero, SKMath::quat_identity);
+	Spatial root = Spatial::create(nullptr, vec3_zero);
+	BoxField field(&root, SKMath::vec3_zero, SKMath::quat_identity, SKMath::vec3_one);
+	InputHandler handler(&root, field, SKMath::vec3_zero, SKMath::quat_identity);
 
 	handler.actions["test"] = [&]() {
 		printf("Action test successful\n");

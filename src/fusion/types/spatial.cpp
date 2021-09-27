@@ -8,16 +8,14 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-Spatial::Spatial(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) {
+Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) {
 	this->origin = origin;
 	this->orientation = orientation;
 	this->localScale = scale;
 }
 
-Spatial::~Spatial() {}
-
-Spatial Spatial::create(SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable) {
-	Spatial spatial(origin, orientation, scale);
+Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable) {
+	Spatial spatial(parent, origin, orientation, scale);
 	spatial.nodePath = "/spatial";
 	spatial.nodeName = GenerateID();
 	messenger->sendSignal(
@@ -25,6 +23,7 @@ Spatial Spatial::create(SKMath::vec3 origin, SKMath::quat orientation, SKMath::v
 		"create",
 		FLEX_ARGS(
 			FLEX_STRING(spatial.nodeName)
+			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
 			FLEX_QUAT(orientation)
 			FLEX_VEC3(scale)

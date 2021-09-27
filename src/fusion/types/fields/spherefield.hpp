@@ -6,8 +6,7 @@ namespace StardustXRFusion {
 
 class SphereField : public Field {
 public:
-	explicit SphereField(SKMath::vec3 origin, float radius);
-	~SphereField();
+	explicit SphereField(Spatial *parent, SKMath::vec3 origin, float radius);
 };
 
 } // namespace StardustXRFusion
