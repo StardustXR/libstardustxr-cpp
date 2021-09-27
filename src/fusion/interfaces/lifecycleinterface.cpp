@@ -10,7 +10,7 @@ LifeCycleInterface::LifeCycleInterface() {
 	scenegraph->methods["logicStep"] = std::bind(&LifeCycleInterface::logicStep, this, std::placeholders::_1, std::placeholders::_2);
 
 	messenger->sendSignal(
-		"/lifecycle",
+		"/",
 		"subscribeLogicStep",
 		FLEX_ARGS(
 			FLEX_STRING(std::string(""))
