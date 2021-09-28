@@ -21,7 +21,7 @@ Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orien
 	spatial.nodeName = GenerateID();
 	messenger->sendSignal(
 		"/spatial",
-		"create",
+		"createSpatial",
 		FLEX_ARGS(
 			FLEX_STRING(spatial.nodeName)
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
