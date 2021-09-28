@@ -9,6 +9,7 @@ using namespace SKMath;
 namespace StardustXRFusion {
 
 Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) {
+	this->parent = parent;
 	this->origin = origin;
 	this->orientation = orientation;
 	this->localScale = scale;

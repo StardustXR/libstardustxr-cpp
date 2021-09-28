@@ -32,7 +32,7 @@ protected:
 	SKMath::vec3 origin;
 	SKMath::quat orientation;
 	SKMath::vec3 localScale;
-	Spatial *parent;
+	Spatial *parent = nullptr;
 };
 
 } // namespace StardustXRFusion
