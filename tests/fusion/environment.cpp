@@ -4,10 +4,9 @@ using namespace StardustXRFusion;
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
-	Environment()->visible(true);
-	Environment()->setSkytex("../../../res/zhengyang_gate_4k.hdr");
-	// Environment()->setSkytex("../../../res/wide_street_01_1k.hdr");
-	Environment()->setLighting("../../../res/zhengyang_gate_4k.hdr");
-	// Environment()->setLighting("../../../res/wide_street_01_1k.hdr");
+	// Environment()->setSkytex(std::string(getenv("HOME"))+"/.config/stardust/skytex_earth.hdr");
+	Environment()->setSkytex(std::string(getenv("HOME"))+"/.config/stardust/skytex_space.hdr");
+	Environment()->setSkylight(std::string(getenv("HOME"))+"/.config/stardust/skytex_earth.hdr");
+	// Environment()->setSkylight(std::string(getenv("HOME"))+"/.config/stardust/skytex_space.hdr");
 	return 0;
 }

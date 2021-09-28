@@ -6,21 +6,11 @@ namespace StardustXRFusion {
 
 EnvironmentInterface::EnvironmentInterface() {}
 
-void EnvironmentInterface::visible(bool visible) {
-	messenger->sendSignal(
-		"/environment",
-		"visible",
-		FLEX_ARG(
-			FLEX_BOOL(visible)
-		)
-	);
-}
-
 void EnvironmentInterface::setSkytex(std::string path) {
 	if(!FileExists(path))
 		return;
 	messenger->sendSignal(
-		"/environment",
+		"/drawable",
 		"setSkytex",
 		FLEX_ARG(
 			FLEX_STRING(ConvertExeRelativePath(path))
@@ -28,12 +18,12 @@ void EnvironmentInterface::setSkytex(std::string path) {
 	);
 }
 
-void EnvironmentInterface::setLighting(std::string path) {
+void EnvironmentInterface::setSkylight(std::string path) {
 	if(!FileExists(path))
 		return;
 	messenger->sendSignal(
-		"/environment",
-		"setLighting",
+		"/drawable",
+		"setSkylight",
 		FLEX_ARG(
 			FLEX_STRING(ConvertExeRelativePath(path))
 		)
