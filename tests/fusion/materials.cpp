@@ -10,7 +10,7 @@ double elapsed = 0.0f;
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 	Model model(nullptr, "../../../res/gyro_gem.glb");
-	LifeCycle()->onLogicStep([&](double delta, double) {
+	OnLogicStep([&](double delta, double) {
 		elapsed += delta;
 		SKMath::color gemColor = SKMath::color_from_hsva(
 			(float) (int(elapsed * 180) % 360),

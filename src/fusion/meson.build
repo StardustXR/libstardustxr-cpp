@@ -15,7 +15,6 @@ fusion_files = files(
 	'scenegraph.cpp',
 )
 
-subdir('interfaces')
 subdir('types')
 
 lib_fusion = library(

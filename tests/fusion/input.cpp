@@ -3,7 +3,6 @@
 #include <iostream>
 #include <thread>
 #include <vector>
-#include "fusion/flex.hpp"
 
 #include "fusion/fusion.hpp"
 #include "fusion/types/fields/boxfield.hpp"

@@ -16,7 +16,7 @@ int main(int, char *[]) {
 	Model insideRing(&middleRing, "../../../res/gyro_inside.glb");
 	Model gem(&gyroRoot, "../../../res/gyro_gem.glb");
 
-	LifeCycle()->onLogicStep([&](double delta, double) {
+	OnLogicStep([&](double delta, double) {
 		time += delta;
 		double rotation = 360*time/rotationSeconds;
 

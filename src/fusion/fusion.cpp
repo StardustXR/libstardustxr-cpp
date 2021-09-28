@@ -1,6 +1,8 @@
 #include "fusion.hpp"
 #include "fusion_internal.hpp"
 #include "../client/connector.hpp"
+#include "flex.hpp"
+#include "fusion_internal.hpp"
 
 #include <csignal>
 #include <iostream>
@@ -14,8 +16,7 @@ namespace StardustXRFusion {
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
 StardustXR::Messenger *messenger = nullptr;
 
-EnvironmentInterface *environment = nullptr;
-LifeCycleInterface *lifeCycle = nullptr;
+LogicStepMethod logicMethod;
 
 std::string GenerateID() {
 	std::string alcoholism = "xxxxxxxxxxxxxxxx";
@@ -38,8 +39,16 @@ bool Setup() {
 	scenegraph = new FusionScenegraph();
 	messenger = new StardustXR::Messenger(readFD, writeFD, scenegraph);
 	messenger->startHandler();
-
 	signal(SIGINT, Shutdown);
+
+	messenger->sendSignal(
+		"/",
+		"subscribeLogicStep",
+		FLEX_ARGS(
+			FLEX_STRING(std::string(""))
+			FLEX_STRING(std::string("logicStep"))
+		)
+	);
 
 	return true;
 }
@@ -59,16 +68,42 @@ void Shutdown(int signal) {
 	std::exit(0);
 }
 
-LifeCycleInterface *LifeCycle() {
-	if(!lifeCycle)
-		lifeCycle = new LifeCycleInterface();
-	return lifeCycle;
+void SetSkytex(std::string path) {
+	if(!FileExists(path))
+		return;
+	messenger->sendSignal(
+		"/drawable",
+		"setSkytex",
+		FLEX_ARG(
+			FLEX_STRING(ConvertExeRelativePath(path))
+		)
+	);
 }
 
-EnvironmentInterface *Environment() {
-	if(!environment)
-		environment = new EnvironmentInterface();
-	return environment;
+void SetSkylight(std::string path) {
+	if(!FileExists(path))
+		return;
+	messenger->sendSignal(
+		"/drawable",
+		"setSkylight",
+		FLEX_ARG(
+			FLEX_STRING(ConvertExeRelativePath(path))
+		)
+	);
+}
+
+std::vector<uint8_t> LogicStep(flexbuffers::Reference data, bool) {
+	flexbuffers::Vector vec = data.AsVector();
+	double delta = vec[0].AsDouble();
+	double timeToRender = vec[1].AsDouble();
+	logicMethod(delta, timeToRender);
+
+	return std::vector<uint8_t>();
+}
+
+void OnLogicStep(LogicStepMethod method) {
+	scenegraph->methods["logicStep"] = &LogicStep;
+	logicMethod = method;
 }
 
 bool FileExists(std::string path) {

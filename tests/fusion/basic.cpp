@@ -1,4 +1,4 @@
-#include "../../src/fusion/fusion.hpp"
+#include "fusion/fusion.hpp"
 
 using namespace StardustXRFusion;
 
