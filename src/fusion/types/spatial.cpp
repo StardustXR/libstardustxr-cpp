@@ -17,7 +17,7 @@ Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation,
 
 Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable) {
 	Spatial spatial(parent, origin, orientation, scale);
-	spatial.nodePath = "/spatial";
+	spatial.nodePath = "/spatial/spatial";
 	spatial.nodeName = GenerateID();
 	messenger->sendSignal(
 		"/spatial",
