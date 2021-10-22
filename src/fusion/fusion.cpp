@@ -18,6 +18,10 @@ StardustXR::Messenger *messenger = nullptr;
 
 LogicStepMethod logicMethod;
 
+std::vector<uint8_t> FlexDummy(flexbuffers::Reference data, bool) {
+	return std::vector<uint8_t>();
+}
+
 std::string GenerateID() {
 	std::string alcoholism = "xxxxxxxxxxxxxxxx";
 	for(char &c : alcoholism) {
@@ -49,6 +53,7 @@ bool Setup() {
 			FLEX_STRING(std::string("logicStep"))
 		)
 	);
+	scenegraph->methods["logicStep"] = &FlexDummy;
 
 	return true;
 }
