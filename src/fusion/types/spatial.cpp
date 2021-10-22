@@ -8,6 +8,12 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
+Spatial::Spatial(Spatial *parent, std::string nodePath, std::string nodeName) {
+	this->parent = parent;
+	this->nodePath = nodePath;
+	this->nodeName = nodeName;
+}
+
 Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) {
 	this->parent = parent;
 	this->origin = origin;
@@ -15,7 +21,7 @@ Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation,
 	this->localScale = scale;
 }
 
-Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable) {
+Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable, bool zoneable) {
 	Spatial spatial(parent, origin, orientation, scale);
 	spatial.nodePath = "/spatial/spatial";
 	spatial.nodeName = GenerateID();
@@ -31,6 +37,7 @@ Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orien
 			FLEX_BOOL(translatable)
 			FLEX_BOOL(rotatable)
 			FLEX_BOOL(scalable)
+			FLEX_BOOL(zoneable)
 		)
 	);
 	return spatial;
@@ -149,6 +156,16 @@ void Spatial::setSpatialParentInPlace(Spatial *space) {
 		"setSpatialParentInPlace",
 		FLEX_ARG(
 			FLEX_STRING(space ? space->getNodePath() : std::string(""))
+		)
+	);
+}
+
+void Spatial::setZoneable(bool zoneable) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setZoneable",
+		FLEX_ARG(
+			FLEX_BOOL(zoneable)
 		)
 	);
 }

@@ -58,3 +58,10 @@ executable(
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+
+executable(
+        'zone',
+        'zone.cpp',
+        include_directories: [fusion_tests_includes],
+        dependencies: [fusion],
+)

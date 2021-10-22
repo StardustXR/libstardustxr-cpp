@@ -10,6 +10,8 @@ public:
 	~Node();
 
 	std::string getNodePath();
+	std::string getNodeName();
+
 protected:
 	std::string nodeName = "";
 	std::string nodePath = "";

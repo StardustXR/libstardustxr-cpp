@@ -15,5 +15,8 @@ Node::~Node() {
 std::string Node::getNodePath() {
 	return nodePath+"/"+nodeName;
 }
+std::string Node::getNodeName() {
+	return nodeName;
+}
 
 } // namespace StardustXRFusion
