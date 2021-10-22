@@ -4,6 +4,8 @@
 #include "sk_math.hpp"
 #include "spherefield.hpp"
 
+using namespace SKMath;
+
 namespace StardustXRFusion {
 
 SphereField::SphereField(Spatial *parent, SKMath::vec3 origin, float radius) : Field(parent, origin, quat_identity) {

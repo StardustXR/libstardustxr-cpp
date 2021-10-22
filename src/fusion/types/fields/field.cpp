@@ -4,6 +4,8 @@
 #include "field.hpp"
 #include "sk_math.hpp"
 
+using namespace SKMath;
+
 namespace StardustXRFusion {
 
 Field *Field::empty = nullptr;

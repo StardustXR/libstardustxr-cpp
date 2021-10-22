@@ -1,6 +1,8 @@
 #include "datamap.hpp"
 #include "../../flex.hpp"
 
+using namespace SKMath;
+
 namespace StardustXRFusion {
 
 Datamap::Datamap(const flexbuffers::Map &flexDatamap) {

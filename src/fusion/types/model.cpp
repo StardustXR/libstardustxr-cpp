@@ -3,6 +3,8 @@
 #include "../flex.hpp"
 #include "../fusion_internal.hpp"
 
+using namespace SKMath;
+
 namespace StardustXRFusion {
 
 Model::Model(Spatial *parent, std::string relativePath, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) : Spatial(parent, origin, orientation, scale) {
