@@ -115,6 +115,17 @@ void Spatial::setPose(pose_t pose) {
 	);
 }
 
+void Spatial::getTransform(std::function<void(SKMath::vec3, SKMath::quat, SKMath::vec3)> callback) {
+	messenger->executeRemoteMethod(
+		getNodePath().c_str(),
+		"getTransform",
+		FLEX_ARG(FLEX_NULL),
+		[callback](flexbuffers::Reference data) {
+			flexbuffers::Vector vec = data.AsVector();
+			callback(SK_VEC3(vec[0].AsTypedVector()), SK_QUAT(vec[1].AsTypedVector()), SK_VEC3(vec[2].AsTypedVector()));
+		}
+	);
+}
 
 Spatial *Spatial::getSpatialParent() {
 	return parent;
