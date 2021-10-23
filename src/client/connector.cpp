@@ -39,7 +39,7 @@ void SendFD(int socket, int fd) {
 		printf("Failed to send message\n");
 }
 
-bool ConnectClient(std::string path, int &read, int &write) {
+bool ConnectClient(std::string path, int &readFD, int &writeFD) {
 	int s2c[2];
 	pipe(s2c);
 	int c2s[2];
@@ -67,8 +67,12 @@ bool ConnectClient(std::string path, int &read, int &write) {
 	SendFD(s, c2s[0]);
 	SendFD(s, s2c[1]);
 
-	read = s2c[0];
-	write = c2s[1];
+	readFD = s2c[0];
+	writeFD = c2s[1];
+
+	pid_t pid = getpid();
+
+	write(writeFD, &pid, sizeof(pid_t));
 	return true;
 }
 
