@@ -10,7 +10,7 @@ int main(int, char *[]) {
 	double time = 0;
 	double rotationSeconds = 5;
 
-	Spatial gyroRoot = Spatial::create(nullptr);
+	Spatial gyroRoot = Spatial::create(StardustXRFusion::Root());
 	Model outsideRing(&gyroRoot, "../../../res/gyro_outside.glb");
 	Model middleRing(&outsideRing, "../../../res/gyro_middle.glb");
 	Model insideRing(&middleRing, "../../../res/gyro_inside.glb");

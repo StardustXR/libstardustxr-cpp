@@ -4,6 +4,8 @@
 #include "flex.hpp"
 #include "fusion_internal.hpp"
 
+#include "types/spatial.hpp"
+
 #include <csignal>
 #include <iostream>
 #include <linux/limits.h>
@@ -15,6 +17,7 @@ namespace StardustXRFusion {
 
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
 StardustXR::Messenger *messenger = nullptr;
+Spatial root(nullptr, "", "");
 
 LogicStepMethod logicMethod;
 
@@ -71,6 +74,10 @@ void Shutdown(int signal) {
 		FLEX_ARG(FLEX_NULL)
 	);
 	std::exit(0);
+}
+
+Spatial *Root() {
+	return &root;
 }
 
 void SetSkytex(std::string path) {
