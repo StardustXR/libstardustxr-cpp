@@ -19,4 +19,12 @@ std::string Node::getNodeName() {
 	return nodeName;
 }
 
+void Node::setEnabled(bool enabled) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setEnabled",
+		FLEX_ARG(FLEX_BOOL(enabled))
+	);
+}
+
 } // namespace StardustXRFusion

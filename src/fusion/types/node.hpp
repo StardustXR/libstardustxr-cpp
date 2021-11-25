@@ -12,6 +12,8 @@ public:
 	std::string getNodePath();
 	std::string getNodeName();
 
+	void setEnabled(bool enabled);
+
 protected:
 	std::string nodeName = "";
 	std::string nodePath = "";
