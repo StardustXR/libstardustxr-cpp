@@ -17,3 +17,4 @@ fusion_files += files(
 
 subdir('fields')
 subdir('input')
+subdir('items')

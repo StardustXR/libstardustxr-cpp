@@ -60,8 +60,8 @@ executable(
 )
 
 executable(
-        'zone',
-        'zone.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
+	'zone',
+	'zone.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
 )
