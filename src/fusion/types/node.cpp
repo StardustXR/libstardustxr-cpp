@@ -5,11 +5,13 @@ namespace StardustXRFusion {
 
 Node::Node() {}
 Node::~Node() {
-	messenger->sendSignal(
-		getNodePath().c_str(),
-		"destroy",
-		FLEX_ARG(FLEX_NULL)
-	);
+	if(destroyable) {
+		messenger->sendSignal(
+			getNodePath().c_str(),
+			"destroy",
+			FLEX_ARG(FLEX_NULL)
+		);
+	}
 }
 
 std::string Node::getNodePath() {

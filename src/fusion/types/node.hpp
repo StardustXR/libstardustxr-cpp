@@ -17,6 +17,7 @@ public:
 protected:
 	std::string nodeName = "";
 	std::string nodePath = "";
+	bool destroyable = true;
 };
 
 } // namespace StardustXRFusion
