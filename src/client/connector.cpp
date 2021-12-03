@@ -39,7 +39,12 @@ void SendFD(int socket, int fd) {
 		printf("Failed to send message\n");
 }
 
-bool ConnectClient(std::string path, int &readFD, int &writeFD) {
+bool ConnectClient(int &readFD, int &writeFD) {
+	setenv("STARDUST_INSTANCE", "0", false);
+	std::string socketPath = getenv("XDG_RUNTIME_DIR");
+	socketPath += "/stardust-";
+	socketPath += getenv("STARDUST_INSTANCE");
+
 	int s2c[2];
 	pipe(s2c);
 	int c2s[2];
@@ -52,10 +57,10 @@ bool ConnectClient(std::string path, int &readFD, int &writeFD) {
 		return false;
 	}
 
-	printf("Trying to connect to Stardust's server at %s...\n", path.c_str());
+	printf("Trying to connect to Stardust's server at %s...\n", socketPath.c_str());
 
 	remote.sun_family = AF_UNIX;
-	strcpy(remote.sun_path, path.c_str());
+	socketPath.copy(remote.sun_path, 108);
 	len = strlen(remote.sun_path) + sizeof(remote.sun_family);
 	if (connect(s, (struct sockaddr *)&remote, len) == -1) {
 		perror("connect");

@@ -19,12 +19,12 @@ namespace StardustXR {
 
 class MessengerManager {
 public:
-  explicit MessengerManager(const char *socketPath = "/tmp/stardust.sock");
+  explicit MessengerManager();
   virtual ~MessengerManager();
 
 protected:
   virtual void clientConnected(int inFD, int outFD) = 0;
-  const char *socketPath;
+  std::string socketPath;
 
 private:
   typedef struct {

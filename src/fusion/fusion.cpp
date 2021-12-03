@@ -38,7 +38,7 @@ bool Setup() {
 	printf("Client starting...\n");
 	int readFD, writeFD;
 	srand(time(nullptr));
-	if (!StardustXR::ConnectClient("/tmp/stardust.sock", readFD, writeFD)) {
+	if (!StardustXR::ConnectClient(readFD, writeFD)) {
 		perror("Client failed to connect to server");
 		return false;
 	}
