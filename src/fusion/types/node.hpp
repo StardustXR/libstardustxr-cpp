@@ -7,6 +7,7 @@ namespace StardustXRFusion {
 class Node {
 public:
 	explicit Node();
+	Node(const Node &original);
 	~Node();
 
 	std::string getNodePath();

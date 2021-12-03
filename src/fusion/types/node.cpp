@@ -4,6 +4,10 @@
 namespace StardustXRFusion {
 
 Node::Node() {}
+Node::Node(const Node &original) {
+	this->nodeName = original.nodeName;
+	this->nodePath = original.nodePath;
+}
 Node::~Node() {
 	if(destroyable) {
 		messenger->sendSignal(
