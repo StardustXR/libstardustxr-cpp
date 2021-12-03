@@ -14,43 +14,12 @@
 
 namespace StardustXR {
 
-void SendFD(int socket, int fd) {
-	struct msghdr msg = {0};
-	char buf[CMSG_SPACE(sizeof(fd))];
-	memset(buf, '\0', sizeof(buf));
-	struct iovec io;
-	io.iov_base = (void *)"ABC";
-	io.iov_len = 3;
-	msg.msg_iov = &io;
-	msg.msg_iovlen = 1;
-	msg.msg_control = buf;
-	msg.msg_controllen = sizeof(buf);
-
-	struct cmsghdr *cmsg = CMSG_FIRSTHDR(&msg);
-	cmsg->cmsg_level = SOL_SOCKET;
-	cmsg->cmsg_type = SCM_RIGHTS;
-	cmsg->cmsg_len = CMSG_LEN(sizeof(fd));
-
-	*((int *)CMSG_DATA(cmsg)) = fd; // CMSG_DATA() returns a pointer to the data portion of a cmsghdr.
-
-	msg.msg_controllen = CMSG_SPACE(sizeof(fd));
-
-	if (sendmsg(socket, &msg, 0) < 0)
-		printf("Failed to send message\n");
-}
-
 bool ConnectClient(int &readFD, int &writeFD) {
 	setenv("STARDUST_INSTANCE", "0", false);
 	std::string socketPath = getenv("XDG_RUNTIME_DIR");
 	socketPath += "/stardust-";
 	socketPath += getenv("STARDUST_INSTANCE");
-
-	int s2c[2];
-	pipe(s2c);
-	int c2s[2];
-	pipe(c2s);
 	int s, len;
-	struct sockaddr_un remote;
 
 	if ((s = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1) {
 		perror("socket");
@@ -59,21 +28,20 @@ bool ConnectClient(int &readFD, int &writeFD) {
 
 	printf("Trying to connect to Stardust's server at %s...\n", socketPath.c_str());
 
-	remote.sun_family = AF_UNIX;
-	socketPath.copy(remote.sun_path, 108);
-	len = strlen(remote.sun_path) + sizeof(remote.sun_family);
-	if (connect(s, (struct sockaddr *)&remote, len) == -1) {
+	struct sockaddr_un server = {};
+	server.sun_family = AF_UNIX;
+	socketPath.copy(server.sun_path, sizeof(server.sun_path));
+
+	len = strlen(server.sun_path) + sizeof(server.sun_family);
+	if (connect(s, (struct sockaddr *)&server, len) == -1) {
 		perror("connect");
 		return false;
 	}
 
 	printf("Connected.\n");
 
-	SendFD(s, c2s[0]);
-	SendFD(s, s2c[1]);
-
-	readFD = s2c[0];
-	writeFD = c2s[1];
+	readFD = s;
+	writeFD = s;
 
 	pid_t pid = getpid();
 

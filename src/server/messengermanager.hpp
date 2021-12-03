@@ -33,8 +33,6 @@ private:
   } RecieveFDReturn;
 
   std::thread socketThread;
-
-  RecieveFDReturn recieveFD(int socket);
   void socketLoop();
 };
 
