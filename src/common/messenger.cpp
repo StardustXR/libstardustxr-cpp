@@ -6,13 +6,13 @@
 
 namespace StardustXR {
 
-Messenger::Messenger(int readFD, int writeFD, Scenegraph *scenegraph) {
-	this->messageReadFD = readFD;
-	this->messageWriteFD = writeFD;
+Messenger::Messenger(int fd, Scenegraph *scenegraph) {
+	this->fd = fd;
 	this->scenegraph = scenegraph;
 
 	// setup signal handler
-	struct sigaction sigact = {SIG_IGN};
+	struct sigaction sigact = {};
+	sigact.sa_handler = SIG_IGN;
 	sigaction(SIGPIPE, &sigact, nullptr);
 }
 
@@ -67,20 +67,20 @@ void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *
 
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 	ssize_t rc;
-	rc = write(messageWriteFD, &size, 4);
+	rc = write(fd, &size, 4);
 	if (rc == -1 && errno == EPIPE) {
 		pipeBroke = true;
 		checkPipeBroken();
 		return;
 	}
 
-	write(messageWriteFD, buffer, size);
+	write(fd, buffer, size);
 }
 
 void Messenger::messageHandler() {
 	while (!pipeBroke) {
 		uint32_t messageLength;
-		switch (read(messageReadFD, &messageLength, 4)) {
+		switch (read(fd, &messageLength, 4)) {
 			case 0: {
 				printf("Pipe broke!\n");
 				pipeBroke = true;
@@ -93,7 +93,7 @@ void Messenger::messageHandler() {
 		}
 
 		uint8_t *messageBinary = (uint8_t *) malloc(messageLength);
-		read(messageReadFD, messageBinary, messageLength);
+		read(fd, messageBinary, messageLength);
 
 		flatbuffers::Verifier messageVerifier(messageBinary, messageLength);
 		if(VerifyMessageBuffer(messageVerifier)) {

@@ -23,8 +23,9 @@ public:
   virtual ~MessengerManager();
 
 protected:
-  virtual void clientConnected(int inFD, int outFD) = 0;
+  virtual void clientConnected(int fd) = 0;
   std::string socketPath;
+  int socketLockFD;
 
 private:
   typedef struct {

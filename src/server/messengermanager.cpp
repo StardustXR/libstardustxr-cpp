@@ -1,6 +1,9 @@
 #include "messengermanager.hpp"
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/file.h>
+
+const uint32_t MAX_INSTANCE_COUNT = 32;
 
 namespace StardustXR {
 
@@ -9,10 +12,17 @@ MessengerManager::MessengerManager() {
 	this->socketPath += "/stardust-";
 	uint32_t instanceNumber = 0;
 	std::string instanceNumberString = "0";
-	while(!unlink((socketPath+instanceNumberString).c_str())) {
-		instanceNumber++;
+	do {
 		instanceNumberString = std::to_string(instanceNumber);
-	}
+		std::string lockPath = socketPath+instanceNumberString+".lock";
+		socketLockFD = open(lockPath.c_str(), O_CREAT | O_CLOEXEC | O_RDWR, (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP));
+		if(socketLockFD < 0)
+			continue;
+		if(flock(socketLockFD, LOCK_EX | LOCK_NB) < 0)
+			continue;
+		break;
+	} while (instanceNumber++ < MAX_INSTANCE_COUNT);
+
 	this->socketPath += instanceNumberString;
 	setenv("STARDUST_INSTANCE", instanceNumberString.c_str(), true);
 
@@ -52,7 +62,7 @@ void MessengerManager::socketLoop() {
 			exit(1);
 		}
 		printf("socketLoop: client connected on %s\n", socketPath.c_str());
-		clientConnected(connectionFD, connectionFD);
+		clientConnected(connectionFD);
 	}
 }
 

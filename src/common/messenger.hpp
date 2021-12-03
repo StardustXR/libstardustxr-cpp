@@ -13,7 +13,7 @@ namespace StardustXR {
 
 class Messenger {
 public:
-	explicit Messenger(int readFD, int writeFD, Scenegraph *scenegraph);
+	explicit Messenger(int fd, Scenegraph *scenegraph);
 	virtual ~Messenger();
 
 	void startHandler();
@@ -38,8 +38,7 @@ public:
 
 protected:
 	// General variables
-	int messageReadFD;
-	int messageWriteFD;
+	int fd;
 	std::atomic<bool> pipeBroke{false};
 	Scenegraph *scenegraph;
 

@@ -14,14 +14,14 @@
 
 namespace StardustXR {
 
-bool ConnectClient(int &readFD, int &writeFD) {
+int ConnectClient() {
 	setenv("STARDUST_INSTANCE", "0", false);
 	std::string socketPath = getenv("XDG_RUNTIME_DIR");
 	socketPath += "/stardust-";
 	socketPath += getenv("STARDUST_INSTANCE");
-	int s, len;
+	int fd, len;
 
-	if ((s = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1) {
+	if ((fd = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1) {
 		perror("socket");
 		return false;
 	}
@@ -33,20 +33,13 @@ bool ConnectClient(int &readFD, int &writeFD) {
 	socketPath.copy(server.sun_path, sizeof(server.sun_path));
 
 	len = strlen(server.sun_path) + sizeof(server.sun_family);
-	if (connect(s, (struct sockaddr *)&server, len) == -1) {
+	if (connect(fd, (struct sockaddr *)&server, len) == -1) {
 		perror("connect");
 		return false;
 	}
 
 	printf("Connected.\n");
-
-	readFD = s;
-	writeFD = s;
-
-	pid_t pid = getpid();
-
-	write(writeFD, &pid, sizeof(pid_t));
-	return true;
+	return fd;
 }
 
 } // namespace StardustXR

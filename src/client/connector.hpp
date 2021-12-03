@@ -4,6 +4,6 @@
 
 namespace StardustXR {
 
-bool ConnectClient(int &read, int &write);
+int ConnectClient();
 
 } // namespace StardustXR

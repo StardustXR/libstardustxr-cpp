@@ -36,15 +36,15 @@ std::string GenerateID() {
 
 bool Setup() {
 	printf("Client starting...\n");
-	int readFD, writeFD;
+	int fd;
 	srand(time(nullptr));
-	if (!StardustXR::ConnectClient(readFD, writeFD)) {
+	if (!(fd = StardustXR::ConnectClient())) {
 		perror("Client failed to connect to server");
 		return false;
 	}
 
 	scenegraph = new FusionScenegraph();
-	messenger = new StardustXR::Messenger(readFD, writeFD, scenegraph);
+	messenger = new StardustXR::Messenger(fd, scenegraph);
 	messenger->startHandler();
 	signal(SIGINT, Shutdown);
 
