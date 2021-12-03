@@ -38,6 +38,22 @@ void PanelItem::applySurfaceMaterial(Model &model, uint32_t submeshIndex) {
 	);
 }
 
+void PanelItem::getData(std::function<void (uint32_t, uint32_t, uint32_t)> callback) {
+	messenger->executeRemoteMethod(
+		getNodePath().c_str(),
+		"getData",
+		FLEX_ARG(FLEX_NULL),
+		[callback](flexbuffers::Reference data) {
+			flexbuffers::Vector dataVec = data.AsVector();
+			callback(
+				dataVec[0].AsUInt32(),
+				dataVec[1].AsUInt32(),
+				dataVec[2].AsUInt32()
+			);
+		}
+	);
+}
+
 std::vector<uint8_t> PanelItem::uiCallback(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector flexVec = data.AsVector();
 	bool created = flexVec[0].AsBool();

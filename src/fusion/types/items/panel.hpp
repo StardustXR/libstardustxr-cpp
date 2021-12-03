@@ -17,6 +17,7 @@ public:
 	static void registerUIHandler(std::function<void(bool, PanelItem &, uint32_t, uint32_t, uint32_t)> callback);
 
 	void applySurfaceMaterial(Model &model, uint32_t submeshIndex);
+	void getData(std::function<void(uint32_t, uint32_t, uint32_t)> callback);
 
 private:
 	PanelItem(Spatial *space, std::string nodePath, std::string nodeName);
