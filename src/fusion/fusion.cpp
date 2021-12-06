@@ -56,7 +56,7 @@ bool Setup() {
 			FLEX_STRING(std::string("logicStep"))
 		)
 	);
-	scenegraph->methods["logicStep"] = &FlexDummy;
+	scenegraph->addMethod("logicStep", &FlexDummy);
 
 	return true;
 }
@@ -114,7 +114,7 @@ std::vector<uint8_t> LogicStep(flexbuffers::Reference data, bool) {
 }
 
 void OnLogicStep(LogicStepMethod method) {
-	scenegraph->methods["logicStep"] = &LogicStep;
+	scenegraph->addMethod("logicStep", &LogicStep);
 	logicMethod = method;
 }
 

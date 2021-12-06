@@ -12,7 +12,7 @@ Zone::Zone(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orie
 	nodePath = "/spatial/zone";
 	nodeName = GenerateID();
 
-	scenegraph->methods[nodeName] = std::bind(&Zone::updateZone, this, std::placeholders::_1, std::placeholders::_2);
+	scenegraph->addMethod(nodeName, std::bind(&Zone::updateZone, this, std::placeholders::_1, std::placeholders::_2));
 	messenger->sendSignal(
 		"/spatial",
 		"createZone",
@@ -28,6 +28,7 @@ Zone::Zone(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orie
 	);
 }
 Zone::~Zone() {
+	scenegraph->removeMethod(nodeName);
 	for(auto space : spatials) {
 		release(space.second);
 	}

@@ -34,7 +34,7 @@ EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, std::st
 }
 void EnvironmentItem::registerUIHandler(std::function<void(bool, EnvironmentItem &)> callback) {
 	uiCallbackFunction = callback;
-	scenegraph->methods["environmentUI"] = &EnvironmentItem::uiCallback;
+	scenegraph->addMethod("environmentUI", &EnvironmentItem::uiCallback);
 
 	messenger->sendSignal(
 		"/item",

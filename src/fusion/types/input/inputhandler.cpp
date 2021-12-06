@@ -21,7 +21,7 @@ InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, S
 	nodeName = GenerateID();
 	nodePath = "/input/handler";
 
-	scenegraph->methods[nodeName] = std::bind(&InputHandler::inputEvent, this, std::placeholders::_1, std::placeholders::_2);
+	scenegraph->addMethod(nodeName, std::bind(&InputHandler::inputEvent, this, std::placeholders::_1, std::placeholders::_2));
 	messenger->sendSignal(
 		"/input",
 		"registerInputHandler",
@@ -36,12 +36,11 @@ InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, S
 		)
 	);
 }
-
 InputHandler::InputHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
 	nodeName = GenerateID();
 	nodePath = "/input/handler";
 
-	scenegraph->methods[nodeName] = std::bind(&InputHandler::inputEvent, this, std::placeholders::_1, std::placeholders::_2);
+	scenegraph->addMethod(nodeName, std::bind(&InputHandler::inputEvent, this, std::placeholders::_1, std::placeholders::_2));
 	messenger->sendSignal(
 		"/input",
 		"registerInputHandler",
@@ -55,6 +54,9 @@ InputHandler::InputHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat or
 			FLEX_STRING(nodeName)
 		)
 	);
+}
+InputHandler::~InputHandler() {
+	scenegraph->removeMethod(nodeName);
 }
 
 void InputHandler::getInputHandlers(Spatial *space, bool excludeSelf, std::function<void(std::vector<InputActions> &)> callback) {

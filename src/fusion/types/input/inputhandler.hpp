@@ -21,6 +21,7 @@ class InputHandler : public Spatial {
 public:
 	explicit InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
 	explicit InputHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation);
+	~InputHandler();
 
 	static void getInputHandlers(Spatial *space, bool excludeSelf, std::function<void(std::vector<InputActions> &)> callback);
 

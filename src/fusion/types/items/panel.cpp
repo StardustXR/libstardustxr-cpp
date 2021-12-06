@@ -15,7 +15,7 @@ PanelItem::PanelItem(Spatial *space, std::string nodePath, std::string nodeName)
 }
 void PanelItem::registerUIHandler(std::function<void(bool, PanelItem &, uint32_t, uint32_t, uint32_t)> callback) {
 	uiCallbackFunction = callback;
-	scenegraph->methods["panelUI"] = &PanelItem::uiCallback;
+	scenegraph->addMethod("panelUI", &PanelItem::uiCallback);
 
 	messenger->sendSignal(
 		"/item",
