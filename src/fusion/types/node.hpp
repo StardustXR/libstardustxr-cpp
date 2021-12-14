@@ -15,6 +15,8 @@ public:
 
 	void setEnabled(bool enabled);
 
+	static uint32_t generateUUID();
+
 protected:
 	std::string nodeName = "";
 	std::string nodePath = "";

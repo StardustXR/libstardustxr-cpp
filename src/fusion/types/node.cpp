@@ -33,4 +33,8 @@ void Node::setEnabled(bool enabled) {
 	);
 }
 
+uint32_t Node::generateUUID() {
+
+}
+
 } // namespace StardustXRFusion

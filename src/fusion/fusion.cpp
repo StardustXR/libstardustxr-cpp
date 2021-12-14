@@ -12,8 +12,11 @@
 #include <libgen.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "random.hpp"
 
 namespace StardustXRFusion {
+
+std::vector<uint32_t> usedIDs;
 
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
 StardustXR::Messenger *messenger = nullptr;
@@ -26,12 +29,14 @@ std::vector<uint8_t> FlexDummy(flexbuffers::Reference data, bool) {
 }
 
 std::string GenerateID() {
-	std::string alcoholism = "xxxxxxxxxxxxxxxx";
-	for(char &c : alcoholism) {
-		c = 'a' + rand() % 26;
+	uint32_t id = 0;
+	while(id == 0 || find(usedIDs.begin(), usedIDs.end(), id) != usedIDs.end()) {
+		id = Random::generate<uint32_t>();
 	}
-
-	return alcoholism;
+	usedIDs.push_back(id);
+	std::string strID = std::to_string(id);
+	strID.reserve(16);
+	return strID;
 }
 
 bool Setup() {
