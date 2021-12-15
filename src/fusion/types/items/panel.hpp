@@ -18,6 +18,7 @@ public:
 
 	void applySurfaceMaterial(Model &model, uint32_t submeshIndex);
 	void getData(std::function<void(uint32_t, uint32_t, uint32_t)> callback);
+	void close();
 
 private:
 	PanelItem(Spatial *space, std::string nodePath, std::string nodeName);

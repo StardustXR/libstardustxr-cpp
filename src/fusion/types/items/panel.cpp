@@ -54,6 +54,14 @@ void PanelItem::getData(std::function<void (uint32_t, uint32_t, uint32_t)> callb
 	);
 }
 
+void PanelItem::close() {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"close",
+		FLEX_ARGS(FLEX_NULL)
+	);
+}
+
 std::vector<uint8_t> PanelItem::uiCallback(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector flexVec = data.AsVector();
 	bool created = flexVec[0].AsBool();
