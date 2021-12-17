@@ -19,7 +19,7 @@ namespace StardustXRFusion {
 std::vector<uint32_t> usedIDs;
 
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
-StardustXR::Messenger *messenger = nullptr;
+StardustXRFusion::Messenger *messenger = nullptr;
 Spatial root(nullptr, "", "");
 
 LogicStepMethod logicMethod;
@@ -42,15 +42,15 @@ std::string GenerateID() {
 bool Setup() {
 	printf("Client starting...\n");
 	int fd;
-	srand(time(nullptr));
 	if (!(fd = StardustXR::ConnectClient())) {
 		perror("Client failed to connect to server");
 		return false;
 	}
 
 	scenegraph = new FusionScenegraph();
-	messenger = new StardustXR::Messenger(fd, scenegraph);
+	messenger = new Messenger(fd, scenegraph);
 	messenger->startHandler();
+	signal(SIGPIPE, Shutdown);
 	signal(SIGINT, Shutdown);
 
 	messenger->sendSignal(

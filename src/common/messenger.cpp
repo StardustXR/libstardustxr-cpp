@@ -1,22 +1,17 @@
 #include "messenger.hpp"
 #include <flatbuffers/flatbuffers.h>
 #include <mutex>
-#include <signal.h>
+#include <poll.h>
 #include <unistd.h>
+
+#define POLL_TIMEOUT 100
 
 namespace StardustXR {
 
 Messenger::Messenger(int fd, Scenegraph *scenegraph) {
 	this->fd = fd;
 	this->scenegraph = scenegraph;
-
-	// setup signal handler
-	struct sigaction sigact = {};
-	sigact.sa_handler = SIG_IGN;
-	sigaction(SIGPIPE, &sigact, nullptr);
 }
-
-Messenger::~Messenger() {}
 
 void Messenger::startHandler() {
 	this->handlerThread = std::thread(&StardustXR::Messenger::messageHandler, this);
@@ -33,8 +28,6 @@ uint Messenger::generateMessageID() {
 }
 
 void Messenger::executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback) {
-	if(checkPipeBroken()) return;
-
 	uint id = generateMessageID();
 	{
 		const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
@@ -43,9 +36,15 @@ void Messenger::executeRemoteMethod(const char *object, const char *method, std:
 	sendCall(2, id, object, method, data);
 }
 
-void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
-	if(checkPipeBroken()) return;
+int Messenger::pollFD(short events) {
+	struct pollfd poll_fds[1];
+	poll_fds[0].fd = fd;
+	poll_fds[0].events = events;
 
+	return poll(poll_fds, 1, POLL_TIMEOUT);
+}
+
+void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
 	const std::lock_guard<std::mutex> sendLock(sendMutex);
 
 	auto objectPath = fbb.CreateString(object);
@@ -69,8 +68,7 @@ void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 	ssize_t rc;
 	rc = write(fd, &size, 4);
 	if (rc == -1 && errno == EPIPE) {
-		pipeBroke = true;
-		checkPipeBroken();
+//		onSocketBreak();
 		return;
 	}
 
@@ -78,16 +76,26 @@ void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
 }
 
 void Messenger::messageHandler() {
-	while (!pipeBroke) {
+	while (1) {
+		int rv = 0;
+		while(rv <= 0) {
+			if(rv == -1) {
+				onDisconnect();
+				return;
+			}
+			rv = pollFD(POLLIN);
+		}
+
 		uint32_t messageLength;
 		switch (read(fd, &messageLength, 4)) {
 			case 0: {
 				printf("Pipe broke!\n");
-				pipeBroke = true;
+				onDisconnect();
 				return;
 			} break;
 			case -1: {
 				printf("Pipe error\n");
+				onDisconnect();
 				continue;
 			}
 		}
@@ -103,8 +111,6 @@ void Messenger::messageHandler() {
 
 		free(messageBinary);
 	}
-
-	onPipeBreak();
 }
 
 void Messenger::handleMessage(const Message *message) {

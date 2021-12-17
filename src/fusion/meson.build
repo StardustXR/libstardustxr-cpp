@@ -13,6 +13,7 @@ install_headers(
 fusion_files = files(
 	'fusion.cpp',
         'random.cpp',
+        'messenger.cpp',
 	'scenegraph.cpp',
 )
 
