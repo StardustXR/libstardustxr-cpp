@@ -42,6 +42,10 @@ namespace StardustXR {
 		fbb.Null();
 	#define FLEX_BOOL(bol) \
 		fbb.Bool(bol);
+	#define FLEX_INT(flexInt) \
+		fbb.Int(flexInt);
+	#define FLEX_UINT(flexUint) \
+		fbb.UInt(flexUint);
 	#define FLEX_FLOAT(flt) \
 		fbb.Float(flt);
 	#define FLEX_ADD(var) \

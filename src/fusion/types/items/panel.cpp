@@ -54,11 +54,22 @@ void PanelItem::getData(std::function<void (uint32_t, uint32_t, uint32_t)> callb
 	);
 }
 
+void PanelItem::resize(uint32_t width, uint32_t height) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"resize",
+		FLEX_ARGS(
+			FLEX_UINT(width)
+			FLEX_UINT(height)
+		)
+	);
+}
+
 void PanelItem::close() {
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"close",
-		FLEX_ARGS(FLEX_NULL)
+		FLEX_ARG(FLEX_NULL)
 	);
 }
 
