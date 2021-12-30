@@ -94,6 +94,38 @@ void PanelItem::scrollPointerAxis(uint32_t source, double x, double y, int32_t d
 	);
 }
 
+void PanelItem::touchDown(uint32_t id, double x, double y) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"touchDown",
+		FLEX_ARGS(
+			FLEX_UINT(id)
+			FLEX_DOUBLE(x)
+			FLEX_DOUBLE(y)
+		)
+	);
+}
+void PanelItem::touchMove(uint32_t id, double x, double y) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"touchMove",
+		FLEX_ARGS(
+			FLEX_UINT(id)
+			FLEX_DOUBLE(x)
+			FLEX_DOUBLE(y)
+		)
+	);
+}
+void PanelItem::touchUp(uint32_t id) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"touchUp",
+		FLEX_ARG(
+			FLEX_UINT(id)
+		)
+	);
+}
+
 void PanelItem::resize(uint32_t width, uint32_t height) {
 	messenger->sendSignal(
 		getNodePath().c_str(),
