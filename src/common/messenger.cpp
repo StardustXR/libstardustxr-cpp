@@ -4,8 +4,6 @@
 #include <poll.h>
 #include <unistd.h>
 
-#define POLL_TIMEOUT 100
-
 namespace StardustXR {
 
 Messenger::Messenger(int fd, Scenegraph *scenegraph) {
@@ -36,12 +34,12 @@ void Messenger::executeRemoteMethod(const char *object, const char *method, std:
 	sendCall(2, id, object, method, data);
 }
 
-int Messenger::pollFD(short events) {
+int Messenger::pollFD(short events, int timeout) {
 	struct pollfd poll_fds[1];
 	poll_fds[0].fd = fd;
 	poll_fds[0].events = events;
 
-	return poll(poll_fds, 1, POLL_TIMEOUT);
+	return poll(poll_fds, 1, timeout);
 }
 
 void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
@@ -65,6 +63,9 @@ void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *
 }
 
 void Messenger::sendMessage(uint8_t *buffer, uint32_t size) {
+	int rv = pollFD(POLLOUT, 1);
+	if(rv <= 0)
+		return;
 	ssize_t rc;
 	rc = write(fd, &size, 4);
 	if (rc == -1 && errno == EPIPE) {
@@ -83,7 +84,7 @@ void Messenger::messageHandler() {
 				onDisconnect();
 				return;
 			}
-			rv = pollFD(POLLIN);
+			rv = pollFD(POLLIN, 100);
 		}
 
 		uint32_t messageLength;

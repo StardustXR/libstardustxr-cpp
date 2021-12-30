@@ -31,14 +31,13 @@ public:
 	}
 	void executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback);
 
-
 protected:
 	// General variables
 	int fd;
 	Scenegraph *scenegraph;
 
 	// General methods
-	int pollFD(short int events);
+	int pollFD(short events, int timeout);
 	virtual void onDisconnect() {}
 
 	// Message handling specific
