@@ -1,7 +1,7 @@
 #pragma once
 
-#include "item.hpp"
-#include "../model.hpp"
+#include "../item.hpp"
+#include "../../model.hpp"
 #include <functional>
 #include <string>
 #include <vector>
@@ -14,10 +14,17 @@ namespace StardustXRFusion {
 
 class PanelItem : public Item {
 public:
-	static void registerUIHandler(std::function<void(bool, PanelItem &, uint32_t, uint32_t)> callback);
+	PanelItem(Spatial *space, std::string nodePath, std::string nodeName);
+	struct Data {
+		const uint32_t width;
+		const uint32_t height;
+	};
+
+	static void registerUIHandlers(std::function<void(PanelItem &, Data)> create, std::function<void(PanelItem &)> destroy);
+	static std::string createAcceptorMethodString;
 
 	void applySurfaceMaterial(Model &model, uint32_t submeshIndex);
-	void getData(std::function<void(uint32_t, uint32_t)> callback);
+	void getData(std::function<void(Data)> callback);
 
 	void setPointerActive(bool active);
 	void setPointerPosition(SKMath::vec2 pos);
@@ -32,9 +39,9 @@ public:
 	void close();
 
 private:
-	PanelItem(Spatial *space, std::string nodePath, std::string nodeName);
 	static std::vector<uint8_t> uiCallback(flexbuffers::Reference data, bool);
-	static std::function<void(bool, PanelItem &, uint32_t, uint32_t)> uiCallbackFunction;
+	static std::function<void(PanelItem &, Data)> uiCreateFunction;
+	static std::function<void(PanelItem &)>       uiDestroyFunction;
 };
 
 }

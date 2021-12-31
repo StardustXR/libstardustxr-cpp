@@ -1,14 +1,15 @@
 install_headers(
 	[
+            'acceptor.hpp',
                 'item.hpp',
-                'environment.hpp',
-                'panel.hpp',
 	],
 	subdir: 'stardustxr/fusion/types/items'
 )
 
 fusion_files += files(
-        'item.cpp',
-        'environment.cpp',
-        'panel.cpp',
+    'acceptor.cpp',
+    'item.cpp',
 )
+
+subdir('acceptors')
+subdir('types')

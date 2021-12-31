@@ -1,5 +1,5 @@
 #include "panel.hpp"
-#include "../../scenegraph.hpp"
+#include "../../../scenegraph.hpp"
 #include "fusion_internal.hpp"
 #include <cstddef>
 #include <flatbuffers/flexbuffers.h>
@@ -8,13 +8,18 @@
 
 namespace StardustXRFusion {
 
-std::function<void(bool, PanelItem &, uint32_t, uint32_t)> PanelItem::uiCallbackFunction = [](bool, PanelItem &, uint32_t, uint32_t) {};
+std::string PanelItem::createAcceptorMethodString = "createPanelItemAcceptor";
+
+std::function<void(PanelItem &, PanelItem::Data)> PanelItem::uiCreateFunction  = [](PanelItem &, PanelItem::Data) {};
+std::function<void(PanelItem &)>                  PanelItem::uiDestroyFunction = [](PanelItem &) {};
 
 PanelItem::PanelItem(Spatial *space, std::string nodePath, std::string nodeName) :
 	Item(space, nodePath, nodeName) {
 }
-void PanelItem::registerUIHandler(std::function<void(bool, PanelItem &, uint32_t, uint32_t)> callback) {
-	uiCallbackFunction = callback;
+
+void PanelItem::registerUIHandlers(std::function<void (PanelItem &, Data)> create, std::function<void (PanelItem &)> destroy) {
+	uiCreateFunction = create;
+	uiDestroyFunction = destroy;
 	scenegraph->addMethod("panelUI", &PanelItem::uiCallback);
 
 	messenger->sendSignal(
@@ -38,17 +43,17 @@ void PanelItem::applySurfaceMaterial(Model &model, uint32_t submeshIndex) {
 	);
 }
 
-void PanelItem::getData(std::function<void (uint32_t, uint32_t)> callback) {
+void PanelItem::getData(std::function<void (Data)> callback) {
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
 		"getData",
 		FLEX_ARG(FLEX_NULL),
 		[callback](flexbuffers::Reference data) {
 			flexbuffers::Vector dataVec = data.AsVector();
-			callback(
+			callback(Data {
 				dataVec[0].AsUInt32(),
 				dataVec[1].AsUInt32()
-			);
+			});
 		}
 	);
 }
@@ -151,7 +156,10 @@ std::vector<uint8_t> PanelItem::uiCallback(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector dataVec = flexVec[2].AsVector();
 
 	PanelItem item(nullptr, "/item/panel", nodeName);
-	uiCallbackFunction(created, item, dataVec[0].AsUInt32(), dataVec[1].AsUInt32());
+	if(created)
+		uiCreateFunction(item, Data {dataVec[0].AsUInt32(), dataVec[1].AsUInt32()});
+	else
+		uiDestroyFunction(item);
 	return std::vector<uint8_t>();
 }
 

@@ -7,9 +7,11 @@ namespace StardustXRFusion {
 
 class Item : public StardustXRFusion::Spatial {
 public:
-	Item(Spatial *space, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
+	void triggerAccept();
+	void release();
 
 protected:
+	Item(Spatial *space, SKMath::vec3 origin, SKMath::quat orientation);
 	Item(Spatial *space, std::string nodePath, std::string nodeName);
 };
 

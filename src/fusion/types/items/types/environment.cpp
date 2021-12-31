@@ -1,5 +1,5 @@
 #include "environment.hpp"
-#include "../../scenegraph.hpp"
+#include "../../../scenegraph.hpp"
 #include "fusion_internal.hpp"
 #include <cstddef>
 #include <flatbuffers/flexbuffers.h>
@@ -8,7 +8,10 @@
 
 namespace StardustXRFusion {
 
-std::function<void(bool, EnvironmentItem &)> EnvironmentItem::uiCallbackFunction = [](bool, EnvironmentItem &) {};
+std::string EnvironmentItem::createAcceptorMethodString = "createEnvironmentItemAcceptor";
+
+std::function<void(EnvironmentItem &, EnvironmentItem::Data)> EnvironmentItem::uiCreateFunction  = [](EnvironmentItem &, EnvironmentItem::Data) {};
+std::function<void(EnvironmentItem &)>                        EnvironmentItem::uiDestroyFunction = [](EnvironmentItem &) {};
 
 EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, SKMath::vec3 origin, SKMath::quat orientation) : 
 	Item(space, origin, orientation) {
@@ -29,12 +32,14 @@ EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, SKMath:
 	);
 }
 
-EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, std::string nodePath, std::string nodeName) : 
-	Item(space, nodePath, nodeName), path(path) {
+EnvironmentItem::EnvironmentItem(Spatial *space, std::string nodePath, std::string nodeName) :
+	Item(space, nodePath, nodeName) {
 }
-void EnvironmentItem::registerUIHandler(std::function<void(bool, EnvironmentItem &)> callback) {
-	uiCallbackFunction = callback;
-	scenegraph->addMethod("environmentUI", &EnvironmentItem::uiCallback);
+
+void EnvironmentItem::registerUIHandlers(std::function<void(EnvironmentItem &, Data)> create, std::function<void(EnvironmentItem &)> destroy) {
+	uiCreateFunction = create;
+	uiDestroyFunction = destroy;
+	scenegraph->addMethod("panelUI", &EnvironmentItem::uiCallback);
 
 	messenger->sendSignal(
 		"/item",
@@ -46,14 +51,21 @@ void EnvironmentItem::registerUIHandler(std::function<void(bool, EnvironmentItem
 	);
 }
 
+EnvironmentItem::Data EnvironmentItem::parseData(flexbuffers::Reference data) {
+
+}
+
 std::vector<uint8_t> EnvironmentItem::uiCallback(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector flexVec = data.AsVector();
 	bool created = flexVec[0].AsBool();
 	std::string nodeName = flexVec[1].AsString().str();
 	std::string path = flexVec[2].AsVector()[0].AsString().str();
 
-	EnvironmentItem item(nullptr, path, "/item/environment", nodeName);
-	uiCallbackFunction(created, item);
+	EnvironmentItem item(nullptr, "/item/environment", nodeName);
+	if(created)
+		uiCreateFunction(item, Data {path});
+	else
+		uiDestroyFunction(item);
 	return std::vector<uint8_t>();
 }
 
