@@ -38,7 +38,7 @@ void PanelItem::applySurfaceMaterial(Model &model, uint32_t submeshIndex) {
 		"applySurfaceMaterial",
 		FLEX_ARGS(
 			FLEX_STRING(model.getNodePath())
-			fbb.UInt(submeshIndex);
+			FLEX_UINT(submeshIndex);
 		)
 	);
 }
