@@ -7,7 +7,6 @@ if get_option('client') or get_option('server')
 		],
 		subdir: 'stardustxr/common'
 	)
+        subdir('flatbuffers')
 endif
 common_files += files('messenger.cpp')
-
-subdir('flatbuffers')
