@@ -1,10 +1,18 @@
 fusion_tests_includes = include_directories('../../src/')
 
 executable(
-	'basic',
-	'basic.cpp',
-	include_directories: [fusion_tests_includes],
-	dependencies: [fusion],
+        'basic',
+        'basic.cpp',
+        include_directories: [fusion_tests_includes],
+        dependencies: [fusion],
+)
+
+executable(
+        'data',
+        'data.cpp',
+        include_directories: [fusion_tests_includes],
+        dependencies: [fusion],
+        link_args: '-lflatbuffers',
 )
 
 executable(

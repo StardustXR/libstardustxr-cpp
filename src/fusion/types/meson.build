@@ -15,6 +15,7 @@ fusion_files += files(
         'zone.cpp',
 )
 
+subdir('data')
 subdir('fields')
 subdir('input')
 subdir('items')
