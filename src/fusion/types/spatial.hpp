@@ -17,7 +17,7 @@ public:
 	void rotate(SKMath::quat rotation);
 	void scale(float scaleFactor);
 
-	void getTransform(std::function<void(SKMath::vec3, SKMath::quat, SKMath::vec3)> callback);
+	void getTransform(Spatial *space, std::function<void(SKMath::vec3, SKMath::quat, SKMath::vec3)> callback);
 
 	void setOrigin(SKMath::vec3 origin);
 	void setOrientation(SKMath::quat orientation);

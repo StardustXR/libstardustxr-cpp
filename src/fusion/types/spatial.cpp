@@ -122,11 +122,11 @@ void Spatial::setPose(pose_t pose) {
 	);
 }
 
-void Spatial::getTransform(std::function<void(SKMath::vec3, SKMath::quat, SKMath::vec3)> callback) {
+void Spatial::getTransform(Spatial *space, std::function<void(SKMath::vec3, SKMath::quat, SKMath::vec3)> callback) {
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
 		"getTransform",
-		FLEX_ARG(FLEX_NULL),
+		FLEX_ARG(FLEX_STRING(space ? space->getNodePath() : std::string(""))),
 		[callback](flexbuffers::Reference data) {
 			flexbuffers::Vector vec = data.AsVector();
 			callback(SK_VEC3(vec[0].AsTypedVector()), SK_QUAT(vec[1].AsTypedVector()), SK_VEC3(vec[2].AsTypedVector()));
