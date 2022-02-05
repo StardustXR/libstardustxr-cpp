@@ -34,16 +34,21 @@ NonSpatialReceiver::NonSpatialReceiver(NonSpatialSender *sender, std::string nod
 	this->nodeName = nodeName;
 }
 
-void NonSpatialReceiver::getMask(std::function<void (flexbuffers::Map mask)> callback) {
+void NonSpatialReceiver::getMask(std::function<void (flexbuffers::Reference)> callback) {
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
 		"getMask",
 		FLEX_ARG(
 			FLEX_NULL
 		), [callback](flexbuffers::Reference data) {
-			callback(data.AsMap());
+			callback(data);
 		}
 	);
+}
+void NonSpatialReceiver::getMask(std::function<void (flexbuffers::Map mask)> callback) {
+	getMask([callback](flexbuffers::Reference mask) {
+		callback(mask.AsMap());
+	});
 }
 
 void NonSpatialReceiver::setMask(std::vector<uint8_t> mask) {
@@ -54,6 +59,14 @@ void NonSpatialReceiver::setMask(std::vector<uint8_t> mask) {
 			FLEX_BLOB(mask)
 		)
 	);
+}
+void NonSpatialReceiver::setMask(std::function<void (flexbuffers::Builder &)> argsConstructor) {
+	flexbuffers::Builder fbb(1024);
+	fbb.Map([&]() {
+		argsConstructor(fbb);
+	});
+	fbb.Finish();
+	setMask(fbb.GetBuffer());
 }
 
 void NonSpatialReceiver::sendData(std::vector<uint8_t> data) {
@@ -67,6 +80,14 @@ void NonSpatialReceiver::sendData(std::vector<uint8_t> data) {
 			});
 		}
 	);
+}
+void NonSpatialReceiver::sendData(std::function<void (flexbuffers::Builder &)> dataConstructor) {
+	flexbuffers::Builder fbb(1024);
+	fbb.Map([&]() {
+		dataConstructor(fbb);
+	});
+	fbb.Finish();
+	sendData(fbb.GetBuffer());
 }
 
 std::vector<uint8_t> NonSpatialReceiver::dataReceived(flexbuffers::Reference data, bool) {
