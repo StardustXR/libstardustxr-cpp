@@ -9,7 +9,7 @@ using namespace SKMath;
 namespace StardustXRFusion {
 
 NonSpatialReceiver::NonSpatialReceiver(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
-	nodePath = "/data/receiver/";
+	nodePath = "/data/receiver";
 	nodeName = GenerateID();
 
 	scenegraph->addMethod(nodeName, std::bind(&NonSpatialReceiver::dataReceived, this, std::placeholders::_1, std::placeholders::_2));
@@ -32,6 +32,28 @@ NonSpatialReceiver::NonSpatialReceiver(NonSpatialSender *sender, std::string nod
 	this->sender = sender;
 	this->nodePath = nodePath;
 	this->nodeName = nodeName;
+}
+
+void NonSpatialReceiver::getMask(std::function<void (flexbuffers::Map mask)> callback) {
+	messenger->executeRemoteMethod(
+		getNodePath().c_str(),
+		"getMask",
+		FLEX_ARG(
+			FLEX_NULL
+		), [callback](flexbuffers::Reference data) {
+			callback(data.AsMap());
+		}
+	);
+}
+
+void NonSpatialReceiver::setMask(std::vector<uint8_t> mask) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setMask",
+		FLEX_ARG(
+			FLEX_BLOB(mask)
+		)
+	);
 }
 
 void NonSpatialReceiver::sendData(std::vector<uint8_t> data) {

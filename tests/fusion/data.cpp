@@ -9,30 +9,40 @@ using namespace SKMath;
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
+	flexbuffers::Builder fbb(1024);
+	fbb.Map([&]() {
+		fbb.String("type", "keyboard");
+	});
+	fbb.Finish();
+
 	Spatial receiverRoot = Spatial::create(nullptr, vec3_forward * 1.0f);
 	SphereField receiverField(&receiverRoot, vec3_zero, 0);
 	NonSpatialReceiver receiver(&receiverRoot, receiverField);
+	receiver.setMask(fbb.GetBuffer());
 
 	receiver.onDataReceived = [](std::string senderUUID, flexbuffers::Reference data){
 		std::string dataString;
 		data.ToString(true, false, dataString);
-		printf("%s", dataString.c_str());
-
-//		flexbuffers::Map datamap = data.AsMap();
-//		for(size_t k=0; k<datamap.size(); ++k) {
-//			printf("%s : %s", datamap.Keys()[k].AsKey(), datamap.Values()[k].ToString().c_str());
-//		}
+		printf("data: %s\n", dataString.c_str());
+		exit(0);
 	};
 
 	NonSpatialSender sender(nullptr);
 	sender.getReceivers([](std::vector<NonSpatialReceiver> &receivers) {
-		flexbuffers::Builder fbb(1024);
-		fbb.Map([&]() {
-			fbb.Bool("test", true);
-		});
-		fbb.Finish();
-		if(receivers.size() > 0)
-			receivers[receivers.size()-1].sendData(fbb.GetBuffer());
+		if(receivers.size() > 0) {
+			flexbuffers::Builder fbb(1024);
+			fbb.Map([&]() {
+				fbb.String("type", "voiceCommand");
+				fbb.String("voiceCommand", "follow player");
+			});
+			fbb.Finish();
+
+			NonSpatialReceiver recentReceiver = receivers[receivers.size()-1];
+			recentReceiver.getMask([](flexbuffers::Map mask) {
+				printf("mask: %s\n", mask.Values()[0].ToString().c_str());
+			});
+			recentReceiver.sendData(fbb.GetBuffer());
+		}
 	});
 
 	StardustXRFusion::StallMainThread();
