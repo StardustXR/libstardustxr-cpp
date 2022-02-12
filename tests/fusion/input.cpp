@@ -55,7 +55,7 @@ int main(int, char *[]) {
 	};
 	handler.updateActions();
 
-	handler.pointerHandlerMethod = [&](const StardustXRFusion::PointerInput &pointer, const Datamap &datamap) {
+	handler.pointerHandlerMethod = [&](const std::string uuid, const StardustXRFusion::PointerInput &pointer, const Datamap &datamap) {
 		printf("Input event:\n");
 		printf("\tdistance:    %f\n", pointer.distance);
 		printf("\tPointer:\n");
@@ -65,7 +65,7 @@ int main(int, char *[]) {
 		PrintDatamap(datamap);
 		return false;
 	};
-	handler.handHandlerMethod = [](const StardustXRFusion::HandInput &hand, const Datamap &datamap) {
+	handler.handHandlerMethod = [](const std::string uuid, const StardustXRFusion::HandInput &hand, const Datamap &datamap) {
 		printf("Input event:\n");
 		printf("\tdistance:    %f\n", hand.distance);
 		printf("\tHand:\n");

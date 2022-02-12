@@ -27,10 +27,10 @@ public:
 
 	void setField(Field *field);
 
-	std::function<bool(const PointerInput &, const Datamap &)> pointerHandlerMethod = [](const PointerInput &, const Datamap &) {
+	std::function<bool(const std::string uuid, const PointerInput &, const Datamap &)> pointerHandlerMethod = [](const std::string uuid, const PointerInput &, const Datamap &) {
 		return false;
 	};
-	std::function<bool(const HandInput &, const Datamap &)> handHandlerMethod = [](const HandInput &, const Datamap &) {
+	std::function<bool(const std::string uuid, const HandInput &, const Datamap &)> handHandlerMethod = [](const std::string uuid, const HandInput &, const Datamap &) {
 		return false;
 	};
 

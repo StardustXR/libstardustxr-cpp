@@ -134,11 +134,11 @@ std::vector<uint8_t> InputHandler::inputEvent(flexbuffers::Reference data, bool)
 	switch (inputData->input_type()) {
 		case StardustXR::InputDataRaw_Hand: {
 			HandInput hand(inputData);
-			capture = handHandlerMethod(hand, datamap);
+			capture = handHandlerMethod(inputData->uuid()->str(), hand, datamap);
 		} break;
 		case StardustXR::InputDataRaw_Pointer: {
 			PointerInput pointer(inputData);
-			capture = pointerHandlerMethod(pointer, datamap);
+			capture = pointerHandlerMethod(inputData->uuid()->str(), pointer, datamap);
 		} break;
 		case StardustXR::InputDataRaw_Action: {
 			const StardustXR::Action *action = inputData->input_as_Action();
