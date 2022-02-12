@@ -75,11 +75,18 @@ bool VerifyInputDataRawVector(flatbuffers::Verifier &verifier, const flatbuffers
 struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef InputDataBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_INPUT_TYPE = 4,
-    VT_INPUT = 6,
-    VT_DISTANCE = 8,
-    VT_DATAMAP = 10
+    VT_UUID = 4,
+    VT_INPUT_TYPE = 6,
+    VT_INPUT = 8,
+    VT_DISTANCE = 10,
+    VT_DATAMAP = 12
   };
+  const flatbuffers::String *uuid() const {
+    return GetPointer<const flatbuffers::String *>(VT_UUID);
+  }
+  flatbuffers::String *mutable_uuid() {
+    return GetPointer<flatbuffers::String *>(VT_UUID);
+  }
   StardustXR::InputDataRaw input_type() const {
     return static_cast<StardustXR::InputDataRaw>(GetField<uint8_t>(VT_INPUT_TYPE, 0));
   }
@@ -102,7 +109,7 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   float distance() const {
     return GetField<float>(VT_DISTANCE, 0.0f);
   }
-  bool mutate_distance(float _distance) {
+  bool mutate_distance(float _distance = 0.0f) {
     return SetField<float>(VT_DISTANCE, _distance, 0.0f);
   }
   const flatbuffers::Vector<uint8_t> *datamap() const {
@@ -116,6 +123,8 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_UUID) &&
+           verifier.VerifyString(uuid()) &&
            VerifyField<uint8_t>(verifier, VT_INPUT_TYPE) &&
            VerifyOffsetRequired(verifier, VT_INPUT) &&
            VerifyInputDataRaw(verifier, input(), input_type()) &&
@@ -142,6 +151,9 @@ struct InputDataBuilder {
   typedef InputData Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_uuid(flatbuffers::Offset<flatbuffers::String> uuid) {
+    fbb_.AddOffset(InputData::VT_UUID, uuid);
+  }
   void add_input_type(StardustXR::InputDataRaw input_type) {
     fbb_.AddElement<uint8_t>(InputData::VT_INPUT_TYPE, static_cast<uint8_t>(input_type), 0);
   }
@@ -168,6 +180,7 @@ struct InputDataBuilder {
 
 inline flatbuffers::Offset<InputData> CreateInputData(
     flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::String> uuid = 0,
     StardustXR::InputDataRaw input_type = StardustXR::InputDataRaw_NONE,
     flatbuffers::Offset<void> input = 0,
     float distance = 0.0f,
@@ -176,19 +189,23 @@ inline flatbuffers::Offset<InputData> CreateInputData(
   builder_.add_datamap(datamap);
   builder_.add_distance(distance);
   builder_.add_input(input);
+  builder_.add_uuid(uuid);
   builder_.add_input_type(input_type);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<InputData> CreateInputDataDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
+    const char *uuid = nullptr,
     StardustXR::InputDataRaw input_type = StardustXR::InputDataRaw_NONE,
     flatbuffers::Offset<void> input = 0,
     float distance = 0.0f,
     const std::vector<uint8_t> *datamap = nullptr) {
+  auto uuid__ = uuid ? _fbb.CreateString(uuid) : 0;
   auto datamap__ = datamap ? _fbb.CreateVector<uint8_t>(*datamap) : 0;
   return StardustXR::CreateInputData(
       _fbb,
+      uuid__,
       input_type,
       input,
       distance,
@@ -238,6 +255,10 @@ inline const StardustXR::InputData *GetSizePrefixedInputData(const void *buf) {
 
 inline InputData *GetMutableInputData(void *buf) {
   return flatbuffers::GetMutableRoot<InputData>(buf);
+}
+
+inline StardustXR::InputData *GetMutableSizePrefixedInputData(void *buf) {
+  return flatbuffers::GetMutableSizePrefixedRoot<StardustXR::InputData>(buf);
 }
 
 inline bool VerifyInputDataBuffer(

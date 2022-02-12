@@ -10,6 +10,7 @@ union InputDataRaw {
 }
 
 table InputData {
+        uuid:string;
 	input:InputDataRaw (required);
 	distance:float = 0;
 	datamap:[ubyte] (flexbuffer);
