@@ -131,6 +131,57 @@ void PanelItem::touchUp(uint32_t id) {
 	);
 }
 
+void PanelItem::setKeyboardActive(bool active) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setKeyboardActive",
+		FLEX_ARG(
+			FLEX_BOOL(active)
+		)
+	);
+}
+void PanelItem::setKeymap(std::string data) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setKeymap",
+		FLEX_ARG(
+			FLEX_STRING(data)
+		)
+	);
+}
+void PanelItem::setKeyState(uint32_t key, bool state) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setKeyState",
+		FLEX_ARGS(
+			FLEX_UINT(key)
+			FLEX_UINT(state)
+		)
+	);
+}
+void PanelItem::setKeyModStates(xkb_mod_mask_t depressed, xkb_mod_mask_t latched, xkb_mod_mask_t locked, xkb_mod_mask_t group) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setKeyModStates",
+		FLEX_ARGS(
+			FLEX_UINT(depressed)
+			FLEX_UINT(latched)
+			FLEX_UINT(locked)
+			FLEX_UINT(group)
+		)
+	);
+}
+void PanelItem::setKeyRepeat(int32_t rate, int32_t delayMS) {
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setKeyRepeat",
+		FLEX_ARGS(
+			FLEX_INT(rate)
+			FLEX_INT(delayMS)
+		)
+	);
+}
+
 void PanelItem::resize(uint32_t width, uint32_t height) {
 	messenger->sendSignal(
 		getNodePath().c_str(),

@@ -19,6 +19,7 @@ int main(int, char *[]) {
 	receiver.onDataReceived = [](std::string senderUUID, flexbuffers::Reference data){
 		std::string dataString;
 		data.ToString(true, false, dataString);
+		data.AsMap()["keymap"].GetType();
 		printf("data: %s\n", dataString.c_str());
 		exit(0);
 	};

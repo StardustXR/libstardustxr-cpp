@@ -5,6 +5,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <xkbcommon/xkbcommon.h>
 
 namespace flexbuffers {
 	class Reference;
@@ -34,6 +35,12 @@ public:
 	void touchDown(uint32_t id, double x, double y);
 	void touchMove(uint32_t id, double x, double y);
 	void touchUp(uint32_t id);
+
+	void setKeyboardActive(bool active);
+	void setKeymap(std::string data);
+	void setKeyState(uint32_t key, bool state);
+	void setKeyModStates(xkb_mod_mask_t depressed, xkb_mod_mask_t latched, xkb_mod_mask_t locked, xkb_mod_mask_t group);
+	void setKeyRepeat(int32_t rate, int32_t delayMS);
 
 	void resize(uint32_t width, uint32_t height);
 	void close();
