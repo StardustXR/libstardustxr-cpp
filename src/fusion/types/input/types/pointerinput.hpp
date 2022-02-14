@@ -17,6 +17,8 @@ public:
 	const SKMath::vec3 origin;
 	const SKMath::vec3 direction;
 	const float tilt = 0.0f;
+
+	const SKMath::vec3 deepestPoint;
 };
 
 } // namespace StardustXRFusion

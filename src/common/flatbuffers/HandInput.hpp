@@ -89,9 +89,9 @@ struct HandBuilder {
 inline flatbuffers::Offset<Hand> CreateHand(
     flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<flatbuffers::Vector<const StardustXR::joint *>> finger_joints = 0,
-    const StardustXR::joint *palm = 0,
-    const StardustXR::joint *wrist = 0,
-    const StardustXR::joint *elbow = 0) {
+    const StardustXR::joint *palm = nullptr,
+    const StardustXR::joint *wrist = nullptr,
+    const StardustXR::joint *elbow = nullptr) {
   HandBuilder builder_(_fbb);
   builder_.add_elbow(elbow);
   builder_.add_wrist(wrist);
@@ -103,9 +103,9 @@ inline flatbuffers::Offset<Hand> CreateHand(
 inline flatbuffers::Offset<Hand> CreateHandDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const std::vector<StardustXR::joint> *finger_joints = nullptr,
-    const StardustXR::joint *palm = 0,
-    const StardustXR::joint *wrist = 0,
-    const StardustXR::joint *elbow = 0) {
+    const StardustXR::joint *palm = nullptr,
+    const StardustXR::joint *wrist = nullptr,
+    const StardustXR::joint *elbow = nullptr) {
   auto finger_joints__ = finger_joints ? _fbb.CreateVectorOfStructs<StardustXR::joint>(*finger_joints) : 0;
   return StardustXR::CreateHand(
       _fbb,

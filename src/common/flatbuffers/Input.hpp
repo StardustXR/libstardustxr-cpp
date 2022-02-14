@@ -7,9 +7,9 @@
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/flexbuffers.h"
 
-#include "PointerInput.hpp"
 #include "ActionInput.hpp"
 #include "HandInput.hpp"
+#include "PointerInput.hpp"
 #include "common.hpp"
 
 namespace StardustXR {

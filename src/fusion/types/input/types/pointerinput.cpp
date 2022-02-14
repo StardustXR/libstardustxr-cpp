@@ -11,6 +11,7 @@ PointerInput::PointerInput(const StardustXR::InputData *pointer) :
 	distance(pointer->distance()),
 	origin(convertVec3(*pointer->input_as_Pointer()->origin())),
 	direction(convertVec3(*pointer->input_as_Pointer()->direction())),
-	tilt(pointer->input_as_Pointer()->tilt()) {}
+	tilt(pointer->input_as_Pointer()->tilt()),
+	deepestPoint(convertVec3(*pointer->input_as_Pointer()->deepest_point())){}
 
 }

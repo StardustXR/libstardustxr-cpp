@@ -25,13 +25,13 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   uint8_t type() const {
     return GetField<uint8_t>(VT_TYPE, 0);
   }
-  bool mutate_type(uint8_t _type) {
+  bool mutate_type(uint8_t _type = 0) {
     return SetField<uint8_t>(VT_TYPE, _type, 0);
   }
   uint32_t id() const {
     return GetField<uint32_t>(VT_ID, 0);
   }
-  bool mutate_id(uint32_t _id) {
+  bool mutate_id(uint32_t _id = 0) {
     return SetField<uint32_t>(VT_ID, _id, 0);
   }
   const flatbuffers::String *object() const {
@@ -160,6 +160,10 @@ inline const StardustXR::Message *GetSizePrefixedMessage(const void *buf) {
 
 inline Message *GetMutableMessage(void *buf) {
   return flatbuffers::GetMutableRoot<Message>(buf);
+}
+
+inline StardustXR::Message *GetMutableSizePrefixedMessage(void *buf) {
+  return flatbuffers::GetMutableSizePrefixedRoot<StardustXR::Message>(buf);
 }
 
 inline bool VerifyMessageBuffer(
