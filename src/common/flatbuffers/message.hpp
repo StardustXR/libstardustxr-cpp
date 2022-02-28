@@ -73,7 +73,6 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.VerifyString(error()) &&
            VerifyOffset(verifier, VT_DATA) &&
            verifier.VerifyVector(data()) &&
-           flexbuffers::VerifyNestedFlexBuffer(data(), verifier) &&
            verifier.EndTable();
   }
 };
