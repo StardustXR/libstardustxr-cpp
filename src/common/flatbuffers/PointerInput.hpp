@@ -47,10 +47,10 @@ struct Pointer FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyFieldRequired<StardustXR::vec3>(verifier, VT_ORIGIN) &&
-           VerifyFieldRequired<StardustXR::vec3>(verifier, VT_DIRECTION) &&
-           VerifyField<float>(verifier, VT_TILT) &&
-           VerifyFieldRequired<StardustXR::vec3>(verifier, VT_DEEPEST_POINT) &&
+           VerifyFieldRequired<StardustXR::vec3>(verifier, VT_ORIGIN, 4) &&
+           VerifyFieldRequired<StardustXR::vec3>(verifier, VT_DIRECTION, 4) &&
+           VerifyField<float>(verifier, VT_TILT, 4) &&
+           VerifyFieldRequired<StardustXR::vec3>(verifier, VT_DEEPEST_POINT, 4) &&
            verifier.EndTable();
   }
 };

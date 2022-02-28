@@ -63,8 +63,8 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_TYPE) &&
-           VerifyField<uint32_t>(verifier, VT_ID) &&
+           VerifyField<uint8_t>(verifier, VT_TYPE, 1) &&
+           VerifyField<uint32_t>(verifier, VT_ID, 4) &&
            VerifyOffset(verifier, VT_OBJECT) &&
            verifier.VerifyString(object()) &&
            VerifyOffset(verifier, VT_METHOD) &&
@@ -73,6 +73,7 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.VerifyString(error()) &&
            VerifyOffset(verifier, VT_DATA) &&
            verifier.VerifyVector(data()) &&
+           flexbuffers::VerifyNestedFlexBuffer(data(), verifier) &&
            verifier.EndTable();
   }
 };

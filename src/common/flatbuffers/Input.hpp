@@ -125,12 +125,13 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_UUID) &&
            verifier.VerifyString(uuid()) &&
-           VerifyField<uint8_t>(verifier, VT_INPUT_TYPE) &&
+           VerifyField<uint8_t>(verifier, VT_INPUT_TYPE, 1) &&
            VerifyOffsetRequired(verifier, VT_INPUT) &&
            VerifyInputDataRaw(verifier, input(), input_type()) &&
-           VerifyField<float>(verifier, VT_DISTANCE) &&
+           VerifyField<float>(verifier, VT_DISTANCE, 4) &&
            VerifyOffset(verifier, VT_DATAMAP) &&
            verifier.VerifyVector(datamap()) &&
+           flexbuffers::VerifyNestedFlexBuffer(datamap(), verifier) &&
            verifier.EndTable();
   }
 };

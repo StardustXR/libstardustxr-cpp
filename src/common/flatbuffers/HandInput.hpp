@@ -49,9 +49,9 @@ struct Hand FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     return VerifyTableStart(verifier) &&
            VerifyOffsetRequired(verifier, VT_FINGER_JOINTS) &&
            verifier.VerifyVector(finger_joints()) &&
-           VerifyFieldRequired<StardustXR::joint>(verifier, VT_PALM) &&
-           VerifyFieldRequired<StardustXR::joint>(verifier, VT_WRIST) &&
-           VerifyField<StardustXR::joint>(verifier, VT_ELBOW) &&
+           VerifyFieldRequired<StardustXR::joint>(verifier, VT_PALM, 4) &&
+           VerifyFieldRequired<StardustXR::joint>(verifier, VT_WRIST, 4) &&
+           VerifyField<StardustXR::joint>(verifier, VT_ELBOW, 4) &&
            verifier.EndTable();
   }
 };
