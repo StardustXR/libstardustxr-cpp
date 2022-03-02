@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "spatial.hpp"
+#include "../spatial/spatial.hpp"
 
 namespace StardustXRFusion {
 

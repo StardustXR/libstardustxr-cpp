@@ -4,7 +4,7 @@
 #include "flex.hpp"
 #include "fusion_internal.hpp"
 
-#include "types/spatial.hpp"
+#include "types/spatial/spatial.hpp"
 
 #include <csignal>
 #include <iostream>

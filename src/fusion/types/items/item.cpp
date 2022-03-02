@@ -1,5 +1,5 @@
 #include "item.hpp"
-#include "types/spatial.hpp"
+#include "../spatial/spatial.hpp"
 #include "fusion_internal.hpp"
 
 namespace StardustXRFusion {

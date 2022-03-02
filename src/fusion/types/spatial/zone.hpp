@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "spatial.hpp"
-#include "fields/field.hpp"
+#include "../fields/field.hpp"
 
 namespace flexbuffers {
 	class Reference;

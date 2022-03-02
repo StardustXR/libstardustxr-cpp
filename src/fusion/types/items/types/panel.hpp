@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../item.hpp"
-#include "../../model.hpp"
+#include "../../drawable/model.hpp"
 #include <functional>
 #include <string>
 #include <vector>

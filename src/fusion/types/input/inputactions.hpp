@@ -1,7 +1,7 @@
 #pragma once
 
 #include "datamap.hpp"
-#include "../spatial.hpp"
+#include "../spatial/spatial.hpp"
 #include "../fields/field.hpp"
 #include "../../sk_math.hpp"
 

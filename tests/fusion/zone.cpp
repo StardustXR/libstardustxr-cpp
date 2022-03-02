@@ -1,7 +1,7 @@
 #include "fusion/fusion.hpp"
 #include "sk_math.hpp"
 #include "types/fields/spherefield.hpp"
-#include "types/zone.hpp"
+#include "types/spatial/zone.hpp"
 
 using namespace StardustXRFusion;
 using namespace SKMath;

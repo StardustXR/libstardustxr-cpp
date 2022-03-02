@@ -1,7 +1,7 @@
 #include "zone.hpp"
 
-#include "../flex.hpp"
-#include "../fusion_internal.hpp"
+#include "../../flex.hpp"
+#include "../../fusion_internal.hpp"
 #include <flatbuffers/flexbuffers.h>
 
 using namespace SKMath;

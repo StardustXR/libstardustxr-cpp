@@ -2,8 +2,8 @@
 
 #include <functional>
 
-#include "node.hpp"
-#include "../sk_math.hpp"
+#include "../node.hpp"
+#include "../../sk_math.hpp"
 
 namespace StardustXRFusion {
 

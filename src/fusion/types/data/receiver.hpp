@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "../spatial.hpp"
+#include "../spatial/spatial.hpp"
 #include "../fields/field.hpp"
 #include <flatbuffers/flatbuffers.h>
 #include <flatbuffers/flexbuffers.h>

@@ -1,7 +1,7 @@
 #include <cmath>
 
 #include "fusion/fusion.hpp"
-#include "fusion/types/model.hpp"
+#include "fusion/types/drawable/model.hpp"
 
 using namespace StardustXRFusion;
 
