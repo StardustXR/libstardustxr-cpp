@@ -7,6 +7,7 @@
 
 #include "../spatial.hpp"
 #include "../fields/field.hpp"
+#include <flatbuffers/flatbuffers.h>
 #include <flatbuffers/flexbuffers.h>
 
 namespace StardustXRFusion {

@@ -9,8 +9,6 @@
 #include "../fields/field.hpp"
 #include "receiver.hpp"
 
-#include <flatbuffers/flexbuffers.h>
-
 namespace StardustXRFusion {
 
 class NonSpatialSender : public Spatial {

@@ -1,6 +1,6 @@
 #include "environment.hpp"
-#include "../../../scenegraph.hpp"
 #include "fusion_internal.hpp"
+#include "../../../scenegraph.hpp"
 #include <cstddef>
 #include <flatbuffers/flexbuffers.h>
 #include <string>

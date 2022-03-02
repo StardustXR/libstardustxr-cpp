@@ -1,12 +1,11 @@
 #pragma once
 
 #include <atomic>
-#include <flatbuffers/flatbuffers.h>
 #include <mutex>
 #include <thread>
 
-#include "flex.hpp"
 #include "flatbuffers/message.hpp"
+#include "flex.hpp"
 #include "scenegraph.hpp"
 
 namespace StardustXR {
