@@ -10,8 +10,13 @@ public:
 	Node(const Node &original);
 	~Node();
 
-	std::string getNodePath();
-	std::string getNodeName();
+	bool operator==(const Node& other) const;
+	bool operator!=(const Node& other) const;
+
+	bool operator<(const Node& other) const;
+
+	std::string getNodePath() const;
+	std::string getNodeName() const;
 
 	void setEnabled(bool enabled);
 

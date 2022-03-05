@@ -17,11 +17,21 @@ Node::~Node() {
 		);
 	}
 }
+bool Node::operator==(const Node &other) const {
+	return this->getNodePath() == other.getNodePath();
+}
+bool Node::operator!=(const Node &other) const {
+	return !(*this == other);
+}
 
-std::string Node::getNodePath() {
+bool Node::operator<(const Node &other) const {
+	return this->getNodePath() < other.getNodePath();
+}
+
+std::string Node::getNodePath() const {
 	return nodePath+"/"+nodeName;
 }
-std::string Node::getNodeName() {
+std::string Node::getNodeName() const {
 	return nodeName;
 }
 

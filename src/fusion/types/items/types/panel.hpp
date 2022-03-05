@@ -21,7 +21,7 @@ public:
 		const uint32_t height;
 	};
 
-	static void registerUIHandlers(std::function<void(PanelItem &, Data)> create, std::function<void(PanelItem &)> destroy);
+	static void registerUIHandlers(std::function<void(PanelItem &, Data)> create, std::function<void(PanelItem &)> capture, std::function<void(PanelItem &, Data)> release, std::function<void(PanelItem &)> destroy);
 	static std::string createAcceptorMethodString;
 
 	void applySurfaceMaterial(Model &model, uint32_t submeshIndex);
@@ -48,6 +48,8 @@ public:
 private:
 	static std::vector<uint8_t> uiCallback(flexbuffers::Reference data, bool);
 	static std::function<void(PanelItem &, Data)> uiCreateFunction;
+	static std::function<void(PanelItem &)>       uiCaptureFunction;
+	static std::function<void(PanelItem &, Data)> uiReleaseFunction;
 	static std::function<void(PanelItem &)>       uiDestroyFunction;
 };
 

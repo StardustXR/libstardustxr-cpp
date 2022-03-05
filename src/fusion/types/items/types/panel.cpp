@@ -11,14 +11,18 @@ namespace StardustXRFusion {
 std::string PanelItem::createAcceptorMethodString = "createPanelItemAcceptor";
 
 std::function<void(PanelItem &, PanelItem::Data)> PanelItem::uiCreateFunction  = [](PanelItem &, PanelItem::Data) {};
+std::function<void(PanelItem &)>                  PanelItem::uiCaptureFunction = [](PanelItem &) {};
+std::function<void(PanelItem &, PanelItem::Data)> PanelItem::uiReleaseFunction = [](PanelItem &, PanelItem::Data) {};
 std::function<void(PanelItem &)>                  PanelItem::uiDestroyFunction = [](PanelItem &) {};
 
 PanelItem::PanelItem(Spatial *space, std::string nodePath, std::string nodeName) :
 	Item(space, nodePath, nodeName) {
 }
 
-void PanelItem::registerUIHandlers(std::function<void (PanelItem &, Data)> create, std::function<void (PanelItem &)> destroy) {
+void PanelItem::registerUIHandlers(std::function<void (PanelItem &, Data)> create, std::function<void (PanelItem &)> capture, std::function<void (PanelItem &, Data)> release, std::function<void (PanelItem &)> destroy) {
 	uiCreateFunction = create;
+	uiCaptureFunction = capture;
+	uiReleaseFunction = release;
 	uiDestroyFunction = destroy;
 	scenegraph->addMethod("panelUI", &PanelItem::uiCallback);
 
@@ -202,15 +206,25 @@ void PanelItem::close() {
 
 std::vector<uint8_t> PanelItem::uiCallback(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector flexVec = data.AsVector();
-	bool created = flexVec[0].AsBool();
+	Item::UIEvent eventType = (Item::UIEvent) flexVec[0].AsUInt32();
 	std::string nodeName = flexVec[1].AsString().str();
 	flexbuffers::Vector dataVec = flexVec[2].AsVector();
 
 	PanelItem item(nullptr, "/item/panel", nodeName);
-	if(created)
-		uiCreateFunction(item, Data {dataVec[0].AsUInt32(), dataVec[1].AsUInt32()});
-	else
-		uiDestroyFunction(item);
+	switch(eventType) {
+		case Item::UIEvent::Create: {
+			uiCreateFunction(item, Data {dataVec[0].AsUInt32(), dataVec[1].AsUInt32()});
+		} break;
+		case Item::UIEvent::Capture: {
+			uiCaptureFunction(item);
+		} break;
+		case Item::UIEvent::Release: {
+			uiReleaseFunction(item, Data {dataVec[0].AsUInt32(), dataVec[1].AsUInt32()});
+		} break;
+		case Item::UIEvent::Destroy: {
+			uiDestroyFunction(item);
+		} break;
+	}
 	return std::vector<uint8_t>();
 }
 
