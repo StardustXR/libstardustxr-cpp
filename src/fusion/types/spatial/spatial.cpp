@@ -16,9 +16,6 @@ Spatial::Spatial(Spatial *parent, std::string nodePath, std::string nodeName) {
 
 Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) {
 	this->parent = parent;
-	this->origin = origin;
-	this->orientation = orientation;
-	this->localScale = scale;
 }
 
 Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable, bool zoneable) {
@@ -43,81 +40,50 @@ Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orien
 	return spatial;
 }
 
-void Spatial::move(vec3 position) {
-	origin = origin + position;
-	messenger->sendSignal(
-		getNodePath().c_str(),
-		"move",
-		FLEX_ARG(
-			FLEX_VEC3(position)
-		)
-	);
-}
-
-void Spatial::rotate(quat rotation) {
-	orientation = orientation * rotation;
-	messenger->sendSignal(
-		getNodePath().c_str(),
-		"rotate",
-		FLEX_ARG(
-			FLEX_QUAT(rotation)
-		)
-	);
-}
-
-void Spatial::scale(float scaleFactor) {
-	this->localScale *= scaleFactor;
-	messenger->sendSignal(
-		getNodePath().c_str(),
-		"scale",
-		FLEX_ARG(
-			FLEX_FLOAT(scaleFactor)
-		)
-	);
-}
-
 void Spatial::setOrigin(vec3 origin) {
-	this->origin = origin;
 	messenger->sendSignal(
 		getNodePath().c_str(),
-		"setOrigin",
-		FLEX_ARG(
+		"setTransform",
+		FLEX_ARGS(
 			FLEX_VEC3(origin)
+			FLEX_NULL
+			FLEX_NULL
 		)
 	);
 }
 
 void Spatial::setOrientation(quat orientation) {
-	this->orientation = orientation;
 	messenger->sendSignal(
 		getNodePath().c_str(),
-		"setOrientation",
-		FLEX_ARG(
+		"setTransform",
+		FLEX_ARGS(
+			FLEX_NULL
 			FLEX_QUAT(orientation)
+			FLEX_NULL
 		)
 	);
 }
 
 void Spatial::setScale(vec3 scale) {
-	localScale = scale;
 	messenger->sendSignal(
 		getNodePath().c_str(),
-		"setScale",
-		FLEX_ARG(
+		"setTransform",
+		FLEX_ARGS(
+			FLEX_NULL
+			FLEX_NULL
 			FLEX_VEC3(scale)
 		)
 	);
 }
 
 void Spatial::setPose(pose_t pose) {
-	origin = pose.position;
-	orientation = pose.orientation;
 	messenger->sendSignal(
 		getNodePath().c_str(),
-		"setPose",
+		"setTransform",
 		FLEX_ARGS(
 			FLEX_VEC3(pose.position)
 			FLEX_QUAT(pose.orientation)
+			FLEX_NULL
 		)
 	);
 }
@@ -168,22 +134,6 @@ void Spatial::setZoneable(bool zoneable) {
 			FLEX_BOOL(zoneable)
 		)
 	);
-}
-
-SKMath::vec3 Spatial::getOrigin() {
-	return origin;
-}
-SKMath::quat Spatial::getOrientation() {
-	return orientation;
-}
-SKMath::vec3 Spatial::getScale() {
-	return localScale;
-}
-SKMath::pose_t Spatial::getPose() {
-	return pose_t{
-		getOrigin(),
-		getOrientation()
-	};
 }
 
 } // namespace StardustXRFusion
