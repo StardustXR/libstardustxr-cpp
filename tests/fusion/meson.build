@@ -61,10 +61,17 @@ executable(
 )
 
 executable(
-	'spatial',
-	'spatial.cpp',
-	include_directories: [fusion_tests_includes],
-	dependencies: [fusion],
+        'spatial',
+        'spatial.cpp',
+        include_directories: [fusion_tests_includes],
+        dependencies: [fusion],
+)
+
+executable(
+        'spatialloop',
+        'spatialloop.cpp',
+        include_directories: [fusion_tests_includes],
+        dependencies: [fusion],
 )
 
 executable(
