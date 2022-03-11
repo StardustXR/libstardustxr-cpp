@@ -15,10 +15,16 @@ public:
 
 	void getTransform(Spatial *space, std::function<void(SKMath::vec3, SKMath::quat, SKMath::vec3)> callback);
 
+	void setOrigin(SKMath::vec3 origin, Spatial &space);
 	void setOrigin(SKMath::vec3 origin);
+
+	void setOrientation(SKMath::quat orientation, Spatial &space);
 	void setOrientation(SKMath::quat orientation);
-	void setScale(SKMath::vec3 scale);
+
+	void setPose(SKMath::pose_t pose, Spatial &space);
 	void setPose(SKMath::pose_t pose);
+
+	void setScale(SKMath::vec3 scale);
 
 	Spatial *getSpatialParent();
 	void setSpatialParent(Spatial *space);

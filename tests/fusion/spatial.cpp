@@ -11,6 +11,7 @@ int main(int, char *[]) {
 	double rotationSeconds = 5;
 
 	Spatial gyroRoot = Spatial::create(StardustXRFusion::Root());
+	gyroRoot.setZoneable(true);
 	Model outsideRing(&gyroRoot, "../../../res/gyro_outside.glb");
 	Model middleRing(&outsideRing, "../../../res/gyro_middle.glb");
 	Model insideRing(&middleRing, "../../../res/gyro_inside.glb");
