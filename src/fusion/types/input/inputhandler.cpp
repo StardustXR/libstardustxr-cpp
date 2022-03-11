@@ -127,8 +127,7 @@ void InputHandler::runAction(std::string action) {
 
 std::vector<uint8_t> InputHandler::inputEvent(flexbuffers::Reference data, bool) {
 	const StardustXR::InputData *inputData = StardustXR::GetInputData(data.AsBlob().data());
-	const flexbuffers::Map flexDatamap = inputData->datamap_flexbuffer_root().AsMap();
-	Datamap datamap(flexDatamap);
+	const Datamap datamap(inputData->datamap()->data(), inputData->datamap()->Length());
 
 	bool capture = false;
 	switch (inputData->input_type()) {

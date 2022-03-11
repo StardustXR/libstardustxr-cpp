@@ -5,12 +5,22 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-Datamap::Datamap(const flexbuffers::Map &flexDatamap) {
-	this->flexDatamap = &flexDatamap;
+Datamap::Datamap(const uint8_t *flexData, const size_t flexDataSize) :
+		flexDataBuffer(flexData, flexData+flexDataSize),
+		flexDatamap(flexbuffers::GetRoot(flexDataBuffer).AsMap()) {}
+
+Datamap::Datamap(const Datamap &datamap) :
+	flexDataBuffer(datamap.flexDataBuffer),
+	flexDatamap(flexbuffers::GetRoot(flexDataBuffer).AsMap()) {}
+
+Datamap &Datamap::operator=(const Datamap &other) {
+	this->flexDataBuffer = other.flexDataBuffer;
+	this->flexDatamap = flexbuffers::GetRoot(flexDataBuffer).AsMap();
+	return *this;
 }
 
 std::vector<std::string> Datamap::keys() const {
-	flexbuffers::TypedVector flexKeys = (*flexDatamap).Keys();
+	flexbuffers::TypedVector flexKeys = flexDatamap.Keys();
 	std::vector<std::string> keys;
 
 	for(uint i=0; i<flexKeys.size(); ++i) {
@@ -21,13 +31,13 @@ std::vector<std::string> Datamap::keys() const {
 }
 
 bool Datamap::exists(std::string key) const {
-	flexbuffers::Reference value = (*flexDatamap)[key];
+	flexbuffers::Reference value = flexDatamap[key];
 
 	return !value.IsNull();
 }
 
 bool Datamap::getBool(std::string key) const {
-	flexbuffers::Reference value = (*flexDatamap)[key];
+	flexbuffers::Reference value = flexDatamap[key];
 
 	if(value.IsBool())
 		return value.AsBool();
@@ -36,7 +46,7 @@ bool Datamap::getBool(std::string key) const {
 }
 
 int32_t Datamap::getInt(std::string key) const {
-	flexbuffers::Reference value = (*flexDatamap)[key];
+	flexbuffers::Reference value = flexDatamap[key];
 
 	if(value.IsInt())
 		return value.AsInt32();
@@ -45,7 +55,7 @@ int32_t Datamap::getInt(std::string key) const {
 }
 
 float Datamap::getFloat(std::string key) const {
-	flexbuffers::Reference value = (*flexDatamap)[key];
+	flexbuffers::Reference value = flexDatamap[key];
 
 	if(value.IsFloat())
 		return value.AsFloat();
@@ -54,7 +64,7 @@ float Datamap::getFloat(std::string key) const {
 }
 
 SKMath::vec2 Datamap::getVec2(std::string key) const {
-	flexbuffers::Reference value = (*flexDatamap)[key];
+	flexbuffers::Reference value = flexDatamap[key];
 
 	if(value.IsTypedVector() && value.AsTypedVector().size() == 2)
 		return SK_VEC2(value.AsTypedVector());
@@ -63,7 +73,7 @@ SKMath::vec2 Datamap::getVec2(std::string key) const {
 }
 
 SKMath::vec3 Datamap::getVec3(std::string key) const {
-	flexbuffers::Reference value = (*flexDatamap)[key];
+	flexbuffers::Reference value = flexDatamap[key];
 
 	if(value.IsTypedVector() && value.AsTypedVector().size() == 3)
 		return SK_VEC3(value.AsTypedVector());

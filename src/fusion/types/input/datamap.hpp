@@ -2,18 +2,19 @@
 
 #include "../../sk_math.hpp"
 #include <cstdint>
+#include <flatbuffers/flatbuffers.h>
+#include <flatbuffers/flexbuffers.h>
 #include <string>
 #include <vector>
-
-namespace flexbuffers {
-	class Map;
-}
 
 namespace StardustXRFusion {
 
 class Datamap {
 public:
-	explicit Datamap(const flexbuffers::Map &flexDatamap);
+	Datamap(const uint8_t *flexData, const size_t flexDataSize);
+	Datamap(const Datamap &datamap);
+
+	Datamap &operator=(const Datamap &other);
 
 	std::vector<std::string> keys() const;
 	bool exists(std::string key) const;
@@ -24,7 +25,8 @@ public:
 	SKMath::vec3 getVec3(std::string key) const;
 
 private:
-	const flexbuffers::Map *flexDatamap;
+	std::vector<uint8_t> flexDataBuffer;
+	flexbuffers::Map flexDatamap;
 };
 
 } // namespace StardustXRFusion
