@@ -27,6 +27,7 @@ MessengerManager::MessengerManager() {
 	setenv("STARDUST_INSTANCE", instanceNumberString.c_str(), true);
 
 	this->socketThread = std::thread(&StardustXR::MessengerManager::socketLoop, this);
+	this->socketThread.detach();
 }
 MessengerManager::~MessengerManager() {}
 
