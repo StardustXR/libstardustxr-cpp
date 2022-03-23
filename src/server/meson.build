@@ -15,4 +15,4 @@ lib_server = library(
 	soversion: '0',
 	install: true
 )
-pkg.generate(lib_server, filebase: 'stardustxr-server', name: 'stardustxr-server', url: 'https://github.com/technobaboo/libstardustxr')
+pkg.generate(lib_server, filebase: 'stardustxr-server', name: 'stardustxr-server', url: 'https://github.com/StardustXR/libstardustxr')

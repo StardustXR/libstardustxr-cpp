@@ -15,7 +15,7 @@ lib_client = library(
 	soversion: '0',
 	install: true
 )
-pkg.generate(lib_client, filebase: 'stardustxr', name: 'stardustxr', url: 'https://github.com/technobaboo/libstardustxr')
+pkg.generate(lib_client, filebase: 'stardustxr', name: 'stardustxr', url: 'https://github.com/StardustXR/libstardustxr')
 
 client = declare_dependency(
 	include_directories: include_directories('.'),

@@ -28,7 +28,7 @@ lib_fusion = library(
 	soversion: '0',
 	install: true
 )
-pkg.generate(lib_fusion, filebase: 'stardustxr-fusion', name: 'stardustxr-fusion', url: 'https://github.com/technobaboo/libstardustxr')
+pkg.generate(lib_fusion, filebase: 'stardustxr-fusion', name: 'stardustxr-fusion', url: 'https://github.com/StardustXR/libstardustxr')
 
 fusion = declare_dependency(
 	include_directories: include_directories('.'),
