@@ -18,6 +18,7 @@ fusion_files = files(
 )
 
 subdir('types')
+subdir('util')
 
 lib_fusion = library(
 	'stardustxr-fusion',
