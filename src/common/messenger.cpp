@@ -10,6 +10,7 @@ Messenger::Messenger(int fd, Scenegraph *scenegraph) {
 	this->fd = fd;
 	this->scenegraph = scenegraph;
 }
+Messenger::~Messenger() {}
 
 void Messenger::startHandler() {
 	this->handlerThread = std::thread(&StardustXR::Messenger::messageHandler, this);

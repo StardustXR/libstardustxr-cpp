@@ -12,7 +12,8 @@ namespace StardustXR {
 
 class Messenger {
 public:
-	explicit Messenger(int fd, Scenegraph *scenegraph);
+	Messenger(int fd, Scenegraph *scenegraph);
+	virtual ~Messenger();
 
 	void startHandler();
 
