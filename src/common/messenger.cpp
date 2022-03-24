@@ -17,6 +17,11 @@ void Messenger::startHandler() {
 	this->handlerThread.detach();
 }
 
+void Messenger::error(const std::string object, const std::string method, const std::string error) {
+	std::vector<uint8_t> blankData;
+	sendCall(0, 0, object, method, error, blankData);
+}
+
 uint Messenger::generateMessageID() {
 	const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
 
@@ -26,13 +31,13 @@ uint Messenger::generateMessageID() {
 	return id;
 }
 
-void Messenger::executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback) {
+void Messenger::executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, Callback callback) {
 	uint id = generateMessageID();
 	{
 		const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
 		pendingCallbacks[id] = callback;
 	}
-	sendCall(2, id, object, method, data);
+	sendCall(2, id, object, method, "", data);
 }
 
 int Messenger::pollFD(short events, int timeout) {
@@ -43,18 +48,20 @@ int Messenger::pollFD(short events, int timeout) {
 	return poll(poll_fds, 1, timeout);
 }
 
-void Messenger::sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data) {
+void Messenger::sendCall(uint8_t type, uint id, const std::string object, const std::string method, const std::string error, std::vector<uint8_t> &data) {
 	const std::lock_guard<std::mutex> sendLock(sendMutex);
 
-	auto objectPath = fbb.CreateString(object);
-	auto methodName = fbb.CreateString(method);
-	auto dataBuffer = fbb.CreateVector<uint8_t>(data);
+	auto objectPath   = fbb.CreateString(object);
+	auto methodName   = fbb.CreateString(method);
+	auto errorMessage = fbb.CreateString(error);
+	auto dataBuffer   = fbb.CreateVector<uint8_t>(data);
 
 	MessageBuilder messageBuilder(fbb);
 	messageBuilder.add_type(type);
 	messageBuilder.add_id(id);
 	messageBuilder.add_object(objectPath);
 	messageBuilder.add_method(methodName);
+	messageBuilder.add_error(errorMessage);
 	messageBuilder.add_data(dataBuffer);
 	auto message = messageBuilder.Finish();
 
@@ -129,7 +136,7 @@ void Messenger::handleMessage(const Message *message) {
 
 		// Method was called, so execute the local scenegraph method and send back the result
 		std::vector<uint8_t> returnValue = scenegraph->executeMethod(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
-		sendCall(3, message->id(), message->object()->c_str(), message->method()->c_str(), returnValue);
+		sendCall(3, message->id(), message->object()->str(), message->method()->str(), "", returnValue);
 	} break;
 	case 3: {
 		Callback callback = nullptr;

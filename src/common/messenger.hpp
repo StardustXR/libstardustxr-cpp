@@ -17,19 +17,20 @@ public:
 
 	void startHandler();
 
-	void sendSignal(const char *object, const char *method, ArgsConstructor argsConstructor) {
+	void error(const std::string object, const std::string method, const std::string error);
+	void sendSignal(const std::string object, const std::string method, ArgsConstructor argsConstructor) {
 		std::vector<uint8_t> data = FlexbufferFromArguments(argsConstructor);
 		sendSignal(object, method, data);
 	}
-	void sendSignal(const char *object, const char *method, std::vector<uint8_t> &data) {
-		sendCall(1, 0, object, method, data);
+	void sendSignal(const std::string object, const std::string method, std::vector<uint8_t> &data) {
+		sendCall(1, 0, object, method, "", data);
 	}
 
-	void executeRemoteMethod(const char *object, const char *method, ArgsConstructor argsConstructor, Callback callback) {
+	void executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, Callback callback) {
 		std::vector<uint8_t> data = FlexbufferFromArguments(argsConstructor);
 		executeRemoteMethod(object, method, data, callback);
 	}
-	void executeRemoteMethod(const char *object, const char *method, std::vector<uint8_t> &data, Callback callback);
+	void executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, Callback callback);
 
 protected:
 	// General variables
@@ -51,7 +52,7 @@ protected:
 	// Message sending specific
 	std::mutex sendMutex;
 	flatbuffers::FlatBufferBuilder fbb;
-	void sendCall(uint8_t type, uint id, const char *object, const char *method, std::vector<uint8_t> &data);
+	void sendCall(uint8_t type, uint id, const std::string object, const std::string method, const std::string error, std::vector<uint8_t> &data);
 	void sendMessage(uint8_t *buffer, uint size);
 };
 
