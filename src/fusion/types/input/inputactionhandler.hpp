@@ -27,7 +27,8 @@ public:
 
 
 	struct Action {
-		bool captureOnTrigger = true;
+		Action(bool captureOnTrigger = true);
+		bool captureOnTrigger;
 		std::function<bool(const std::string uuid, const PointerInput &, const Datamap &)> pointerActiveCondition = [](const std::string uuid, const PointerInput &pointer, const Datamap &datamap){return false;};
 		std::function<bool(const std::string uuid, const HandInput &,    const Datamap &)> handActiveCondition    = [](const std::string uuid, const HandInput &hand,       const Datamap &datamap){return false;};
 
@@ -36,12 +37,15 @@ public:
 		std::vector<InputMethod> stoppedActing;
 
 		std::vector<InputMethod> queuedActiveInputs;
+
+		virtual void update();
+		virtual ~Action();
 	};
 
 	explicit InputActionHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
 	explicit InputActionHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation);
 
-	std::vector<Action> actions;
+	std::vector<Action *> actions;
 	void update();
 
 protected:

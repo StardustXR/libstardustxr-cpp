@@ -15,35 +15,20 @@ InputActionHandler::InputActionHandler(Spatial *parent, SKMath::vec3 origin, SKM
 }
 
 void InputActionHandler::update() {
-	for(Action &action : actions) {
-//		std::sort(action.queuedActiveInputs.begin(), action.queuedActiveInputs.end(), [](InputMethod &a, InputMethod &b) {
-//			return a.uuid < b.uuid;
-//		});
-
-		action.startedActing.clear();
-		action.stoppedActing.clear();
-
-		std::set_difference(action.queuedActiveInputs.begin(), action.queuedActiveInputs.end(),
-							action.activelyActing.begin(), action.activelyActing.end(),
-							std::inserter(action.startedActing, action.startedActing.begin()));
-		std::set_difference(action.activelyActing.begin(), action.activelyActing.end(),
-							action.queuedActiveInputs.begin(), action.queuedActiveInputs.end(),
-							std::inserter(action.stoppedActing, action.stoppedActing.begin()));
-
-		action.activelyActing = action.queuedActiveInputs;
-		action.queuedActiveInputs.clear();
+	for(Action *action : actions) {
+		action->update();
 	}
 }
 
 bool InputActionHandler::pointerInputEvent(const std::string uuid, const PointerInput &pointer, const Datamap &datamap) {
 	bool capture = false;
-	for(Action &action : actions) {
-		bool acted = action.pointerActiveCondition(uuid, pointer, datamap);
+	for(Action *action : actions) {
+		bool acted = action->pointerActiveCondition(uuid, pointer, datamap);
 		if(acted) {
-			if(action.captureOnTrigger)
+			if(action->captureOnTrigger)
 				capture = true;
 
-			action.queuedActiveInputs.emplace_back(uuid, datamap, new PointerInput(pointer), nullptr);
+			action->queuedActiveInputs.emplace_back(uuid, datamap, new PointerInput(pointer), nullptr);
 		}
 	}
 	return capture;
@@ -51,13 +36,13 @@ bool InputActionHandler::pointerInputEvent(const std::string uuid, const Pointer
 
 bool InputActionHandler::handInputEvent(const std::string uuid, const HandInput &hand, const Datamap &datamap) {
 	bool capture = false;
-	for(Action &action : actions) {
-		bool acted = action.handActiveCondition(uuid, hand, datamap);
+	for(Action *action : actions) {
+		bool acted = action->handActiveCondition(uuid, hand, datamap);
 		if(acted) {
-			if(action.captureOnTrigger)
+			if(action->captureOnTrigger)
 				capture = true;
 
-			action.queuedActiveInputs.emplace_back(uuid, datamap, nullptr, new HandInput(hand));
+			action->queuedActiveInputs.emplace_back(uuid, datamap, nullptr, new HandInput(hand));
 		}
 	}
 	return capture;
@@ -87,5 +72,30 @@ bool InputActionHandler::InputMethod::operator<(const InputMethod &other) {
 bool InputActionHandler::InputMethod::operator==(const std::string &uuid) {
 	return this->uuid == uuid;
 }
+
+InputActionHandler::Action::Action(bool captureOnTrigger) :
+	captureOnTrigger(captureOnTrigger){}
+
+void InputActionHandler::Action::update() {
+//	std::sort(queuedActiveInputs.begin(), queuedActiveInputs.end(), [](InputMethod &a, InputMethod &b) {
+//		return a.uuid < b.uuid;
+//	});
+
+	this->startedActing.clear();
+	this->stoppedActing.clear();
+
+	std::set_difference(queuedActiveInputs.begin(),  queuedActiveInputs.end(),
+						activelyActing.begin(),      activelyActing.end(),
+						std::inserter(startedActing, startedActing.begin()));
+
+	std::set_difference(activelyActing.begin(),      activelyActing.end(),
+						queuedActiveInputs.begin(),  queuedActiveInputs.end(),
+						std::inserter(stoppedActing, stoppedActing.begin()));
+
+	activelyActing = queuedActiveInputs;
+	queuedActiveInputs.clear();
+}
+
+InputActionHandler::Action::~Action(){}
 
 }
