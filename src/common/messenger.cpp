@@ -126,7 +126,7 @@ void Messenger::handleMessage(const Message *message) {
 	switch (message->type()) {
 	case 0: {
 		// Error, so spit the error out to stderr
-		fputs(message->error()->c_str(), stderr);
+		fprintf(stderr, "[Stardust XR][%s:%s] %s", message->object()->c_str(), message->method()->c_str(), message->error()->c_str());
 	} break;
 	case 1: {
 		// Signal, so execute the local scenegraph method
