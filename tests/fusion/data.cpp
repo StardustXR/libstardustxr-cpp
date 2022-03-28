@@ -11,7 +11,7 @@ int main(int, char *[]) {
 
 	Spatial receiverRoot = Spatial::create(nullptr, vec3_forward * 1.0f);
 	SphereField receiverField(&receiverRoot, vec3_zero, 0);
-	NonSpatialReceiver receiver(&receiverRoot, receiverField);
+	PulseReceiver receiver(&receiverRoot, receiverField);
 	receiver.setMask([](flexbuffers::Builder &fbb) {
 		fbb.Bool("keyboard", true);
 	});
@@ -24,10 +24,10 @@ int main(int, char *[]) {
 		exit(0);
 	};
 
-	NonSpatialSender sender(nullptr);
-	sender.getReceivers([](std::vector<NonSpatialReceiver> &receivers) {
+	PulseSender sender(nullptr);
+	sender.getReceivers([](std::vector<PulseReceiver> &receivers) {
 		if(receivers.size() > 0) {
-			NonSpatialReceiver recentReceiver = receivers[receivers.size()-1];
+			PulseReceiver recentReceiver = receivers[receivers.size()-1];
 			recentReceiver.getMask([](flexbuffers::Reference mask) {
 				std::string maskString;
 				mask.ToString(true, false, maskString);

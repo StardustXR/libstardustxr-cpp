@@ -8,14 +8,14 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-NonSpatialReceiver::NonSpatialReceiver(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
+PulseReceiver::PulseReceiver(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
 	nodePath = "/data/receiver";
 	nodeName = GenerateID();
 
-	scenegraph->addMethod(nodeName, std::bind(&NonSpatialReceiver::dataReceived, this, std::placeholders::_1, std::placeholders::_2));
+	scenegraph->addMethod(nodeName, std::bind(&PulseReceiver::dataReceived, this, std::placeholders::_1, std::placeholders::_2));
 	messenger->sendSignal(
 		"/data",
-		"createNonSpatialReceiver",
+		"createPulseReceiver",
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
 			FLEX_STRING(field.getNodePath())
@@ -27,14 +27,14 @@ NonSpatialReceiver::NonSpatialReceiver(Spatial *parent, Field &field, SKMath::ve
 		)
 	);
 }
-NonSpatialReceiver::NonSpatialReceiver(NonSpatialSender *sender, std::string nodePath, std::string nodeName) : Spatial(nullptr, nodePath, nodeName) {
+PulseReceiver::PulseReceiver(PulseSender *sender, std::string nodePath, std::string nodeName) : Spatial(nullptr, nodePath, nodeName) {
 	this->destroyable = false;
 	this->sender = sender;
 	this->nodePath = nodePath;
 	this->nodeName = nodeName;
 }
 
-void NonSpatialReceiver::getMask(std::function<void (flexbuffers::Reference)> callback) {
+void PulseReceiver::getMask(std::function<void (flexbuffers::Reference)> callback) {
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
 		"getMask",
@@ -45,13 +45,13 @@ void NonSpatialReceiver::getMask(std::function<void (flexbuffers::Reference)> ca
 		}
 	);
 }
-void NonSpatialReceiver::getMask(std::function<void (flexbuffers::Map mask)> callback) {
+void PulseReceiver::getMask(std::function<void (flexbuffers::Map mask)> callback) {
 	getMask([callback](flexbuffers::Reference mask) {
 		callback(mask.AsMap());
 	});
 }
 
-void NonSpatialReceiver::setMask(std::vector<uint8_t> mask) {
+void PulseReceiver::setMask(std::vector<uint8_t> mask) {
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setMask",
@@ -60,7 +60,7 @@ void NonSpatialReceiver::setMask(std::vector<uint8_t> mask) {
 		)
 	);
 }
-void NonSpatialReceiver::setMask(std::function<void (flexbuffers::Builder &)> argsConstructor) {
+void PulseReceiver::setMask(std::function<void (flexbuffers::Builder &)> argsConstructor) {
 	flexbuffers::Builder fbb(1024);
 	fbb.Map([&]() {
 		argsConstructor(fbb);
@@ -69,7 +69,7 @@ void NonSpatialReceiver::setMask(std::function<void (flexbuffers::Builder &)> ar
 	setMask(fbb.GetBuffer());
 }
 
-void NonSpatialReceiver::sendData(std::vector<uint8_t> data) {
+void PulseReceiver::sendData(std::vector<uint8_t> data) {
 	messenger->sendSignal(
 		sender->getNodePath().c_str(),
 		"sendData",
@@ -81,7 +81,7 @@ void NonSpatialReceiver::sendData(std::vector<uint8_t> data) {
 		}
 	);
 }
-void NonSpatialReceiver::sendData(std::function<void (flexbuffers::Builder &)> dataConstructor) {
+void PulseReceiver::sendData(std::function<void (flexbuffers::Builder &)> dataConstructor) {
 	flexbuffers::Builder fbb(1024);
 	fbb.Map([&]() {
 		dataConstructor(fbb);
@@ -90,7 +90,7 @@ void NonSpatialReceiver::sendData(std::function<void (flexbuffers::Builder &)> d
 	sendData(fbb.GetBuffer());
 }
 
-std::vector<uint8_t> NonSpatialReceiver::dataReceived(flexbuffers::Reference data, bool) {
+std::vector<uint8_t> PulseReceiver::dataReceived(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector vector = data.AsVector();
 	std::string senderUUID = vector[0].AsString().str();
 	flexbuffers::Blob sentDataBlob = vector[1].AsBlob();

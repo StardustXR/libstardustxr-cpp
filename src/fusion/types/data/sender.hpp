@@ -11,11 +11,11 @@
 
 namespace StardustXRFusion {
 
-class NonSpatialSender : public Spatial {
+class PulseSender : public Spatial {
 public:
-	explicit NonSpatialSender(Spatial *parent, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
+	explicit PulseSender(Spatial *parent, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
 
-	void getReceivers(std::function<void(std::vector<NonSpatialReceiver> &)> callback);
+	void getReceivers(std::function<void(std::vector<PulseReceiver> &)> callback);
 };
 
 } // namespace StardustXRFusion

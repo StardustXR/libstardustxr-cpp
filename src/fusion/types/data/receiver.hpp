@@ -12,12 +12,12 @@
 
 namespace StardustXRFusion {
 
-class NonSpatialSender;
+class PulseSender;
 
-class NonSpatialReceiver : public Spatial {
+class PulseReceiver : public Spatial {
 public:
-	explicit NonSpatialReceiver(Spatial *parent, Field &field, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
-	explicit NonSpatialReceiver(NonSpatialSender *sender, std::string nodePath, std::string nodeName);\
+	PulseReceiver(Spatial *parent, Field &field, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
+	PulseReceiver(PulseSender *sender, std::string nodePath, std::string nodeName);\
 
 	void getMask(std::function<void (flexbuffers::Reference)> callback);
 	void getMask(std::function<void (flexbuffers::Map)> callback);
@@ -28,7 +28,7 @@ public:
 	void sendData(std::function<void (flexbuffers::Builder &)> dataConstructor);
 	std::function<void(std::string, flexbuffers::Reference)> onDataReceived = [](std::string senderUUID, flexbuffers::Reference data){};
 private:
-	NonSpatialSender *sender;
+	PulseSender *sender;
 	std::vector<uint8_t> dataReceived(flexbuffers::Reference data, bool);
 };
 

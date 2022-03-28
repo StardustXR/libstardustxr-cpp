@@ -8,13 +8,13 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-NonSpatialSender::NonSpatialSender(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
+PulseSender::PulseSender(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
 	nodePath = "/data/sender";
 	nodeName = GenerateID();
 
 	messenger->sendSignal(
 		"/data",
-		"createNonSpatialSender",
+		"createPulseSender",
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
@@ -26,7 +26,7 @@ NonSpatialSender::NonSpatialSender(Spatial *parent, SKMath::vec3 origin, SKMath:
 	);
 }
 
-void NonSpatialSender::getReceivers(std::function<void (std::vector<NonSpatialReceiver> &)> callback) {
+void PulseSender::getReceivers(std::function<void (std::vector<PulseReceiver> &)> callback) {
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
 		"getReceivers",
@@ -34,7 +34,7 @@ void NonSpatialSender::getReceivers(std::function<void (std::vector<NonSpatialRe
 			FLEX_NULL
 		), [this, callback](flexbuffers::Reference data) {
 			flexbuffers::Vector flexReceivers = data.AsVector();
-			std::vector<NonSpatialReceiver> receivers;
+			std::vector<PulseReceiver> receivers;
 			for(size_t i=0; i<flexReceivers.size(); ++i) {
 				receivers.emplace_back(this, getNodePath(), flexReceivers[i].AsString().str());
 			}
