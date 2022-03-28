@@ -27,8 +27,6 @@ Model::Model(Spatial *parent, std::string relativePath, SKMath::vec3 origin, SKM
 	valid = true;
 }
 
-Model::~Model() {}
-
 void Model::setMaterialProperty(uint32_t submesh, std::string propertyName, float value) {
 	messenger->sendSignal(
 		getNodePath().c_str(),

@@ -1,10 +1,12 @@
 install_headers(
-	[
-                'model.hpp',
-	],
-        subdir: 'stardustxr/fusion/types/drawable'
+    [
+        'model.hpp',
+        'text.hpp',
+    ],
+    subdir: 'stardustxr/fusion/types/drawable'
 )
 
 fusion_files += files(
-        'model.cpp',
+    'model.cpp',
+    'text.cpp',
 )
