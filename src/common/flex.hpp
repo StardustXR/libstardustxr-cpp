@@ -59,6 +59,11 @@ namespace StardustXR {
 	///////////////////////////////////////////
 	// Special Flexbuffer type macros
 
+	#define FLEX_VEC2(vec) \
+		fbb.TypedVector([&]() {\
+			fbb.Float(vec.x);\
+			fbb.Float(vec.y);\
+		});
 	#define FLEX_VEC3(vec) \
 		fbb.TypedVector([&]() {\
 			fbb.Float(vec.x);\
