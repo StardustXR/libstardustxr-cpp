@@ -14,7 +14,7 @@ std::function<void(EnvironmentItem &, EnvironmentItem::Data)> EnvironmentItem::u
 std::function<void(EnvironmentItem &)>                        EnvironmentItem::uiDestroyFunction = [](EnvironmentItem &) {};
 
 EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, SKMath::vec3 origin, SKMath::quat orientation) : 
-	Item(space, origin, orientation) {
+	Item(true) {
 
 	nodeName = GenerateID();
 	nodePath = "/item/environment";
@@ -32,8 +32,8 @@ EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, SKMath:
 	);
 }
 
-EnvironmentItem::EnvironmentItem(Spatial *space, std::string nodePath, std::string nodeName) :
-	Item(space, nodePath, nodeName) {
+EnvironmentItem::EnvironmentItem(std::string nodePath, std::string nodeName) :
+	Item(false) {
 }
 
 void EnvironmentItem::registerUIHandlers(std::function<void(EnvironmentItem &, Data)> create, std::function<void(EnvironmentItem &)> destroy) {
@@ -61,7 +61,7 @@ std::vector<uint8_t> EnvironmentItem::uiCallback(flexbuffers::Reference data, bo
 	std::string nodeName = flexVec[1].AsString().str();
 	std::string path = flexVec[2].AsVector()[0].AsString().str();
 
-	EnvironmentItem item(nullptr, "/item/environment", nodeName);
+	EnvironmentItem item("/item/environment", nodeName);
 	if(created)
 		uiCreateFunction(item, Data {path});
 	else

@@ -4,8 +4,7 @@
 namespace StardustXRFusion {
 
 ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation, std::string createMethod) :
-	Spatial(parent, origin, orientation) {
-	destroyable = true;
+	Spatial(true) {
 
 	nodeName = GenerateID();
 	nodePath = "/item/acceptor";

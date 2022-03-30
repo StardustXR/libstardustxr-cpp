@@ -8,7 +8,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-Zone::Zone(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
+Zone::Zone(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(true) {
 	nodePath = "/spatial/zone";
 	nodeName = GenerateID();
 
@@ -74,8 +74,10 @@ std::vector<uint8_t> Zone::updateZone(flexbuffers::Reference data, bool) {
 
 	for(uint i=0; i<enter.size(); ++i) {
 		std::string uuid = enter[i].AsString().str();
-		spatials.emplace(uuid, Spatial{nullptr, getNodePath(), uuid});
-		onSpatialEnter(spatials.at(uuid));
+		Spatial spatial;
+		spatial.setBackend(getNodePath(), uuid);
+		spatials.emplace(uuid, spatial);
+		onSpatialEnter(spatial);
 	}
 	for(uint i=0; i<exit.size(); ++i) {
 		std::string uuid = exit[i].AsString().str();

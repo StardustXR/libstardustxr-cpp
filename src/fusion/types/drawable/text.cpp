@@ -7,7 +7,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-Text::Text(Spatial *parent, std::string text, float characterHeight, SKMath::vec3 origin, SKMath::quat orientation, std::string fontPath, Align textAlign, SKMath::vec2 bounds, Fit fit, Align boundsAlign, SKMath::color color) : Spatial(parent, origin, orientation, vec3_one) {
+Text::Text(Spatial *parent, std::string text, float characterHeight, SKMath::vec3 origin, SKMath::quat orientation, std::string fontPath, Align textAlign, SKMath::vec2 bounds, Fit fit, Align boundsAlign, SKMath::color color) : Spatial(true) {
 //	if(!FileExists(relativePath))
 //		return;
 	nodePath = "/drawable/text";

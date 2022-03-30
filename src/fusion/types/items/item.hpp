@@ -5,7 +5,7 @@
 
 namespace StardustXRFusion {
 
-class Item : public StardustXRFusion::Spatial {
+class Item : public Spatial {
 public:
 	enum UIEvent {
 		Create  = 0,
@@ -17,8 +17,7 @@ public:
 	void release();
 
 protected:
-	Item(Spatial *space, SKMath::vec3 origin, SKMath::quat orientation);
-	Item(Spatial *space, std::string nodePath, std::string nodeName);
+	Item(bool destroyable);
 };
 
 }

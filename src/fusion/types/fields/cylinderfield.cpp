@@ -7,7 +7,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-CylinderField::CylinderField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, float length, float radius) : Field(parent, origin, orientation) {
+CylinderField::CylinderField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, float length, float radius) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(

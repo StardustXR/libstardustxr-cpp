@@ -8,7 +8,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-PulseReceiver::PulseReceiver(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
+PulseReceiver::PulseReceiver(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(true) {
 	nodePath = "/data/receiver";
 	nodeName = GenerateID();
 
@@ -27,8 +27,7 @@ PulseReceiver::PulseReceiver(Spatial *parent, Field &field, SKMath::vec3 origin,
 		)
 	);
 }
-PulseReceiver::PulseReceiver(PulseSender *sender, std::string nodePath, std::string nodeName) : Spatial(nullptr, nodePath, nodeName) {
-	this->destroyable = false;
+PulseReceiver::PulseReceiver(PulseSender *sender, std::string nodePath, std::string nodeName) : Spatial(false) {
 	this->sender = sender;
 	this->nodePath = nodePath;
 	this->nodeName = nodeName;

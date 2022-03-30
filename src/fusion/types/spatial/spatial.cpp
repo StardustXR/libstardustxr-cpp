@@ -8,27 +8,22 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-static Spatial emptySpatial(nullptr, "", "null");
+Spatial::Spatial(bool destroyable) : Node(destroyable) {}
 
-Spatial::Spatial(Spatial *parent, std::string nodePath, std::string nodeName) {
-	this->parent = parent;
-	this->nodePath = nodePath;
-	this->nodeName = nodeName;
+Spatial::Spatial() : Node(false) {
+	this->nodeName = "";
+	this->nodePath = "";
 }
 
-Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) {
-	this->parent = parent;
-}
-
-Spatial Spatial::create(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable, bool zoneable) {
-	Spatial spatial(parent, origin, orientation, scale);
-	spatial.nodePath = "/spatial/spatial";
-	spatial.nodeName = GenerateID();
+Spatial::Spatial(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale, bool translatable, bool rotatable, bool scalable, bool zoneable) :
+Node(true) {
+	nodePath = "/spatial/spatial";
+	nodeName = GenerateID();
 	messenger->sendSignal(
 		"/spatial",
 		"createSpatial",
 		FLEX_ARGS(
-			FLEX_STRING(spatial.nodeName)
+			FLEX_STRING(nodeName)
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
 			FLEX_QUAT(orientation)
@@ -55,7 +50,16 @@ void Spatial::setOrigin(vec3 origin, Spatial &space) {
 	);
 }
 void Spatial::setOrigin(vec3 origin) {
-	setOrigin(origin, emptySpatial);
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setTransform",
+		FLEX_ARGS(
+			FLEX_NULL
+			FLEX_VEC3(origin)
+			FLEX_NULL
+			FLEX_NULL
+		)
+	);
 }
 
 void Spatial::setOrientation(quat orientation, Spatial &space) {
@@ -71,7 +75,16 @@ void Spatial::setOrientation(quat orientation, Spatial &space) {
 	);
 }
 void Spatial::setOrientation(quat orientation) {
-	setOrientation(orientation, emptySpatial);
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setTransform",
+		FLEX_ARGS(
+			FLEX_NULL
+			FLEX_NULL
+			FLEX_QUAT(orientation)
+			FLEX_NULL
+		)
+	);
 }
 
 void Spatial::setPose(pose_t pose, Spatial &space) {
@@ -87,7 +100,16 @@ void Spatial::setPose(pose_t pose, Spatial &space) {
 	);
 }
 void Spatial::setPose(pose_t pose) {
-	setPose(pose, emptySpatial);
+	messenger->sendSignal(
+		getNodePath().c_str(),
+		"setTransform",
+		FLEX_ARGS(
+			FLEX_NULL
+			FLEX_VEC3(pose.position)
+			FLEX_QUAT(pose.orientation)
+			FLEX_NULL
+		)
+	);
 }
 
 void Spatial::setScale(SKMath::vec3 scale) {
@@ -95,7 +117,7 @@ void Spatial::setScale(SKMath::vec3 scale) {
 		getNodePath().c_str(),
 		"setTransform",
 		FLEX_ARGS(
-			FLEX_STRING(std::string(""))
+			FLEX_STRING("")
 			FLEX_NULL
 			FLEX_NULL
 			FLEX_VEC3(scale)
@@ -115,12 +137,7 @@ void Spatial::getTransform(Spatial *space, std::function<void(SKMath::vec3, SKMa
 	);
 }
 
-Spatial *Spatial::getSpatialParent() {
-	return parent;
-}
-
 void Spatial::setSpatialParent(Spatial *space) {
-	parent = space;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setSpatialParent",
@@ -131,7 +148,6 @@ void Spatial::setSpatialParent(Spatial *space) {
 }
 
 void Spatial::setSpatialParentInPlace(Spatial *space) {
-	parent = space;
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setSpatialParentInPlace",

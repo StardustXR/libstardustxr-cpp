@@ -46,9 +46,8 @@ void PrintDatamap(const Datamap &datamap) {
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
-	Spatial root = Spatial::create(nullptr, vec3_zero);
-	BoxField field(&root, SKMath::vec3_zero, SKMath::quat_identity, SKMath::vec3_one);
-	InputHandler handler(&root, field, SKMath::vec3_zero, SKMath::quat_identity);
+	BoxField field(Root(), SKMath::vec3_zero, SKMath::quat_identity, SKMath::vec3_one);
+	InputHandler handler(Root(), field, SKMath::vec3_zero, SKMath::quat_identity);
 
 	handler.pointerHandlerMethod = [&](const std::string uuid, const StardustXRFusion::PointerInput &pointer, const Datamap &datamap) {
 		printf("Input event:\n");

@@ -9,9 +9,8 @@ using namespace SKMath;
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
-	Spatial root = Spatial::create(nullptr);
-	SphereField field(&root, vec3_zero, 0.25f);
-	Zone zone(&root, field);
+	SphereField field(Root(), vec3_zero, 0.25f);
+	Zone zone(Root(), field);
 
 	zone.onSpatialEnter = [&zone](Spatial &spatial) {
 		printf("%s entered ", spatial.getNodeName().c_str());

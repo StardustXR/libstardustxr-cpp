@@ -8,9 +8,9 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-Field *Field::empty = nullptr;
+const Field Field::empty;
 
-Field::Field(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {}
+Field::Field() : Spatial(true) {}
 
 void Field::distance(Spatial *space, vec3 point, std::function<void(float distance)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
@@ -55,12 +55,6 @@ void Field::closestPoint(Spatial *space, SKMath::vec3 point, std::function<void 
 			callback(SK_VEC3(data.AsVector()));
 		}
 	);
-}
-
-Field &Field::Empty() {
-	if(empty == nullptr)
-		empty = new Field(nullptr, vec3_zero, quat_identity);
-	return *empty;
 }
 
 } // namespace StardustXRFusion

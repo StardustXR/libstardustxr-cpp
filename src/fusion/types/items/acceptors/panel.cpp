@@ -12,7 +12,7 @@ std::vector<uint8_t> PanelItemAcceptor::acceptorCallback(flexbuffers::Reference 
 	std::string nodeName = flexVec[1].AsString().str();
 	flexbuffers::Vector dataVec = flexVec[2].AsVector();
 
-	PanelItem item(nullptr, getNodePath(), nodeName);
+	PanelItem item(getNodePath(), nodeName);
 	if(captured)
 		itemCapturedMethod(item, PanelItem::Data {dataVec[0].AsUInt32(), dataVec[1].AsUInt32()});
 	else

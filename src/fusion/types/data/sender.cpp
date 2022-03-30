@@ -8,7 +8,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-PulseSender::PulseSender(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
+PulseSender::PulseSender(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(true) {
 	nodePath = "/data/sender";
 	nodeName = GenerateID();
 

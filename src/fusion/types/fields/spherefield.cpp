@@ -8,7 +8,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-SphereField::SphereField(Spatial *parent, SKMath::vec3 origin, float radius) : Field(parent, origin, quat_identity) {
+SphereField::SphereField(Spatial *parent, SKMath::vec3 origin, float radius) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(

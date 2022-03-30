@@ -9,7 +9,7 @@ using namespace SKMath;
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
-	Spatial receiverRoot = Spatial::create(nullptr, vec3_forward * 1.0f);
+	Spatial receiverRoot(nullptr, vec3_forward * 1.0f);
 	SphereField receiverField(&receiverRoot, vec3_zero, 0);
 	PulseReceiver receiver(&receiverRoot, receiverField);
 	receiver.setMask([](flexbuffers::Builder &fbb) {

@@ -7,7 +7,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-Model::Model(Spatial *parent, std::string relativePath, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) : Spatial(parent, origin, orientation, scale) {
+Model::Model(Spatial *parent, std::string relativePath, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 scale) : Spatial(true) {
 	if(!FileExists(relativePath))
 		return;
 	nodePath = "/drawable/model";

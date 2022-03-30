@@ -12,7 +12,7 @@ std::vector<uint8_t> EnvironmentItemAcceptor::acceptorCallback(flexbuffers::Refe
 	std::string nodeName = flexVec[1].AsString().str();
 	flexbuffers::Vector dataVec = flexVec[2].AsVector();
 
-	EnvironmentItem item(nullptr, "/item/panel", nodeName);
+	EnvironmentItem item("/item/panel", nodeName);
 	if(captured)
 		itemCapturedMethod(item, EnvironmentItem::Data {dataVec[0].AsString().str()});
 	else

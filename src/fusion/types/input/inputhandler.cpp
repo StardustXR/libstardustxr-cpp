@@ -17,9 +17,9 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
-	nodeName = GenerateID();
+InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(true) {
 	nodePath = "/input/handler";
+	nodeName = GenerateID();
 
 	scenegraph->addMethod(nodeName, std::bind(&InputHandler::inputEvent, this, std::placeholders::_1, std::placeholders::_2));
 	messenger->sendSignal(

@@ -3,10 +3,12 @@
 
 namespace StardustXRFusion {
 
-Node::Node() {}
+
+Node::Node(bool destroyable) : destroyable(destroyable) {}
 Node::Node(const Node &original) {
 	this->nodeName = original.nodeName;
 	this->nodePath = original.nodePath;
+	this->destroyable = original.destroyable;
 }
 Node::~Node() {
 	if(destroyable) {
@@ -28,10 +30,10 @@ bool Node::operator<(const Node &other) const {
 	return this->getNodePath() < other.getNodePath();
 }
 
-std::string Node::getNodePath() const {
+const std::string Node::getNodePath() const {
 	return nodePath+"/"+nodeName;
 }
-std::string Node::getNodeName() const {
+const std::string Node::getNodeName() const {
 	return nodeName;
 }
 
@@ -43,8 +45,9 @@ void Node::setEnabled(bool enabled) {
 	);
 }
 
-uint32_t Node::generateUUID() {
-
+void Node::setBackend(const std::string nodePath, const std::string nodeName) {
+	this->nodePath = nodePath;
+	this->nodeName = nodeName;
 }
 
 } // namespace StardustXRFusion

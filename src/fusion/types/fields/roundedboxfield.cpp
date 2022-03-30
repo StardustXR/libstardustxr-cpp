@@ -8,7 +8,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-RoundedBoxField::RoundedBoxField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size) : Field(parent, origin, orientation) {
+RoundedBoxField::RoundedBoxField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(

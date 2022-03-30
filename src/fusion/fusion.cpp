@@ -20,7 +20,7 @@ std::vector<uint32_t> usedIDs;
 
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
 StardustXRFusion::Messenger *messenger = nullptr;
-Spatial root(nullptr, "", "");
+Spatial root;
 
 LogicStepMethod logicMethod;
 

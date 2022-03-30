@@ -15,8 +15,10 @@ std::function<void(PanelItem &)>                  PanelItem::uiCaptureFunction =
 std::function<void(PanelItem &, PanelItem::Data)> PanelItem::uiReleaseFunction = [](PanelItem &, PanelItem::Data) {};
 std::function<void(PanelItem &)>                  PanelItem::uiDestroyFunction = [](PanelItem &) {};
 
-PanelItem::PanelItem(Spatial *space, std::string nodePath, std::string nodeName) :
-	Item(space, nodePath, nodeName) {
+PanelItem::PanelItem(std::string nodePath, std::string nodeName) :
+Item(false) {
+	this->nodePath = nodePath;
+	this->nodeName = nodeName;
 }
 
 void PanelItem::registerUIHandlers(std::function<void (PanelItem &, Data)> create, std::function<void (PanelItem &)> capture, std::function<void (PanelItem &, Data)> release, std::function<void (PanelItem &)> destroy) {
@@ -210,7 +212,7 @@ std::vector<uint8_t> PanelItem::uiCallback(flexbuffers::Reference data, bool) {
 	std::string nodeName = flexVec[1].AsString().str();
 	flexbuffers::Vector dataVec = flexVec[2].AsVector();
 
-	PanelItem item(nullptr, "/item/panel", nodeName);
+	PanelItem item("/item/panel", nodeName);
 	switch(eventType) {
 		case Item::UIEvent::Create: {
 			uiCreateFunction(item, Data {dataVec[0].AsUInt32(), dataVec[1].AsUInt32()});

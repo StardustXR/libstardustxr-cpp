@@ -30,10 +30,10 @@ executable(
 )
 
 executable(
-	'input',
-	'input.cpp',
-	include_directories: [fusion_tests_includes],
-	dependencies: [fusion],
+        'input',
+        'input.cpp',
+        include_directories: [fusion_tests_includes],
+        dependencies: [fusion],
 )
 
 
