@@ -38,7 +38,7 @@ namespace StardustXR {
 			args\
 		});
 	#define FLEX_STRING(str) \
-		fbb.String(str.c_str());
+		fbb.String(str);
 	#define FLEX_NULL \
 		fbb.Null();
 	#define FLEX_BOOL(bol) \
