@@ -53,6 +53,15 @@ bool Setup() {
 	signal(SIGPIPE, Shutdown);
 	signal(SIGINT, Shutdown);
 
+	const char* launchAnchor = getenv("STARDUST_LAUNCH_ANCHOR");
+	if(launchAnchor) {
+		messenger->sendSignal(
+			"/",
+			"applyLaunchAnchor",
+			FLEX_ARG(FLEX_UINT(std::stoul(launchAnchor)))
+		);
+	}
+
 	messenger->sendSignal(
 		"/",
 		"subscribeLogicStep",

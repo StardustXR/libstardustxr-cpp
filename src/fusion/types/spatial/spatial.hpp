@@ -12,6 +12,7 @@ public:
 	Spatial();
 	Spatial(Spatial *parent, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity, SKMath::vec3 scale = SKMath::vec3_one, bool translatable = true, bool rotatable = true, bool scalable = true, bool zoneable = false);
 
+	void createLaunchAnchor(std::function<void(uint32_t)> callback);
 
 	void getTransform(Spatial *space, std::function<void(SKMath::vec3, SKMath::quat, SKMath::vec3)> callback);
 

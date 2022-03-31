@@ -37,6 +37,10 @@ namespace StardustXR {
 		fbb.Vector([&]() {\
 			args\
 		});
+	#define FLEX_TYPED_VEC(args) \
+		fbb.TypedVector([&]() {\
+			args\
+		});
 	#define FLEX_STRING(str) \
 		fbb.String(str);
 	#define FLEX_NULL \

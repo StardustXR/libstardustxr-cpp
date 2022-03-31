@@ -34,7 +34,17 @@ Node(true) {
 			FLEX_BOOL(zoneable)
 		)
 	);
-	return spatial;
+}
+
+void Spatial::createLaunchAnchor(std::function<void (uint32_t)> callback) {
+	messenger->executeRemoteMethod(
+		getNodePath().c_str(),
+		"createLaunchAnchor",
+		FLEX_ARG(FLEX_NULL),
+		[callback](flexbuffers::Reference data) {
+			callback(data.AsUInt32());
+		}
+	);
 }
 
 void Spatial::setOrigin(vec3 origin, Spatial &space) {

@@ -36,6 +36,12 @@ executable(
         dependencies: [fusion],
 )
 
+executable(
+        'launch',
+        'launch.cpp',
+        include_directories: [fusion_tests_includes],
+        dependencies: [fusion],
+)
 
 executable(
 	'lifecycle',
