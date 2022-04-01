@@ -29,4 +29,6 @@ ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, S
 	);
 }
 
+ItemAcceptor::~ItemAcceptor() {}
+
 }
