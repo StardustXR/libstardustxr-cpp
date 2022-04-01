@@ -21,10 +21,8 @@ int ConnectClient() {
 	socketPath += getenv("STARDUST_INSTANCE");
 	int fd, len;
 
-	if ((fd = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1) {
-		perror("socket");
-		return false;
-	}
+	if ((fd = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1)
+		return 0;
 
 	printf("Trying to connect to Stardust's server at %s...\n", socketPath.c_str());
 
@@ -33,10 +31,8 @@ int ConnectClient() {
 	socketPath.copy(server.sun_path, sizeof(server.sun_path));
 
 	len = strlen(server.sun_path) + sizeof(server.sun_family);
-	if (connect(fd, (struct sockaddr *)&server, len) == -1) {
-		perror("connect");
-		return false;
-	}
+	if (connect(fd, (struct sockaddr *)&server, len) == -1)
+		return 0;
 
 	printf("Connected.\n");
 	return fd;

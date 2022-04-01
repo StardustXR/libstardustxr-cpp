@@ -41,9 +41,9 @@ std::string GenerateID() {
 
 bool Setup() {
 	printf("Client starting...\n");
-	int fd;
-	if (!(fd = StardustXR::ConnectClient())) {
-		perror("Client failed to connect to server");
+	int fd = StardustXR::ConnectClient();
+	if (!fd) {
+		perror("Client failed to connect to server\n");
 		return false;
 	}
 
