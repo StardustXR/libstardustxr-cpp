@@ -7,9 +7,8 @@
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/flexbuffers.h"
 
-#include "ActionInput.hpp"
-#include "HandInput.hpp"
 #include "PointerInput.hpp"
+#include "HandInput.hpp"
 #include "common.hpp"
 
 namespace StardustXR {
@@ -17,63 +16,59 @@ namespace StardustXR {
 struct InputData;
 struct InputDataBuilder;
 
-enum InputDataRaw : uint8_t {
-  InputDataRaw_NONE = 0,
-  InputDataRaw_Pointer = 1,
-  InputDataRaw_Hand = 2,
-  InputDataRaw_Action = 3,
-  InputDataRaw_MIN = InputDataRaw_NONE,
-  InputDataRaw_MAX = InputDataRaw_Action
+enum class InputDataRaw : uint8_t {
+  NONE = 0,
+  Pointer = 1,
+  Hand = 2,
+  MIN = NONE,
+  MAX = Hand
 };
 
-inline const InputDataRaw (&EnumValuesInputDataRaw())[4] {
+inline const InputDataRaw (&EnumValuesInputDataRaw())[3] {
   static const InputDataRaw values[] = {
-    InputDataRaw_NONE,
-    InputDataRaw_Pointer,
-    InputDataRaw_Hand,
-    InputDataRaw_Action
+    InputDataRaw::NONE,
+    InputDataRaw::Pointer,
+    InputDataRaw::Hand
   };
   return values;
 }
 
 inline const char * const *EnumNamesInputDataRaw() {
-  static const char * const names[5] = {
+  static const char * const names[4] = {
     "NONE",
     "Pointer",
     "Hand",
-    "Action",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameInputDataRaw(InputDataRaw e) {
-  if (flatbuffers::IsOutRange(e, InputDataRaw_NONE, InputDataRaw_Action)) return "";
+  if (flatbuffers::IsOutRange(e, InputDataRaw::NONE, InputDataRaw::Hand)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesInputDataRaw()[index];
 }
 
 template<typename T> struct InputDataRawTraits {
-  static const InputDataRaw enum_value = InputDataRaw_NONE;
+  static const InputDataRaw enum_value = InputDataRaw::NONE;
 };
 
 template<> struct InputDataRawTraits<StardustXR::Pointer> {
-  static const InputDataRaw enum_value = InputDataRaw_Pointer;
+  static const InputDataRaw enum_value = InputDataRaw::Pointer;
 };
 
 template<> struct InputDataRawTraits<StardustXR::Hand> {
-  static const InputDataRaw enum_value = InputDataRaw_Hand;
-};
-
-template<> struct InputDataRawTraits<StardustXR::Action> {
-  static const InputDataRaw enum_value = InputDataRaw_Action;
+  static const InputDataRaw enum_value = InputDataRaw::Hand;
 };
 
 bool VerifyInputDataRaw(flatbuffers::Verifier &verifier, const void *obj, InputDataRaw type);
-bool VerifyInputDataRawVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types);
+bool VerifyInputDataRawVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<InputDataRaw> *types);
 
 struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef InputDataBuilder Builder;
+  static FLATBUFFERS_CONSTEXPR_CPP11 const char *GetFullyQualifiedName() {
+    return "StardustXR.InputData";
+  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_UUID = 4,
     VT_INPUT_TYPE = 6,
@@ -95,13 +90,10 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   template<typename T> const T *input_as() const;
   const StardustXR::Pointer *input_as_Pointer() const {
-    return input_type() == StardustXR::InputDataRaw_Pointer ? static_cast<const StardustXR::Pointer *>(input()) : nullptr;
+    return input_type() == StardustXR::InputDataRaw::Pointer ? static_cast<const StardustXR::Pointer *>(input()) : nullptr;
   }
   const StardustXR::Hand *input_as_Hand() const {
-    return input_type() == StardustXR::InputDataRaw_Hand ? static_cast<const StardustXR::Hand *>(input()) : nullptr;
-  }
-  const StardustXR::Action *input_as_Action() const {
-    return input_type() == StardustXR::InputDataRaw_Action ? static_cast<const StardustXR::Action *>(input()) : nullptr;
+    return input_type() == StardustXR::InputDataRaw::Hand ? static_cast<const StardustXR::Hand *>(input()) : nullptr;
   }
   void *mutable_input() {
     return GetPointer<void *>(VT_INPUT);
@@ -144,10 +136,6 @@ template<> inline const StardustXR::Hand *InputData::input_as<StardustXR::Hand>(
   return input_as_Hand();
 }
 
-template<> inline const StardustXR::Action *InputData::input_as<StardustXR::Action>() const {
-  return input_as_Action();
-}
-
 struct InputDataBuilder {
   typedef InputData Table;
   flatbuffers::FlatBufferBuilder &fbb_;
@@ -182,7 +170,7 @@ struct InputDataBuilder {
 inline flatbuffers::Offset<InputData> CreateInputData(
     flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<flatbuffers::String> uuid = 0,
-    StardustXR::InputDataRaw input_type = StardustXR::InputDataRaw_NONE,
+    StardustXR::InputDataRaw input_type = StardustXR::InputDataRaw::NONE,
     flatbuffers::Offset<void> input = 0,
     float distance = 0.0f,
     flatbuffers::Offset<flatbuffers::Vector<uint8_t>> datamap = 0) {
@@ -198,7 +186,7 @@ inline flatbuffers::Offset<InputData> CreateInputData(
 inline flatbuffers::Offset<InputData> CreateInputDataDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const char *uuid = nullptr,
-    StardustXR::InputDataRaw input_type = StardustXR::InputDataRaw_NONE,
+    StardustXR::InputDataRaw input_type = StardustXR::InputDataRaw::NONE,
     flatbuffers::Offset<void> input = 0,
     float distance = 0.0f,
     const std::vector<uint8_t> *datamap = nullptr) {
@@ -215,26 +203,22 @@ inline flatbuffers::Offset<InputData> CreateInputDataDirect(
 
 inline bool VerifyInputDataRaw(flatbuffers::Verifier &verifier, const void *obj, InputDataRaw type) {
   switch (type) {
-    case InputDataRaw_NONE: {
+    case InputDataRaw::NONE: {
       return true;
     }
-    case InputDataRaw_Pointer: {
+    case InputDataRaw::Pointer: {
       auto ptr = reinterpret_cast<const StardustXR::Pointer *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case InputDataRaw_Hand: {
+    case InputDataRaw::Hand: {
       auto ptr = reinterpret_cast<const StardustXR::Hand *>(obj);
-      return verifier.VerifyTable(ptr);
-    }
-    case InputDataRaw_Action: {
-      auto ptr = reinterpret_cast<const StardustXR::Action *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return true;
   }
 }
 
-inline bool VerifyInputDataRawVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types) {
+inline bool VerifyInputDataRawVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<InputDataRaw> *types) {
   if (!values || !types) return !values && !types;
   if (values->size() != types->size()) return false;
   for (flatbuffers::uoffset_t i = 0; i < values->size(); ++i) {

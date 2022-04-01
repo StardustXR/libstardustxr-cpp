@@ -15,11 +15,15 @@ struct PointerBuilder;
 
 struct Pointer FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef PointerBuilder Builder;
+  static FLATBUFFERS_CONSTEXPR_CPP11 const char *GetFullyQualifiedName() {
+    return "StardustXR.Pointer";
+  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_ORIGIN = 4,
     VT_DIRECTION = 6,
     VT_TILT = 8,
-    VT_DEEPEST_POINT = 10
+    VT_DEEPEST_POINT = 10,
+    VT_CLOSEST_DISTANCE = 12
   };
   const StardustXR::vec3 *origin() const {
     return GetStruct<const StardustXR::vec3 *>(VT_ORIGIN);
@@ -45,12 +49,19 @@ struct Pointer FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   StardustXR::vec3 *mutable_deepest_point() {
     return GetStruct<StardustXR::vec3 *>(VT_DEEPEST_POINT);
   }
+  float closest_distance() const {
+    return GetField<float>(VT_CLOSEST_DISTANCE, 0.0f);
+  }
+  bool mutate_closest_distance(float _closest_distance = 0.0f) {
+    return SetField<float>(VT_CLOSEST_DISTANCE, _closest_distance, 0.0f);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyFieldRequired<StardustXR::vec3>(verifier, VT_ORIGIN, 4) &&
            VerifyFieldRequired<StardustXR::vec3>(verifier, VT_DIRECTION, 4) &&
            VerifyField<float>(verifier, VT_TILT, 4) &&
            VerifyFieldRequired<StardustXR::vec3>(verifier, VT_DEEPEST_POINT, 4) &&
+           VerifyField<float>(verifier, VT_CLOSEST_DISTANCE, 4) &&
            verifier.EndTable();
   }
 };
@@ -71,6 +82,9 @@ struct PointerBuilder {
   void add_deepest_point(const StardustXR::vec3 *deepest_point) {
     fbb_.AddStruct(Pointer::VT_DEEPEST_POINT, deepest_point);
   }
+  void add_closest_distance(float closest_distance) {
+    fbb_.AddElement<float>(Pointer::VT_CLOSEST_DISTANCE, closest_distance, 0.0f);
+  }
   explicit PointerBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -90,8 +104,10 @@ inline flatbuffers::Offset<Pointer> CreatePointer(
     const StardustXR::vec3 *origin = nullptr,
     const StardustXR::vec3 *direction = nullptr,
     float tilt = 0.0f,
-    const StardustXR::vec3 *deepest_point = nullptr) {
+    const StardustXR::vec3 *deepest_point = nullptr,
+    float closest_distance = 0.0f) {
   PointerBuilder builder_(_fbb);
+  builder_.add_closest_distance(closest_distance);
   builder_.add_deepest_point(deepest_point);
   builder_.add_tilt(tilt);
   builder_.add_direction(direction);

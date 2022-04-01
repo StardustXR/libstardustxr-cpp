@@ -23,6 +23,9 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) vec3 FLATBUFFERS_FINAL_CLASS {
   float z_;
 
  public:
+  static FLATBUFFERS_CONSTEXPR_CPP11 const char *GetFullyQualifiedName() {
+    return "StardustXR.vec3";
+  }
   vec3()
       : x_(0),
         y_(0),
@@ -62,6 +65,9 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) quat FLATBUFFERS_FINAL_CLASS {
   float w_;
 
  public:
+  static FLATBUFFERS_CONSTEXPR_CPP11 const char *GetFullyQualifiedName() {
+    return "StardustXR.quat";
+  }
   quat()
       : x_(0),
         y_(0),
@@ -107,6 +113,9 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) pose FLATBUFFERS_FINAL_CLASS {
   StardustXR::quat rotation_;
 
  public:
+  static FLATBUFFERS_CONSTEXPR_CPP11 const char *GetFullyQualifiedName() {
+    return "StardustXR.pose";
+  }
   pose()
       : position_(),
         rotation_() {
@@ -137,6 +146,9 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) joint FLATBUFFERS_FINAL_CLASS {
   float radius_;
 
  public:
+  static FLATBUFFERS_CONSTEXPR_CPP11 const char *GetFullyQualifiedName() {
+    return "StardustXR.joint";
+  }
   joint()
       : position_(),
         rotation_(),

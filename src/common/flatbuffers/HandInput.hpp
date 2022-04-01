@@ -15,6 +15,9 @@ struct HandBuilder;
 
 struct Hand FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef HandBuilder Builder;
+  static FLATBUFFERS_CONSTEXPR_CPP11 const char *GetFullyQualifiedName() {
+    return "StardustXR.Hand";
+  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_FINGER_JOINTS = 4,
     VT_PALM = 6,
