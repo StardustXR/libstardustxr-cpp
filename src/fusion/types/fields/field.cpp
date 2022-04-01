@@ -8,9 +8,7 @@ using namespace SKMath;
 
 namespace StardustXRFusion {
 
-const Field Field::empty;
-
-Field::Field() : Spatial(true) {}
+Field::Field() : Spatial(false) {}
 
 void Field::distance(Spatial *space, vec3 point, std::function<void(float distance)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";

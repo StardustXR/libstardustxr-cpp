@@ -6,7 +6,7 @@ namespace StardustXRFusion {
 
 class BoxField : public Field {
 public:
-	explicit BoxField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size);
+	BoxField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size);
 
 	void setSize(SKMath::vec3 size);
 };
