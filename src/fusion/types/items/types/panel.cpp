@@ -212,7 +212,7 @@ std::vector<uint8_t> PanelItem::uiCallback(flexbuffers::Reference data, bool) {
 	std::string nodeName = flexVec[1].AsString().str();
 	flexbuffers::Vector dataVec = flexVec[2].AsVector();
 
-	PanelItem item("/item/panel", nodeName);
+	PanelItem item("/item/panel/ui", nodeName);
 	switch(eventType) {
 		case Item::UIEvent::Create: {
 			uiCreateFunction(item, Data {dataVec[0].AsUInt32(), dataVec[1].AsUInt32()});

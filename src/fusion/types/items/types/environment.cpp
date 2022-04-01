@@ -61,7 +61,7 @@ std::vector<uint8_t> EnvironmentItem::uiCallback(flexbuffers::Reference data, bo
 	std::string nodeName = flexVec[1].AsString().str();
 	std::string path = flexVec[2].AsVector()[0].AsString().str();
 
-	EnvironmentItem item("/item/environment", nodeName);
+	EnvironmentItem item("/item/environment/ui", nodeName);
 	if(created)
 		uiCreateFunction(item, Data {path});
 	else

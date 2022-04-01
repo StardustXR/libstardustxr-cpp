@@ -1,18 +1,22 @@
 #include "acceptor.hpp"
 #include "fusion_internal.hpp"
 
+//#include <cctype>
+
 namespace StardustXRFusion {
 
-ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation, std::string createMethod) :
+ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation, std::string itemType) :
 	Spatial(true) {
 
 	nodeName = GenerateID();
-	nodePath = "/item/acceptor";
+	nodePath = "/item/"+itemType+"/acceptor";
 
+	itemType[0] = std::toupper(itemType[0]);
+	std::string createMethod = "create" + itemType + "ItemAcceptor";
 	scenegraph->addMethod(nodeName, std::bind(&ItemAcceptor::acceptorCallback, this, std::placeholders::_1, std::placeholders::_2));
 	messenger->sendSignal(
 		"/item",
-		createMethod.c_str(),
+		createMethod,
 		FLEX_ARGS(
 			FLEX_STRING(nodeName)
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
@@ -25,4 +29,4 @@ ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, S
 	);
 }
 
-} // namespace StardustXRFusion
+}
