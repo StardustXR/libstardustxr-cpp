@@ -7,8 +7,8 @@
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/flexbuffers.h"
 
-#include "PointerInput.hpp"
 #include "HandInput.hpp"
+#include "PointerInput.hpp"
 #include "common.hpp"
 
 namespace StardustXR {
@@ -115,7 +115,7 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_UUID) &&
+           VerifyOffsetRequired(verifier, VT_UUID) &&
            verifier.VerifyString(uuid()) &&
            VerifyField<uint8_t>(verifier, VT_INPUT_TYPE, 1) &&
            VerifyOffsetRequired(verifier, VT_INPUT) &&
@@ -162,6 +162,7 @@ struct InputDataBuilder {
   flatbuffers::Offset<InputData> Finish() {
     const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<InputData>(end);
+    fbb_.Required(o, InputData::VT_UUID);
     fbb_.Required(o, InputData::VT_INPUT);
     return o;
   }

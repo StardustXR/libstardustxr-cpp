@@ -6,5 +6,4 @@ table Pointer {
 	direction:vec3 (required);
 	tilt:float = 0;
         deepest_point:vec3 (required);
-        closest_distance:float;
 }
