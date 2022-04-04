@@ -1,6 +1,5 @@
 install_headers(
-	[
-		'ActionInput.hpp',
+        [
 		'common.hpp',
 		'message.hpp',
 		'HandInput.hpp',

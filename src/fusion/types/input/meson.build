@@ -13,4 +13,5 @@ fusion_files += files(
         'inputactionhandler.cpp',
 )
 
+subdir('actions')
 subdir('types')
