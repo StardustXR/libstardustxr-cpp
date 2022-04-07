@@ -1,6 +1,7 @@
 #include "messenger.hpp"
 #include <flatbuffers/flatbuffers.h>
 #include <mutex>
+#include <future>
 #include <poll.h>
 #include <unistd.h>
 
@@ -22,6 +23,15 @@ void Messenger::error(const std::string object, const std::string method, const 
 	sendCall(0, 0, object, method, error, blankData);
 }
 
+std::vector<uint8_t> Messenger::executeRemoteMethodSync(const std::string object, const std::string method, ArgsConstructor argsConstructor) {
+	std::promise<std::vector<uint8_t>> promise;
+	std::future<std::vector<uint8_t>> future = promise.get_future();
+	executeRemoteMethod(object, method, argsConstructor, [&promise](const std::vector<uint8_t> data) {
+		promise.set_value(data);
+	});
+	return future.get();
+}
+
 uint Messenger::generateMessageID() {
 	const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
 
@@ -31,7 +41,23 @@ uint Messenger::generateMessageID() {
 	return id;
 }
 
+void Messenger::executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, Callback callback) {
+	executeRemoteMethod(object, method, argsConstructor, [callback](const std::vector<uint8_t> data) {
+		flexbuffers::Reference flex = flexbuffers::GetRoot(data);
+		callback(flex);
+	});
+}
 void Messenger::executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, Callback callback) {
+	executeRemoteMethod(object, method, data, [callback](const std::vector<uint8_t> data) {
+		flexbuffers::Reference flex = flexbuffers::GetRoot(data);
+		callback(flex);
+	});
+}
+void Messenger::executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, RawCallback callback) {
+	std::vector<uint8_t> data = FlexbufferFromArguments(argsConstructor);
+	executeRemoteMethod(object, method, data, callback);
+}
+void Messenger::executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, RawCallback callback) {
 	uint id = generateMessageID();
 	{
 		const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
@@ -139,7 +165,7 @@ void Messenger::handleMessage(const Message *message) {
 		sendCall(3, message->id(), message->object()->str(), message->method()->str(), "", returnValue);
 	} break;
 	case 3: {
-		Callback callback = nullptr;
+		RawCallback callback = nullptr;
 		{
 			const std::lock_guard<std::mutex> lock(pendingCallbacksMutex);
 			if(pendingCallbacks.count(message->id())) {
@@ -153,7 +179,7 @@ void Messenger::handleMessage(const Message *message) {
 		}
 
 		//Method return, so execute the callback method if it exists and remove it from the pending map
-		callback(message->data_flexbuffer_root());
+		callback(std::vector<uint8_t>(message->data()->Data(), message->data()->Data() + message->data()->size()));
 	}
 	}
 }

@@ -26,11 +26,12 @@ public:
 		sendCall(1, 0, object, method, "", data);
 	}
 
-	void executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, Callback callback) {
-		std::vector<uint8_t> data = FlexbufferFromArguments(argsConstructor);
-		executeRemoteMethod(object, method, data, callback);
-	}
+
+	std::vector<uint8_t> executeRemoteMethodSync(const std::string object, const std::string method, ArgsConstructor argsConstructor);
+	void executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, Callback callback);
 	void executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, Callback callback);
+	void executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, RawCallback callback);
+	void executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, RawCallback callback);
 
 protected:
 	// General variables
@@ -44,7 +45,7 @@ protected:
 	// Message handling specific
 	std::thread handlerThread;
 	std::mutex pendingCallbacksMutex;
-	std::map<uint, Callback> pendingCallbacks;
+	std::map<uint, RawCallback> pendingCallbacks;
 	uint generateMessageID();
 	void messageHandler();
 	void handleMessage(const Message *message);
