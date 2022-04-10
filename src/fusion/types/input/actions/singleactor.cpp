@@ -5,7 +5,7 @@ namespace StardustXRFusion {
 void SingleActorAction::update() {
 	InputActionHandler::Action::update();
 
-	if(startedActing.size() > 0) {
+	if(startedActing.size() > 0 && !(!changeActor && actorUUID != "")) {
 		auto newActor = startedActing.end()-1;
 		if(newActor->uuid != actorUUID) {
 			if(!actorActing)

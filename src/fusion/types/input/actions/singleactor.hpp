@@ -7,6 +7,8 @@
 namespace StardustXRFusion {
 
 struct SingleActorAction : public InputActionHandler::Action {
+	bool changeActor  = true;
+
 	bool actorStarted = false;
 	bool actorChanged = false;
 	bool actorActing  = false;
