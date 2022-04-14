@@ -36,25 +36,8 @@ InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, S
 		)
 	);
 }
-InputHandler::InputHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(parent, origin, orientation, vec3_one) {
-	nodeName = GenerateID();
-	nodePath = "/input/handler";
-
-	messenger->sendSignal(
-		"/input",
-		"registerInputHandler",
-		FLEX_ARGS(
-			FLEX_STRING(nodeName)
-			FLEX_STRING(std::string(""))
-			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
-			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
-			FLEX_STRING(std::string(""))
-			FLEX_STRING(nodeName)
-		)
-	);
-}
 InputHandler::~InputHandler() {
+	scenegraph->removeMethod(nodeName);
 }
 
 void InputHandler::setField(Field *field) {

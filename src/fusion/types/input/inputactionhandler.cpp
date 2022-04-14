@@ -9,11 +9,6 @@ InputActionHandler::InputActionHandler(Spatial *parent, Field &field, SKMath::ve
 	pointerHandlerMethod = std::bind(&InputActionHandler::pointerInputEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
-InputActionHandler::InputActionHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation) :
-	InputHandler(parent, origin, orientation) {
-
-}
-
 void InputActionHandler::update() {
 	for(Action *action : actions) {
 		action->update();
