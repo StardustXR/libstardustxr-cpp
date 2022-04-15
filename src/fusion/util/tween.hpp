@@ -52,6 +52,8 @@ static float TweenEaseOutCirc(float t) {
 
 template<class T>
 struct Tween {
+	Tween(){}
+	Tween(float d, T start, T end, float (*curve)(float) = TweenLinear) : t(d), d(d), start(start), end(end), curve(curve){}
 	float t = 0;
 	float d = 1;
 	T start;
