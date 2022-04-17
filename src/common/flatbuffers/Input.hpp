@@ -5,7 +5,6 @@
 #define FLATBUFFERS_GENERATED_INPUT_STARDUSTXR_H_
 
 #include "flatbuffers/flatbuffers.h"
-#include "flatbuffers/flexbuffers.h"
 
 #include "HandInput.hpp"
 #include "PointerInput.hpp"
@@ -110,9 +109,6 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   flatbuffers::Vector<uint8_t> *mutable_datamap() {
     return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_DATAMAP);
   }
-  flexbuffers::Reference datamap_flexbuffer_root() const {
-    return flexbuffers::GetRoot(datamap()->Data(), datamap()->size());
-  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffsetRequired(verifier, VT_UUID) &&
@@ -123,7 +119,6 @@ struct InputData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<float>(verifier, VT_DISTANCE, 4) &&
            VerifyOffset(verifier, VT_DATAMAP) &&
            verifier.VerifyVector(datamap()) &&
-           flexbuffers::VerifyNestedFlexBuffer(datamap(), verifier) &&
            verifier.EndTable();
   }
 };
