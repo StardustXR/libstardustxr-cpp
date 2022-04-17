@@ -6,7 +6,7 @@ table Message {
     object: string;
     method: string;
     error: string;
-    data:[ubyte] (flexbuffer);
+    data:[ubyte];
 }
 
 root_type Message;

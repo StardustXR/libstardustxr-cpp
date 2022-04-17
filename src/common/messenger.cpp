@@ -156,12 +156,14 @@ void Messenger::handleMessage(const Message *message) {
 	} break;
 	case 1: {
 		// Signal, so execute the local scenegraph method
-		scenegraph->sendSignal(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
+		flexbuffers::Reference dataRoot = flexbuffers::GetRoot(message->data()->Data(), message->data()->Length());
+		scenegraph->sendSignal(message->object()->str(), message->method()->str(), dataRoot);
 	} break;
 	case 2: {
 
 		// Method was called, so execute the local scenegraph method and send back the result
-		std::vector<uint8_t> returnValue = scenegraph->executeMethod(message->object()->str(), message->method()->str(), message->data_flexbuffer_root());
+		flexbuffers::Reference dataRoot = flexbuffers::GetRoot(message->data()->Data(), message->data()->Length());
+		std::vector<uint8_t> returnValue = scenegraph->executeMethod(message->object()->str(), message->method()->str(), dataRoot);
 		sendCall(3, message->id(), message->object()->str(), message->method()->str(), "", returnValue);
 	} break;
 	case 3: {

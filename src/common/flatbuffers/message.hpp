@@ -5,7 +5,6 @@
 #define FLATBUFFERS_GENERATED_MESSAGE_STARDUSTXR_H_
 
 #include "flatbuffers/flatbuffers.h"
-#include "flatbuffers/flexbuffers.h"
 
 namespace StardustXR {
 
@@ -61,9 +60,6 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   flatbuffers::Vector<uint8_t> *mutable_data() {
     return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_DATA);
   }
-  flexbuffers::Reference data_flexbuffer_root() const {
-    return flexbuffers::GetRoot(data()->Data(), data()->size());
-  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint8_t>(verifier, VT_TYPE, 1) &&
@@ -76,7 +72,6 @@ struct Message FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.VerifyString(error()) &&
            VerifyOffset(verifier, VT_DATA) &&
            verifier.VerifyVector(data()) &&
-           flexbuffers::VerifyNestedFlexBuffer(data(), verifier) &&
            verifier.EndTable();
   }
 };
