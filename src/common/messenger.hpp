@@ -13,41 +13,29 @@ namespace StardustXR {
 class Messenger {
 public:
 	Messenger(int fd, Scenegraph *scenegraph);
-	virtual ~Messenger();
 
-	void startHandler();
+	const int fd;
+	Scenegraph *const scenegraph;
+
+	bool dispatch();
 
 	void error(const std::string object, const std::string method, const std::string error);
-	void sendSignal(const std::string object, const std::string method, ArgsConstructor argsConstructor) {
-		std::vector<uint8_t> data = FlexbufferFromArguments(argsConstructor);
-		sendSignal(object, method, data);
-	}
-	void sendSignal(const std::string object, const std::string method, std::vector<uint8_t> &data) {
-		sendCall(1, 0, object, method, "", data);
-	}
-
-
-	std::vector<uint8_t> executeRemoteMethodSync(const std::string object, const std::string method, ArgsConstructor argsConstructor);
+	void sendSignal(const std::string object, const std::string method, ArgsConstructor argsConstructor);
+	void sendSignal(const std::string object, const std::string method, std::vector<uint8_t> &data);
 	void executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, Callback callback);
 	void executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, Callback callback);
 	void executeRemoteMethod(const std::string object, const std::string method, ArgsConstructor argsConstructor, RawCallback callback);
 	void executeRemoteMethod(const std::string object, const std::string method, std::vector<uint8_t> &data, RawCallback callback);
+	//	std::vector<uint8_t> executeRemoteMethodSync(const std::string object, const std::string method, ArgsConstructor argsConstructor);
 
 protected:
-	// General variables
-	int fd;
-	Scenegraph *scenegraph;
-
 	// General methods
 	int pollFD(short events, int timeout);
-	virtual void onDisconnect() {}
 
 	// Message handling specific
-	std::thread handlerThread;
 	std::mutex pendingCallbacksMutex;
 	std::map<uint, RawCallback> pendingCallbacks;
 	uint generateMessageID();
-	void messageHandler();
 	void handleMessage(const Message *message);
 
 	// Message sending specific

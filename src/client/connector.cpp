@@ -1,6 +1,7 @@
 #include "connector.hpp"
 
 #include <fcntl.h>
+#include <poll.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -33,7 +34,6 @@ int ConnectClient() {
 	len = strlen(server.sun_path) + sizeof(server.sun_family);
 	if (connect(fd, (struct sockaddr *)&server, len) == -1)
 		return 0;
-
 	printf("Connected.\n");
 	return fd;
 }

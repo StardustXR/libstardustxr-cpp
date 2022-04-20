@@ -14,5 +14,5 @@ int main(int, char *[]) {
 
 	spatial1.setSpatialParent(&spatial4);
 
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

@@ -4,5 +4,5 @@ using namespace StardustXRFusion;
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

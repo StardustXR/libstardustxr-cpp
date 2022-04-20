@@ -6,7 +6,7 @@
 
 #include "types/spatial/spatial.hpp"
 
-#include <csignal>
+#include <poll.h>
 #include <iostream>
 #include <linux/limits.h>
 #include <libgen.h>
@@ -20,6 +20,7 @@ std::vector<uint32_t> usedIDs;
 
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
 StardustXRFusion::Messenger *messenger = nullptr;
+
 Spatial root;
 
 LogicStepMethod logicMethod;
@@ -49,9 +50,6 @@ bool Setup() {
 
 	scenegraph = new FusionScenegraph();
 	messenger = new Messenger(fd, scenegraph);
-	messenger->startHandler();
-	signal(SIGPIPE, Shutdown);
-	signal(SIGINT, Shutdown);
 
 	const char* launchAnchor = getenv("STARDUST_LAUNCH_ANCHOR");
 	if(launchAnchor) {
@@ -75,19 +73,37 @@ bool Setup() {
 	return true;
 }
 
-void StallMainThread() {
+void RunEventLoop(int timeout) {
+	pollfd poll_fd = {
+		.fd = messenger->fd,
+		.events = POLLIN,
+	};
 	while(1) {
-		std::this_thread::sleep_for(std::chrono::seconds(3600));
+		int fdStatus = poll(&poll_fd, 1, timeout);
+		if(fdStatus < 0)
+			break;
+		if(fdStatus == 0)
+			continue;
+
+		if(!messenger->dispatch())
+			break;
 	}
+	Shutdown();
 }
 
-void Shutdown(int signal) {
+//void Stop() {
+//}
+
+void Shutdown() {
 	messenger->sendSignal(
 		"/",
 		"disconnect",
 		FLEX_ARG(FLEX_NULL)
 	);
-	std::exit(0);
+	delete scenegraph;
+	delete messenger;
+	scenegraph = nullptr;
+	messenger  = nullptr;
 }
 
 Spatial *Root() {

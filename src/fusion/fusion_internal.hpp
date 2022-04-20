@@ -11,6 +11,7 @@ extern StardustXRFusion::FusionScenegraph *scenegraph;
 extern StardustXRFusion::Messenger *messenger;
 
 std::string GenerateID();
+void Shutdown();
 
 bool FileExists(std::string path);
 

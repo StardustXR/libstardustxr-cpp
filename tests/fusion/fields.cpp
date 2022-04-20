@@ -10,5 +10,5 @@ int main(int, char *[]) {
 	sphereField.distance(&sphereField, vec3_right*1.0f, [&](float distance) {
 		printf("Distance: %f\n", distance);
 	});
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

@@ -10,8 +10,8 @@ class Spatial;
 typedef std::function<void(double, double)> LogicStepMethod;
 
 bool Setup();
-void StallMainThread();
-void Shutdown(int signal);
+void RunEventLoop(int timeout = 10000);
+//void Stop();
 
 Spatial *Root();
 void SetSkytex(std::string path);

@@ -28,5 +28,5 @@ int main(int, char *[]) {
 		middleRing.setOrientation(quat_from_angles(0, 0, rotation));
 		insideRing.setOrientation(quat_from_angles(rotation, 0, 0));
 	});
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

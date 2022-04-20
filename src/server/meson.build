@@ -1,11 +1,11 @@
 install_headers(
 	[
-		'messengermanager.hpp',
+                'socket.hpp',
 	],
 	subdir: 'stardustxr/server'
 )
 server_files = files(
-	'messengermanager.cpp'
+        'socket.cpp'
 )
 lib_server = library(
 	'stardustxr-server',

@@ -23,5 +23,5 @@ int main(int, char *[]) {
 		printf("%s left\n", uuid.c_str());
 	};
 
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

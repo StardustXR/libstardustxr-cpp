@@ -39,5 +39,5 @@ int main(int, char *[]) {
 		}
 	});
 
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

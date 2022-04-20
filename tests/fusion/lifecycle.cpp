@@ -7,5 +7,5 @@ int main(int, char *[]) {
 	OnLogicStep([&](double delta, double timeToRender) {
 		printf("Frame delta is %f ms\n", delta);
 	});
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

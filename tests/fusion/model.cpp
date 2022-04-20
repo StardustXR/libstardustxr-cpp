@@ -8,5 +8,5 @@ using namespace SKMath;
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 	Model model(nullptr, "../../../res/stardust_icon.glb", vec3_zero, quat_identity, vec3_one * 0.1f);
-	StardustXRFusion::StallMainThread();
+	StardustXRFusion::RunEventLoop();
 }

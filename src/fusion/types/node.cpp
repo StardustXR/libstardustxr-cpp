@@ -11,7 +11,7 @@ Node::Node(const Node &original) {
 	this->destroyable = original.destroyable;
 }
 Node::~Node() {
-	if(destroyable) {
+	if(messenger && destroyable) {
 		messenger->sendSignal(
 			getNodePath().c_str(),
 			"destroy",
