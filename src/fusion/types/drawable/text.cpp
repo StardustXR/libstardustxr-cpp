@@ -32,4 +32,20 @@ Text::Text(Spatial *parent, std::string text, float characterHeight, SKMath::vec
 	);
 }
 
+void Text::setText(std::string text) {
+	messenger->sendSignal(
+		getNodePath(),
+		"setText",
+		FLEX_ARG(FLEX_STRING(text))
+	);
+}
+
+void Text::setColor(SKMath::color color) {
+	messenger->sendSignal(
+		getNodePath(),
+		"setText",
+		FLEX_ARG(FLEX_COLOR(color))
+	);
+}
+
 } // namespace StardustXRFusion
