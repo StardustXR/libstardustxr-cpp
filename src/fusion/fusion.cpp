@@ -18,6 +18,7 @@ namespace StardustXRFusion {
 
 std::vector<uint32_t> usedIDs;
 
+std::atomic_bool running = {false};
 StardustXRFusion::FusionScenegraph *scenegraph = nullptr;
 StardustXRFusion::Messenger *messenger = nullptr;
 
@@ -41,6 +42,8 @@ std::string GenerateID() {
 }
 
 bool Setup() {
+	if(running)
+		return true;
 	printf("Client starting...\n");
 	int fd = StardustXR::ConnectClient();
 	if (!fd) {
@@ -70,6 +73,7 @@ bool Setup() {
 	);
 	scenegraph->addMethod("logicStep", &FlexDummy);
 
+	running = true;
 	return true;
 }
 
@@ -91,10 +95,9 @@ void RunEventLoop(int timeout) {
 	Shutdown();
 }
 
-//void Stop() {
-//}
-
 void Shutdown() {
+	if(!running)
+		return;
 	messenger->sendSignal(
 		"/",
 		"disconnect",
@@ -104,6 +107,7 @@ void Shutdown() {
 	delete messenger;
 	scenegraph = nullptr;
 	messenger  = nullptr;
+	running = false;
 }
 
 Spatial *Root() {

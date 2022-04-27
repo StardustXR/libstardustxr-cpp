@@ -11,7 +11,7 @@ typedef std::function<void(double, double)> LogicStepMethod;
 
 bool Setup();
 void RunEventLoop(int timeout = 10000);
-//void Stop();
+void Shutdown();
 
 Spatial *Root();
 void SetSkytex(std::string path);
