@@ -22,9 +22,8 @@ subdir('util')
 
 lib_fusion = library(
 	'stardustxr-fusion',
-	[common_files, fusion_files],
-	link_args: '-lflatbuffers',
-	dependencies: [client, threads],
+        [common_files, fusion_files],
+        dependencies: [client, threads, flatbuffers],
 	version: '0.1.1',
 	soversion: '0',
 	install: true

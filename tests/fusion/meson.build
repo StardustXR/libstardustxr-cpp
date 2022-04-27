@@ -11,8 +11,7 @@ executable(
         'data',
         'data.cpp',
         include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
-        link_args: '-lflatbuffers',
+        dependencies: [fusion, flatbuffers],
 )
 
 executable(
