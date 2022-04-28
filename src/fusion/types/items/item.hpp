@@ -17,7 +17,7 @@ public:
 	void release();
 
 protected:
-	Item(bool destroyable);
+	explicit Item(bool destroyable);
 };
 
 }

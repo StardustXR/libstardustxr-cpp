@@ -15,7 +15,7 @@ namespace StardustXRFusion {
 
 class PanelItem : public Item {
 public:
-	PanelItem(std::string nodePath, std::string nodeName);
+	explicit PanelItem(std::string nodePath, std::string nodeName);
 	struct Data {
 		const uint32_t width;
 		const uint32_t height;

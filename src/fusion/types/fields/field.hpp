@@ -13,7 +13,7 @@ public:
 	void normal			(Spatial *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback);
 	void closestPoint	(Spatial *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback);
 protected:
-	Field();
+	explicit Field();
 };
 
 } // namespace StardustXRFusion

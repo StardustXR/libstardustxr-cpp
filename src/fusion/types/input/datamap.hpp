@@ -11,7 +11,7 @@ namespace StardustXRFusion {
 
 class Datamap {
 public:
-	Datamap(const uint8_t *flexData, const size_t flexDataSize);
+	explicit Datamap(const uint8_t *flexData, const size_t flexDataSize);
 	Datamap(const Datamap &datamap);
 
 	Datamap &operator=(const Datamap &other);

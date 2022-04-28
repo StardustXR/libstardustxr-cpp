@@ -12,8 +12,8 @@ namespace StardustXRFusion {
 class InputActionHandler : public InputHandler {
 public:
 	struct InputMethod {
-		InputMethod(const std::string uuid, const Datamap datamap, PointerInput *pointer, HandInput *hand);
-		InputMethod(const InputMethod &copyFrom);
+		explicit InputMethod(const std::string uuid, const Datamap datamap, PointerInput *pointer, HandInput *hand);
+		explicit InputMethod(const InputMethod &copyFrom);
 
 		std::string uuid;
 		Datamap datamap;
@@ -27,7 +27,7 @@ public:
 
 
 	struct Action {
-		Action(bool captureOnTrigger = true);
+		explicit Action(bool captureOnTrigger = true);
 		bool captureOnTrigger;
 		std::function<bool(const std::string uuid, const PointerInput &, const Datamap &)> pointerActiveCondition = [](const std::string uuid, const PointerInput &pointer, const Datamap &datamap){return false;};
 		std::function<bool(const std::string uuid, const HandInput &,    const Datamap &)> handActiveCondition    = [](const std::string uuid, const HandInput &hand,       const Datamap &datamap){return false;};

@@ -3,7 +3,6 @@
 
 namespace StardustXRFusion {
 
-
 Node::Node(bool destroyable) : destroyable(destroyable) {}
 Node::Node(const Node &original) {
 	this->nodeName = original.nodeName;
@@ -19,6 +18,7 @@ Node::~Node() {
 		);
 	}
 }
+
 bool Node::operator==(const Node &other) const {
 	return this->getNodePath() == other.getNodePath();
 }

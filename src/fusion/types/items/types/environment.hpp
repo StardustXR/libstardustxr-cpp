@@ -13,8 +13,8 @@ namespace StardustXRFusion {
 
 class EnvironmentItem : public Item {
 public:
-	EnvironmentItem(Spatial *space, const std::string path, SKMath::vec3 origin, SKMath::quat orientation);
-	EnvironmentItem(std::string nodePath, std::string nodeName);
+	explicit EnvironmentItem(Spatial *space, const std::string path, SKMath::vec3 origin, SKMath::quat orientation);
+	explicit EnvironmentItem(std::string nodePath, std::string nodeName);
 
 	struct Data {
 		const std::string path;

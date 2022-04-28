@@ -6,10 +6,10 @@ namespace StardustXRFusion {
 
 class Node {
 public:
-	bool operator==(const Node& other) const;
-	bool operator!=(const Node& other) const;
-
-	bool operator<(const Node& other) const;
+	Node& operator= (const Node *other) const = delete;
+	bool  operator==(const Node &other) const;
+	bool  operator!=(const Node &other) const;
+	bool  operator< (const Node &other) const;
 
 	const std::string getNodePath() const;
 	const std::string getNodeName() const;
@@ -18,8 +18,8 @@ public:
 	void setBackend(const std::string nodePath, const std::string nodeName);
 
 protected:
-	Node(bool destroyable);
-	Node(const Node &original);
+	explicit Node(bool destroyable);
+	explicit Node(const Node &original);
 	~Node();
 
 	std::string nodeName = "";
