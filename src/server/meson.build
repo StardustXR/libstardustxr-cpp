@@ -1,11 +1,11 @@
 install_headers(
 	[
-                'socket.hpp',
+	'socket.hpp',
 	],
 	subdir: 'stardustxr/server'
 )
 server_files = files(
-        'socket.cpp'
+	'socket.cpp'
 )
 lib_server = library(
 	'stardustxr-server',

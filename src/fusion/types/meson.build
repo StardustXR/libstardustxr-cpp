@@ -1,12 +1,12 @@
 install_headers(
-        [
-                'node.hpp',
+	[
+		'node.hpp',
 	],
 	subdir: 'stardustxr/fusion/types'
 )
 
 fusion_files += files(
-        'node.cpp',
+	'node.cpp',
 )
 
 subdir('data')

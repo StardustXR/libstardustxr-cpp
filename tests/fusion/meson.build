@@ -1,18 +1,20 @@
 fusion_tests_includes = include_directories('../../src/')
 
 executable(
-        'basic',
-        'basic.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
+	'basic',
+	'basic.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
 )
 
+
 executable(
-        'data',
-        'data.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion, flatbuffers],
+	'data',
+	'data.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion, flatbuffers],
 )
+
 
 executable(
 	'environment',
@@ -21,6 +23,7 @@ executable(
 	dependencies: [fusion],
 )
 
+
 executable(
 	'fields',
 	'fields.cpp',
@@ -28,19 +31,22 @@ executable(
 	dependencies: [fusion],
 )
 
-executable(
-        'input',
-        'input.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
-)
 
 executable(
-        'launch',
-        'launch.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
+	'input',
+	'input.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
 )
+
+
+executable(
+	'launch',
+	'launch.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
+)
+
 
 executable(
 	'lifecycle',
@@ -65,26 +71,30 @@ executable(
 	dependencies: [fusion],
 )
 
-executable(
-        'spatial',
-        'spatial.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
-)
 
 executable(
-        'spatialloop',
-        'spatialloop.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
+	'spatial',
+	'spatial.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
 )
 
+
 executable(
-        'text',
-        'text.cpp',
-        include_directories: [fusion_tests_includes],
-        dependencies: [fusion],
+	'spatialloop',
+	'spatialloop.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
 )
+
+
+executable(
+	'text',
+	'text.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
+)
+
 
 executable(
 	'zone',
