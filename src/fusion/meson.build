@@ -24,7 +24,7 @@ lib_fusion = library(
 	'stardustxr-fusion',
 	[common_files, fusion_files],
 	dependencies: [client, threads, flatbuffers],
-	version: '0.1.1',
+	version: '0.9.0',
 	soversion: '0',
 	install: true
 )

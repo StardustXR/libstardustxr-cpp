@@ -11,7 +11,7 @@ lib_client = library(
 	'stardustxr',
 	[common_files, client_files],
 	dependencies: [threads],
-	version: '0.1.1',
+	version: '0.9.0',
 	soversion: '0',
 	install: true
 )
