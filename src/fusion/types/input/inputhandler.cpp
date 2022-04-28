@@ -1,7 +1,7 @@
 #include "../../fusion_internal.hpp"
 #include "../../flex.hpp"
 #include "../../scenegraph.hpp"
-#include "sk_math.hpp"
+#include "values.hpp"
 #include "types/handinput.hpp"
 #include "types/pointerinput.hpp"
 
@@ -13,11 +13,11 @@
 #include <string>
 #include <variant>
 
-using namespace SKMath;
+
 
 namespace StardustXRFusion {
 
-InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(true) {
+InputHandler::InputHandler(Spatial *parent, Field &field, Vec3 origin, Quat rotation) : Spatial(true) {
 	nodePath = "/input/handler";
 	nodeName = GenerateID();
 
@@ -30,7 +30,7 @@ InputHandler::InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, S
 			FLEX_STRING(field.getNodePath())
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
+			FLEX_QUAT(rotation)
 			FLEX_STRING(std::string(""))
 			FLEX_STRING(nodeName)
 		)

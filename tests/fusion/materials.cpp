@@ -12,7 +12,7 @@ int main(int, char *[]) {
 	Model model(nullptr, "../../../res/gyro_gem.glb");
 	OnLogicStep([&](double delta, double) {
 		elapsed += delta;
-		SKMath::color gemColor = SKMath::color_from_hsva(
+		Color gemColor = Color::FromHSVA(
 			(float) (int(elapsed * 180) % 360),
 			1,
 			1,

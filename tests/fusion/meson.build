@@ -1,5 +1,7 @@
 fusion_tests_includes = include_directories('../../src/')
 
+glm = dependency('glm')
+
 executable(
 	'basic',
 	'basic.cpp',
@@ -72,12 +74,14 @@ executable(
 )
 
 
-executable(
-	'spatial',
-	'spatial.cpp',
-	include_directories: [fusion_tests_includes],
-	dependencies: [fusion],
-)
+if glm.found()
+	executable(
+		'spatial',
+		'spatial.cpp',
+		include_directories: [fusion_tests_includes],
+		dependencies: [fusion, glm],
+	)
+endif
 
 
 executable(
@@ -88,12 +92,14 @@ executable(
 )
 
 
-executable(
-	'text',
-	'text.cpp',
-	include_directories: [fusion_tests_includes],
-	dependencies: [fusion],
-)
+if glm.found()
+	executable(
+		'text',
+		'text.cpp',
+		include_directories: [fusion_tests_includes],
+		dependencies: [fusion, glm],
+	)
+endif
 
 
 executable(

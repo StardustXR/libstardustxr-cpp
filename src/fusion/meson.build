@@ -5,8 +5,7 @@ endif
 install_headers(
 	[
 		'fusion.hpp',
-		'sk_math_util.h',
-		'sk_math.hpp',
+		'values.hpp',
 	],
 	subdir: 'stardustxr/fusion'
 )
@@ -15,6 +14,7 @@ fusion_files = files(
 	'random.cpp',
 	'messenger.cpp',
 	'scenegraph.cpp',
+	'values.cpp',
 )
 
 subdir('types')

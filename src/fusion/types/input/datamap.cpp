@@ -1,7 +1,7 @@
 #include "datamap.hpp"
 #include "../../flex.hpp"
 
-using namespace SKMath;
+
 
 namespace StardustXRFusion {
 
@@ -63,22 +63,22 @@ float Datamap::getFloat(std::string key) const {
 		return 0.0f;
 }
 
-SKMath::vec2 Datamap::getVec2(std::string key) const {
+Vec2 Datamap::getVec2(std::string key) const {
 	flexbuffers::Reference value = flexDatamap[key];
 
 	if(value.IsTypedVector() && value.AsTypedVector().size() == 2)
-		return SK_VEC2(value.AsTypedVector());
+		return STARDUST_VEC2(value.AsTypedVector());
 	else
-		return vec2_zero;
+		return Vec2::Zero;
 }
 
-SKMath::vec3 Datamap::getVec3(std::string key) const {
+Vec3 Datamap::getVec3(std::string key) const {
 	flexbuffers::Reference value = flexDatamap[key];
 
 	if(value.IsTypedVector() && value.AsTypedVector().size() == 3)
-		return SK_VEC3(value.AsTypedVector());
+		return STARDUST_VEC3(value.AsTypedVector());
 	else
-		return vec3_zero;
+		return Vec3::Zero;
 }
 
 }

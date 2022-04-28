@@ -8,4 +8,6 @@ common_files = []
 
 subdir('src')
 
-subdir('tests')
+if get_option('tests')
+	subdir('tests')
+endif

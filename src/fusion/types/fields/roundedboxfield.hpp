@@ -6,7 +6,7 @@ namespace StardustXRFusion {
 
 class RoundedBoxField : public Field {
 public:
-	explicit RoundedBoxField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, SKMath::vec3 size);
+	explicit RoundedBoxField(Spatial *parent, Vec3 origin, Quat rotation, Vec3 size);
 };
 
 } // namespace StardustXRFusion

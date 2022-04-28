@@ -1,8 +1,10 @@
+#include <cmath>
+
+#include "fusion/values/glm.hpp"
 #include "fusion/fusion.hpp"
 #include "fusion/types/drawable/model.hpp"
 
 using namespace StardustXRFusion;
-using namespace SKMath;
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
@@ -21,12 +23,12 @@ int main(int, char *[]) {
 		time += delta;
 		double rotation = 360*time/rotationSeconds;
 
-		gyroRoot.setOrigin(vec3_up * std::sin(rotation*deg2rad) * 0.1f);
-		gem.setScale(vec3_one * (1.0f + std::sin(rotation*deg2rad*2) * 0.25f));
+		gyroRoot.setOrigin(Vec3::Up * std::sin(glm::degrees(rotation)) * 0.1f);
+		gem.setScale(Vec3::One * (1.0f + std::sin(glm::degrees(rotation*2)) * 0.25f));
 
-		outsideRing.setOrientation(quat_from_angles(rotation, 0, 0));
-		middleRing.setOrientation(quat_from_angles(0, 0, rotation));
-		insideRing.setOrientation(quat_from_angles(rotation, 0, 0));
+		outsideRing.setOrientation(glm::quat(glm::vec3(rotation, 0, 0)));
+		middleRing.setOrientation (glm::quat(glm::vec3(0, 0, rotation)));
+		insideRing.setOrientation (glm::quat(glm::vec3(rotation, 0, 0)));
 	});
 	StardustXRFusion::RunEventLoop();
 }

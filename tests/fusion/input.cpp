@@ -9,9 +9,9 @@
 #include "fusion/types/input/inputhandler.hpp"
 #include "fusion/types/input/types/handinput.hpp"
 #include "fusion/types/input/types/pointerinput.hpp"
-#include "sk_math.hpp"
+#include "values.hpp"
 
-using namespace SKMath;
+
 using namespace StardustXRFusion;
 
 void PrintDatamap(const Datamap &datamap) {
@@ -46,8 +46,8 @@ void PrintDatamap(const Datamap &datamap) {
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
-	BoxField field(Root(), SKMath::vec3_zero, SKMath::quat_identity, SKMath::vec3_one);
-	InputHandler handler(Root(), field, SKMath::vec3_zero, SKMath::quat_identity);
+	BoxField field(Root(), Vec3::Zero, Quat::Identity, Vec3::One);
+	InputHandler handler(Root(), field, Vec3::Zero, Quat::Identity);
 
 	handler.pointerHandlerMethod = [&](const std::string uuid, const StardustXRFusion::PointerInput &pointer, const Datamap &datamap) {
 		printf("Input event:\n");
@@ -63,8 +63,8 @@ int main(int, char *[]) {
 		printf("Input event:\n");
 		printf("\tdistance:    %f\n", hand.distance);
 		printf("\tHand:\n");
-		const SKMath::vec3 palmPosition = hand.palm.pose.position;
-		const SKMath::quat palmRotation = hand.palm.pose.orientation;
+		const Vec3 palmPosition = hand.palm.pose.position;
+		const Quat palmRotation = hand.palm.pose.rotation;
 		printf("\t\tpalm:  (%f, %f, %f), (%f, %f, %f, %f)\n", palmPosition.x, palmPosition.y, palmPosition.z, palmRotation.w, palmRotation.x, palmRotation.y, palmRotation.z);
 		PrintDatamap(datamap);
 		return false;

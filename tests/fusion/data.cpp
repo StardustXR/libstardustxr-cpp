@@ -4,13 +4,13 @@
 #include "fusion/types/data/sender.hpp"
 
 using namespace StardustXRFusion;
-using namespace SKMath;
+
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
 
-	Spatial receiverRoot(nullptr, vec3_forward * 1.0f);
-	SphereField receiverField(&receiverRoot, vec3_zero, 0);
+	Spatial receiverRoot(nullptr, Vec3::Forward * 1.0f);
+	SphereField receiverField(&receiverRoot, Vec3::Zero, 0);
 	PulseReceiver receiver(&receiverRoot, receiverField);
 	receiver.setMask([](flexbuffers::Builder &fbb) {
 		fbb.Bool("keyboard", true);

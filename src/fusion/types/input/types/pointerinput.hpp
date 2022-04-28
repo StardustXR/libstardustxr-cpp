@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../sk_math.hpp"
+#include "../../../values.hpp"
 
 namespace StardustXR {
 	class InputData;
@@ -14,11 +14,11 @@ public:
 
 	const float distance;
 
-	const SKMath::vec3 origin;
-	const SKMath::vec3 direction;
+	const Vec3 origin;
+	const Vec3 direction;
 	const float tilt = 0.0f;
 
-	const SKMath::vec3 deepestPoint;
+	const Vec3 deepestPoint;
 };
 
 } // namespace StardustXRFusion

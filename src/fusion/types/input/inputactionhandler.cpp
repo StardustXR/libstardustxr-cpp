@@ -2,8 +2,8 @@
 
 namespace StardustXRFusion {
 
-InputActionHandler::InputActionHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) :
-	InputHandler(parent, field, origin, orientation) {
+InputActionHandler::InputActionHandler(Spatial *parent, Field &field, Vec3 origin, Quat rotation) :
+	InputHandler(parent, field, origin, rotation) {
 
 	handHandlerMethod = std::bind(&InputActionHandler::handInputEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	pointerHandlerMethod = std::bind(&InputActionHandler::pointerInputEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);

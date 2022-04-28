@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../sk_math.hpp"
+#include "../../values.hpp"
 #include <cstdint>
 #include <flatbuffers/flatbuffers.h>
 #include <flatbuffers/flexbuffers.h>
@@ -21,8 +21,8 @@ public:
 	bool getBool(std::string key) const;
 	int32_t getInt(std::string key) const;
 	float getFloat(std::string key) const;
-	SKMath::vec2 getVec2(std::string key) const;
-	SKMath::vec3 getVec3(std::string key) const;
+	Vec2 getVec2(std::string key) const;
+	Vec3 getVec3(std::string key) const;
 
 private:
 	std::vector<uint8_t> flexDataBuffer;

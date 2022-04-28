@@ -3,8 +3,8 @@
 
 namespace StardustXRFusion {
 
-const SKMath::vec3 convertVec3(const StardustXR::vec3 &vec) {
-	return SKMath::vec3 {vec.x(), vec.y(), vec.z()};
+const Vec3 convertVec3(const StardustXR::vec3 &vec) {
+	return Vec3 {vec.x(), vec.y(), vec.z()};
 }
 
 PointerInput::PointerInput(const StardustXR::InputData *pointer) :

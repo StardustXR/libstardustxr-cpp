@@ -28,7 +28,7 @@ public:
 	void getData(std::function<void(Data)> callback);
 
 	void setPointerActive(bool active);
-	void setPointerPosition(SKMath::vec2 pos);
+	void setPointerPosition(Vec2 pos);
 	void setPointerButtonPressed(uint32_t button, bool pressed);
 	void scrollPointerAxis(uint32_t source, double x, double y, int32_t dx, int32_t dy);
 

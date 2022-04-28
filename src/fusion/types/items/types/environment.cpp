@@ -13,7 +13,7 @@ std::string EnvironmentItem::createAcceptorMethodString = "createEnvironmentItem
 std::function<void(EnvironmentItem &, EnvironmentItem::Data)> EnvironmentItem::uiCreateFunction  = [](EnvironmentItem &, EnvironmentItem::Data) {};
 std::function<void(EnvironmentItem &)>                        EnvironmentItem::uiDestroyFunction = [](EnvironmentItem &) {};
 
-EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, SKMath::vec3 origin, SKMath::quat orientation) : 
+EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, Vec3 origin, Quat rotation) : 
 	Item(true) {
 
 	nodeName = GenerateID();
@@ -27,7 +27,7 @@ EnvironmentItem::EnvironmentItem(Spatial *space, const std::string path, SKMath:
 			FLEX_STRING(space ? space->getNodePath() : std::string(""))
 			FLEX_STRING(path)
 			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
+			FLEX_QUAT(rotation)
 		)
 	);
 }

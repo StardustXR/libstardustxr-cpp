@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../sk_math.hpp"
+#include "../../../values.hpp"
 #include <array>
 
 namespace StardustXR {
@@ -11,7 +11,7 @@ namespace StardustXRFusion {
 
 struct joint_t {
 	float radius;
-	SKMath::pose_t pose;
+	Pose pose;
 
 	const joint_t& operator=(const joint_t& other)const {
          return other;

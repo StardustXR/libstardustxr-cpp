@@ -3,11 +3,11 @@
 
 #include "cylinderfield.hpp"
 
-using namespace SKMath;
+
 
 namespace StardustXRFusion {
 
-CylinderField::CylinderField(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation, float length, float radius) {
+CylinderField::CylinderField(Spatial *parent, Vec3 origin, Quat rotation, float length, float radius) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(
@@ -17,7 +17,7 @@ CylinderField::CylinderField(Spatial *parent, SKMath::vec3 origin, SKMath::quat 
 			FLEX_STRING(nodeName)
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
+			FLEX_QUAT(rotation)
 			FLEX_FLOAT(length)
 			FLEX_FLOAT(radius)
 		)

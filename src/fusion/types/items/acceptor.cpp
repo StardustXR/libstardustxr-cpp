@@ -5,7 +5,7 @@
 
 namespace StardustXRFusion {
 
-ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation, std::string itemType) :
+ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, Vec3 origin, Quat rotation, std::string itemType) :
 	Spatial(true) {
 
 	nodeName = GenerateID();
@@ -22,7 +22,7 @@ ItemAcceptor::ItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, S
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_STRING(field.getNodePath())
 			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
+			FLEX_QUAT(rotation)
 			FLEX_STRING(std::string(""))
 			FLEX_STRING(nodeName)
 		)

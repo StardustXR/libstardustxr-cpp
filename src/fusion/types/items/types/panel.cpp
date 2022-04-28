@@ -71,7 +71,7 @@ void PanelItem::setPointerActive(bool active) {
 		FLEX_ARG(FLEX_BOOL(active))
 	);
 }
-void PanelItem::setPointerPosition(SKMath::vec2 pos) {
+void PanelItem::setPointerPosition(Vec2 pos) {
 	messenger->sendSignal(
 		getNodePath().c_str(),
 		"setPointerPosition",

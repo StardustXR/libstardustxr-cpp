@@ -3,8 +3,8 @@
 
 namespace StardustXRFusion {
 
-EnvironmentItemAcceptor::EnvironmentItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) :
-	ItemAcceptor(parent, field, origin, orientation, "environment") {}
+EnvironmentItemAcceptor::EnvironmentItemAcceptor(Spatial *parent, Field &field, Vec3 origin, Quat rotation) :
+	ItemAcceptor(parent, field, origin, rotation, "environment") {}
 
 std::vector<uint8_t> EnvironmentItemAcceptor::acceptorCallback(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector flexVec = data.AsVector();

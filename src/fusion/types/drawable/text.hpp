@@ -33,10 +33,10 @@ public:
 		Overflow = 1 << 4,
 	};
 
-	explicit Text(Spatial *parent, std::string text = "Text", float characterHeight = 1.f, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity, std::string fontPath = "", Align textAlign = Align::TopLeft, SKMath::vec2 bounds = SKMath::vec2_zero, Fit fit = Fit::Overflow, Align boundsAlign = Align::TopLeft, SKMath::color color = {1,1,1,1});
+	explicit Text(Spatial *parent, std::string text = "Text", float characterHeight = 1.f, Vec3 origin = Vec3::Zero, Quat orientation = Quat::Identity, std::string fontPath = "", Align textAlign = Align::TopLeft, Vec2 bounds = Vec2::Zero, Fit fit = Fit::Overflow, Align boundsAlign = Align::TopLeft, Color color = Color::White);
 
 	void setText(std::string text);
-	void setColor(SKMath::color color);
+	void setColor(Color color);
 };
 
 } // namespace StardustXRFusion
