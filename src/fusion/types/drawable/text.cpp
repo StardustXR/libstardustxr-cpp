@@ -3,11 +3,11 @@
 #include "../../flex.hpp"
 #include "../../fusion_internal.hpp"
 
-using namespace SKMath;
+
 
 namespace StardustXRFusion {
 
-Text::Text(Spatial *parent, std::string text, float characterHeight, SKMath::vec3 origin, SKMath::quat orientation, std::string fontPath, Align textAlign, SKMath::vec2 bounds, Fit fit, Align boundsAlign, SKMath::color color) : Spatial(true) {
+Text::Text(Spatial *parent, std::string text, float characterHeight, Vec3 origin, Quat rotation, std::string fontPath, Align textAlign, Vec2 bounds, Fit fit, Align boundsAlign, Color color) : Spatial(true) {
 //	if(!FileExists(relativePath))
 //		return;
 	nodePath = "/drawable/text";
@@ -19,7 +19,7 @@ Text::Text(Spatial *parent, std::string text, float characterHeight, SKMath::vec
 			FLEX_STRING(nodeName)
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
+			FLEX_QUAT(rotation)
 			FLEX_STRING(text)
 			FLEX_STRING(fontPath != "" ? ConvertExeRelativePath(fontPath) : std::string(""))
 			FLEX_FLOAT(characterHeight)
@@ -40,7 +40,7 @@ void Text::setText(std::string text) {
 	);
 }
 
-void Text::setColor(SKMath::color color) {
+void Text::setColor(Color color) {
 	messenger->sendSignal(
 		getNodePath(),
 		"setText",

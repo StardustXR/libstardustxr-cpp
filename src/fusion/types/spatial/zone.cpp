@@ -4,11 +4,11 @@
 #include "../../fusion_internal.hpp"
 #include <flatbuffers/flexbuffers.h>
 
-using namespace SKMath;
+
 
 namespace StardustXRFusion {
 
-Zone::Zone(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) : Spatial(true) {
+Zone::Zone(Spatial *parent, Field &field, Vec3 origin, Quat rotation) : Spatial(true) {
 	nodePath = "/spatial/zone";
 	nodeName = GenerateID();
 
@@ -21,7 +21,7 @@ Zone::Zone(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orie
 			FLEX_STRING(field.getNodePath())
 			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
 			FLEX_VEC3(origin)
-			FLEX_QUAT(orientation)
+			FLEX_QUAT(rotation)
 			FLEX_STRING(std::string(""))
 			FLEX_STRING(nodeName)
 		)

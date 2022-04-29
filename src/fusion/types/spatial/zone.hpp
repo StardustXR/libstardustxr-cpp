@@ -16,7 +16,7 @@ namespace StardustXRFusion {
 
 class Zone : public Spatial {
 public:
-	explicit Zone(Spatial *parent, Field &field, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
+	explicit Zone(Spatial *parent, Field &field, Vec3 origin = Vec3::Zero, Quat rotation = Quat::Identity);
 	~Zone();
 
 	void isCaptured(Spatial &spatial, std::function<void(bool)> callback);

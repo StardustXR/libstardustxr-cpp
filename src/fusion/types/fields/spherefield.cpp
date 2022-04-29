@@ -1,14 +1,14 @@
 #include "../../fusion_internal.hpp"
 #include "../../flex.hpp"
 
-#include "sk_math.hpp"
+#include "values.hpp"
 #include "spherefield.hpp"
 
-using namespace SKMath;
+
 
 namespace StardustXRFusion {
 
-SphereField::SphereField(Spatial *parent, SKMath::vec3 origin, float radius) {
+SphereField::SphereField(Spatial *parent, Vec3 origin, float radius) {
 	nodeName = GenerateID();
 	nodePath = "/field";
 	messenger->sendSignal(

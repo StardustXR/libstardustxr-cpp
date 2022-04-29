@@ -1,3 +1,4 @@
-option('client', type : 'boolean')
-option('server', type : 'boolean')
-option('fusion', type : 'boolean')
+option('client', type: 'boolean')
+option('server', type: 'boolean')
+option('fusion', type: 'boolean')
+option('tests',  type: 'boolean')

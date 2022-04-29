@@ -13,7 +13,7 @@ namespace StardustXRFusion {
 
 class PulseSender : public Spatial {
 public:
-	explicit PulseSender(Spatial *parent, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
+	explicit PulseSender(Spatial *parent, Vec3 origin = Vec3::Zero, Quat rotation = Quat::Identity);
 
 	void getReceivers(std::function<void(std::vector<PulseReceiver> &)> callback);
 };

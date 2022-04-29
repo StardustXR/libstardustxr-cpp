@@ -1,26 +1,26 @@
 #include "../common/flex.hpp"
-#include "sk_math.hpp"
+#include "values.hpp"
 
 #pragma once
 
 namespace StardustXRFusion {
 
 	///////////////////////////////////////////
-	// Conversion from flex to SKMath
+	// Conversion from flex to internal values
 
-	#define SK_VEC2(vec) SKMath::vec2{\
+	#define STARDUST_VEC2(vec) Vec2{\
 		vec[0].AsFloat(),\
 		vec[1].AsFloat()\
 	}
-	#define SK_VEC3(vec) SKMath::vec3{\
+	#define STARDUST_VEC3(vec) Vec3{\
 		vec[0].AsFloat(),\
 		vec[1].AsFloat(),\
 		vec[2].AsFloat()\
 	}
-	#define SK_QUAT(quat_) SKMath::quat{\
-		quat_[0].AsFloat(),\
-		quat_[1].AsFloat(),\
-		quat_[2].AsFloat(),\
-		quat_[3].AsFloat()\
+	#define STARDUST_QUAT(vec) Quat{\
+		vec[0].AsFloat(),\
+		vec[1].AsFloat(),\
+		vec[2].AsFloat(),\
+		vec[3].AsFloat()\
 	}
 }

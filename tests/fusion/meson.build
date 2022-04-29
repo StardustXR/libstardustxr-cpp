@@ -1,104 +1,123 @@
 fusion_tests_includes = include_directories('../../src/')
 
-executable(
+glm = dependency('glm')
+
+test_basic = executable(
 	'basic',
 	'basic.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('basic', test_basic)
 
 
-executable(
+test_data = executable(
 	'data',
 	'data.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion, flatbuffers],
 )
+test('data', test_data)
 
 
-executable(
+test_environment = executable(
 	'environment',
 	'environment.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('environment', test_environment)
 
 
-executable(
+test_fields = executable(
 	'fields',
 	'fields.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('fields', test_fields)
 
 
-executable(
+test_input = executable(
 	'input',
 	'input.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('input', test_input)
 
 
-executable(
+test_launch = executable(
 	'launch',
 	'launch.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('launch', test_launch)
 
 
-executable(
+test_lifecycle = executable(
 	'lifecycle',
 	'lifecycle.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('lifecycle', test_lifecycle)
 
 
-executable(
+test_materials = executable(
 	'materials',
 	'materials.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('materials', test_materials)
 
 
-executable(
+test_model = executable(
 	'model',
 	'model.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('model', test_model)
 
 
-executable(
-	'spatial',
-	'spatial.cpp',
-	include_directories: [fusion_tests_includes],
-	dependencies: [fusion],
-)
+if glm.found()
+	test_spatial = executable(
+		'spatial',
+		'spatial.cpp',
+		include_directories: [fusion_tests_includes],
+		dependencies: [fusion, glm],
+	)
+	test('spatial', test_spatial)
+endif
 
 
-executable(
+test_spatial_loop = executable(
 	'spatialloop',
 	'spatialloop.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('spatialloop', test_spatial_loop)
 
 
-executable(
-	'text',
-	'text.cpp',
-	include_directories: [fusion_tests_includes],
-	dependencies: [fusion],
-)
+if glm.found()
+	test_text = executable(
+		'text',
+		'text.cpp',
+		include_directories: [fusion_tests_includes],
+		dependencies: [fusion, glm],
+	)
+	test('text', test_text)
+endif
 
 
-executable(
+test_zone = executable(
 	'zone',
 	'zone.cpp',
 	include_directories: [fusion_tests_includes],
 	dependencies: [fusion],
 )
+test('zone', test_zone)

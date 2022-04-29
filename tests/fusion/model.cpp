@@ -1,12 +1,12 @@
 #include "fusion/fusion.hpp"
 #include "fusion/types/drawable/model.hpp"
-#include "sk_math.hpp"
+#include "values.hpp"
 
 using namespace StardustXRFusion;
-using namespace SKMath;
+
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
-	Model model(nullptr, "../../../res/stardust_icon.glb", vec3_zero, quat_identity, vec3_one * 0.1f);
+	Model model(nullptr, "../../res/stardust_icon.glb", Vec3::Zero, Quat::Identity, Vec3::One * 0.1f);
 	StardustXRFusion::RunEventLoop();
 }

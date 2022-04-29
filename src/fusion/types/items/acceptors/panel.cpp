@@ -3,8 +3,8 @@
 
 namespace StardustXRFusion {
 
-PanelItemAcceptor::PanelItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation) :
-	ItemAcceptor(parent, field, origin, orientation, "panel") {}
+PanelItemAcceptor::PanelItemAcceptor(Spatial *parent, Field &field, Vec3 origin, Quat rotation) :
+	ItemAcceptor(parent, field, origin, rotation, "panel") {}
 
 std::vector<uint8_t> PanelItemAcceptor::acceptorCallback(flexbuffers::Reference data, bool) {
 	flexbuffers::Vector flexVec = data.AsVector();

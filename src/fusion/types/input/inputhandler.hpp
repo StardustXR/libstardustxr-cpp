@@ -3,7 +3,7 @@
 #include "datamap.hpp"
 #include "../spatial/spatial.hpp"
 #include "../fields/field.hpp"
-#include "../../sk_math.hpp"
+#include "../../values.hpp"
 
 #include <map>
 
@@ -18,8 +18,8 @@ class PointerInput;
 
 class InputHandler : public Spatial {
 public:
-	explicit InputHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
-	explicit InputHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation);
+	explicit InputHandler(Spatial *parent, Field &field, Vec3 origin, Quat rotation);
+	explicit InputHandler(Spatial *parent, Vec3 origin, Quat rotation);
 	~InputHandler();
 
 	void setField(Field *field);

@@ -2,15 +2,13 @@
 #include "../../flex.hpp"
 
 #include "field.hpp"
-#include "sk_math.hpp"
-
-using namespace SKMath;
+#include "values.hpp"
 
 namespace StardustXRFusion {
 
 Field::Field() : Spatial(false) {}
 
-void Field::distance(Spatial *space, vec3 point, std::function<void(float distance)> callback) {
+void Field::distance(Spatial *space, Vec3 point, std::function<void(float distance)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
@@ -25,7 +23,7 @@ void Field::distance(Spatial *space, vec3 point, std::function<void(float distan
 	);
 }
 
-void Field::normal(Spatial *space, vec3 point, std::function<void (SKMath::vec3)> callback) {
+void Field::normal(Spatial *space, Vec3 point, std::function<void (Vec3)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
@@ -35,12 +33,12 @@ void Field::normal(Spatial *space, vec3 point, std::function<void (SKMath::vec3)
 			FLEX_VEC3(point)
 		),
 		[callback](flexbuffers::Reference data) {
-			callback(SK_VEC3(data.AsVector()));
+			callback(STARDUST_VEC3(data.AsVector()));
 		}
 	);
 }
 
-void Field::closestPoint(Spatial *space, SKMath::vec3 point, std::function<void (SKMath::vec3)> callback) {
+void Field::closestPoint(Spatial *space, Vec3 point, std::function<void (Vec3)> callback) {
 	std::string spacePath = (space) ? space->getNodePath() : "";
 	messenger->executeRemoteMethod(
 		getNodePath().c_str(),
@@ -50,7 +48,7 @@ void Field::closestPoint(Spatial *space, SKMath::vec3 point, std::function<void 
 			FLEX_VEC3(point)
 		),
 		[callback](flexbuffers::Reference data) {
-			callback(SK_VEC3(data.AsVector()));
+			callback(STARDUST_VEC3(data.AsVector()));
 		}
 	);
 }

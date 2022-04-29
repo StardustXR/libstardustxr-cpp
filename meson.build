@@ -6,6 +6,9 @@ flatbuffers = dependency('flatbuffers', version:'>=2.0.6')
 
 common_files = []
 
+subdir('res')
 subdir('src')
 
-subdir('tests')
+if get_option('tests')
+	subdir('tests')
+endif

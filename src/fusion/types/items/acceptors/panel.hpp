@@ -10,7 +10,7 @@ namespace StardustXRFusion {
 
 class PanelItemAcceptor : public ItemAcceptor {
 public:
-	explicit PanelItemAcceptor(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
+	explicit PanelItemAcceptor(Spatial *parent, Field &field, Vec3 origin, Quat rotation);
 
 	std::function<void(PanelItem &panel, PanelItem::Data data)> itemCapturedMethod = [](PanelItem &, PanelItem::Data) {};
 	std::function<void(PanelItem &panel)> itemReleasedMethod = [](PanelItem &) {};

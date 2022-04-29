@@ -16,7 +16,7 @@ class PulseSender;
 
 class PulseReceiver : public Spatial {
 public:
-	explicit PulseReceiver(Spatial *parent, Field &field, SKMath::vec3 origin = SKMath::vec3_zero, SKMath::quat orientation = SKMath::quat_identity);
+	explicit PulseReceiver(Spatial *parent, Field &field, Vec3 origin = Vec3::Zero, Quat rotation = Quat::Identity);
 	explicit PulseReceiver(PulseSender *sender, std::string nodePath, std::string nodeName);
 
 	void getMask(std::function<void (flexbuffers::Reference)> callback);

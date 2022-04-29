@@ -6,13 +6,13 @@ namespace StardustXRFusion {
 const joint_t convertJoint(const StardustXR::joint *joint) {
 	return joint_t{
 		joint->radius(),
-		SKMath::pose_t{
-			SKMath::vec3{
+		Pose{
+			Vec3{
 				joint->position().x(),
 				joint->position().y(),
 				joint->position().z()
 			},
-			SKMath::quat{
+			Quat{
 				joint->rotation().x(),
 				joint->rotation().y(),
 				joint->rotation().z(),
@@ -49,7 +49,7 @@ HandInput::HandInput(const StardustXR::InputData *hand) :
 	fingers(convertFingers(*hand->input_as_Hand()->finger_joints())),
 	palm(convertJoint(hand->input_as_Hand()->palm())),
 	wrist(convertJoint(hand->input_as_Hand()->wrist())),
-	elbow(hand->input_as_Hand()->elbow() ? convertJoint(hand->input_as_Hand()->elbow()) : joint_t{}) {
+	elbow(hand->input_as_Hand()->elbow() ? convertJoint(hand->input_as_Hand()->elbow()) : joint_t{0, Pose::Identity}) {
 }
 
 }

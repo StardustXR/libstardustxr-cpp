@@ -9,7 +9,7 @@ int main() {
 	if(!StardustXRFusion::Setup())
 		return 0;
 
-	Spatial spawnPos(Root(), SKMath::vec3_up * 0.5f);
+	Spatial spawnPos(Root(), Vec3::Up * 0.5f);
 	spawnPos.createLaunchAnchor([&](uint32_t anchorCode) {
 		setenv("STARDUST_LAUNCH_ANCHOR", std::to_string(anchorCode).c_str(), true);
 		std::string spatialPath = ConvertExeRelativePath("spatial");

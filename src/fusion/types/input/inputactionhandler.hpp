@@ -42,8 +42,8 @@ public:
 		virtual ~Action();
 	};
 
-	explicit InputActionHandler(Spatial *parent, Field &field, SKMath::vec3 origin, SKMath::quat orientation);
-	explicit InputActionHandler(Spatial *parent, SKMath::vec3 origin, SKMath::quat orientation);
+	explicit InputActionHandler(Spatial *parent, Field &field, Vec3 origin, Quat rotation);
+	explicit InputActionHandler(Spatial *parent, Vec3 origin, Quat rotation);
 
 	std::vector<Action *> actions;
 	void update();

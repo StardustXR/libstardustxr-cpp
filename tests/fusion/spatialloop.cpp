@@ -2,7 +2,7 @@
 #include "fusion/types/spatial/spatial.hpp"
 
 using namespace StardustXRFusion;
-using namespace SKMath;
+
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
