@@ -9,7 +9,7 @@ double elapsed = 0.0f;
 
 int main(int, char *[]) {
 	StardustXRFusion::Setup();
-	Model model(nullptr, "../../../res/gyro_gem.glb");
+	Model model(nullptr, "../../res/gyro_gem.glb");
 	OnLogicStep([&](double delta, double) {
 		elapsed += delta;
 		Color gemColor = Color::FromHSVA(

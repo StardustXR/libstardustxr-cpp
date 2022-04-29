@@ -14,10 +14,10 @@ int main(int, char *[]) {
 
 	StardustXRFusion::Root()->setZoneable(true);
 	Spatial gyroRoot(StardustXRFusion::Root());
-	Model outsideRing(&gyroRoot, "../../../res/gyro_outside.glb");
-	Model middleRing(&outsideRing, "../../../res/gyro_middle.glb");
-	Model insideRing(&middleRing, "../../../res/gyro_inside.glb");
-	Model gem(&gyroRoot, "../../../res/gyro_gem.glb");
+	Model outsideRing(&gyroRoot, "../../res/gyro_outside.glb");
+	Model middleRing(&outsideRing, "../../res/gyro_middle.glb");
+	Model insideRing(&middleRing, "../../res/gyro_inside.glb");
+	Model gem(&gyroRoot, "../../res/gyro_gem.glb");
 
 	OnLogicStep([&](double delta, double) {
 		time += delta;
