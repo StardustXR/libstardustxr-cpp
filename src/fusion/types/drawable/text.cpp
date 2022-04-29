@@ -43,7 +43,7 @@ void Text::setText(std::string text) {
 void Text::setColor(Color color) {
 	messenger->sendSignal(
 		getNodePath(),
-		"setText",
+		"setColor",
 		FLEX_ARG(FLEX_COLOR(color))
 	);
 }
