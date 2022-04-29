@@ -29,20 +29,73 @@ Quat::Quat(float x, float y, float z, float w)   : x(x), y(y), z(z), w(w) {}
 Pose::Pose(Vec3 position, Quat rotation)         : position(position), rotation(rotation) {}
 Color::Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
 
+Vec2::Vec2() : Vec2(0,0) {}
+Vec3::Vec3() : Vec3(0,0,0) {}
+Quat::Quat() : Quat(Quat::Identity) {}
+Pose::Pose() : Pose(Pose::Identity) {}
+Color::Color() : Color(Color::White) {}
+
+Vec2 Vec2::operator-() const {
+	return { -x, -y };
+}
+Vec2 Vec2::operator+(Vec2 const rhs) const {
+	return {
+		x + rhs.x,
+		y + rhs.y
+	};
+}
+Vec2 Vec2::operator-(Vec2 const rhs) const {
+	return {
+		x - rhs.x,
+		y - rhs.y
+	};
+}
 Vec2 Vec2::operator*(float rhs) const {
 	return {
 		x * rhs,
 		y * rhs
 	};
-};
+}
+Vec2 Vec2::operator/(float rhs) const {
+	return {
+		x / rhs,
+		y / rhs
+	};
+}
 
+
+Vec3 Vec3::operator-() const {
+	return { -x, -y, -z };
+}
+Vec3 Vec3::operator+(Vec3 const rhs) const {
+	return {
+		x + rhs.x,
+		y + rhs.y,
+		z + rhs.z
+	};
+}
+Vec3 Vec3::operator-(Vec3 const rhs) const {
+	return {
+		x - rhs.x,
+		y - rhs.y,
+		z - rhs.z
+	};
+}
 Vec3 Vec3::operator*(float rhs) const {
 	return {
 		x * rhs,
 		y * rhs,
 		z * rhs
 	};
-};
+}
+Vec3 Vec3::operator/(float rhs) const {
+	return {
+		x / rhs,
+		y / rhs,
+		z / rhs
+	};
+}
+
 
 Color Color::FromHSVA(float h, float s, float v, float a) {
 	const float Kx = 1.0f;
