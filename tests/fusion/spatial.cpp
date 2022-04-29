@@ -21,10 +21,10 @@ int main(int, char *[]) {
 
 	OnLogicStep([&](double delta, double) {
 		time += delta;
-		double rotation = 360*time/rotationSeconds;
+		double rotation = glm::radians(360*time/rotationSeconds);
 
-		gyroRoot.setOrigin(Vec3::Up * std::sin(glm::degrees(rotation)) * 0.1f);
-		gem.setScale(Vec3::One * (1.0f + std::sin(glm::degrees(rotation*2)) * 0.25f));
+		gyroRoot.setOrigin(Vec3::Up * std::sin(rotation) * 0.1f);
+		gem.setScale(Vec3::One * (1.0f + std::sin(rotation*2) * 0.25f));
 
 		outsideRing.setOrientation(glm::quat(glm::vec3(rotation, 0, 0)));
 		middleRing.setOrientation (glm::quat(glm::vec3(0, 0, rotation)));
