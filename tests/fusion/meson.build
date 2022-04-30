@@ -38,6 +38,15 @@ test_fields = executable(
 test('fields', test_fields)
 
 
+test_hmd = executable(
+	'hmd',
+	'hmd.cpp',
+	include_directories: [fusion_tests_includes],
+	dependencies: [fusion],
+)
+test('hmd', test_hmd)
+
+
 test_input = executable(
 	'input',
 	'input.cpp',

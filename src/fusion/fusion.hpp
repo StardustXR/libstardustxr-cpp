@@ -14,6 +14,7 @@ void RunEventLoop(int timeout = 10000);
 void Shutdown();
 
 Spatial *Root();
+Spatial *HMD();
 void SetSkytex(std::string path);
 void SetSkylight(std::string path);
 void OnLogicStep(LogicStepMethod method);
