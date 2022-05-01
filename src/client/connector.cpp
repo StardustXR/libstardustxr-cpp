@@ -22,7 +22,7 @@ int ConnectClient() {
 	socketPath += getenv("STARDUST_INSTANCE");
 	int fd, len;
 
-	if ((fd = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1)
+	if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
 		return 0;
 
 	printf("Trying to connect to Stardust's server at %s...\n", socketPath.c_str());

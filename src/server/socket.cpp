@@ -38,7 +38,7 @@ std::string SocketHandler::lockSocketPath() {
 
 bool SocketHandler::createSocket() {
 	printf("Trying to make a socket at %s.\n", socketPath.c_str());
-	if ((socketFD = socket(AF_UNIX, SOCK_SEQPACKET, 0)) == -1) return false;
+	if ((socketFD = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) return false;
 
 	sockaddr_un local = { .sun_family = AF_UNIX, };
 	unlink(socketPath.c_str());
