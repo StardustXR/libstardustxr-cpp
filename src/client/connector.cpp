@@ -24,6 +24,8 @@ int ConnectClient() {
 
 	if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
 		return 0;
+	if(fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
+		return 0;
 
 	printf("Trying to connect to Stardust's server at %s...\n", socketPath.c_str());
 
@@ -32,8 +34,18 @@ int ConnectClient() {
 	socketPath.copy(server.sun_path, sizeof(server.sun_path));
 
 	len = strlen(server.sun_path) + sizeof(server.sun_family);
-	if (connect(fd, (struct sockaddr *)&server, len) == -1)
-		return 0;
+	if (connect(fd, (struct sockaddr *)&server, len) == -1) {
+		if((errno == EWOULDBLOCK) && (errno == EINPROGRESS)) {
+			pollfd poll_fd = {};
+			poll_fd.fd = fd;
+			poll_fd.events = POLLOUT;
+			if(poll(&poll_fd, 1, 0) <= 0) {
+				return 0;
+			}
+		} else {
+			return 0;
+		}
+	}
 	printf("Connected.\n");
 	return fd;
 }
