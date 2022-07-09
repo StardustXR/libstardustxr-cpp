@@ -67,10 +67,7 @@ bool Setup() {
 	messenger->sendSignal(
 		"/",
 		"subscribeLogicStep",
-		FLEX_ARGS(
-			FLEX_STRING(std::string(""))
-			FLEX_STRING(std::string("logicStep"))
-		)
+		FLEX_ARG(FLEX_NULL)
 	);
 	scenegraph->addMethod("logicStep", &FlexDummy);
 
