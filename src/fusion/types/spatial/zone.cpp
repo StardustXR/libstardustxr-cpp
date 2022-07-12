@@ -4,87 +4,64 @@
 #include "../../fusion_internal.hpp"
 #include <flatbuffers/flexbuffers.h>
 
-
-
 namespace StardustXRFusion {
 
-Zone::Zone(Spatial *parent, Field &field, Vec3 origin, Quat rotation) : Spatial(true) {
-	nodePath = "/spatial/zone";
-	nodeName = GenerateID();
+Zone::Zone(Spatial *parent, Field &field, Vec3 origin, Quat rotation)
+    : Spatial() {
+  core->path = "/spatial/zone";
+  core->name = GenerateID();
 
-	scenegraph->addMethod(nodeName, std::bind(&Zone::updateZone, this, std::placeholders::_1, std::placeholders::_2));
-	messenger->sendSignal(
-		"/spatial",
-		"createZone",
-		FLEX_ARGS(
-			FLEX_STRING(nodeName)
-			FLEX_STRING(field.getNodePath())
-			FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
-			FLEX_VEC3(origin)
-			FLEX_QUAT(rotation)
-			FLEX_STRING(std::string(""))
-			FLEX_STRING(nodeName)
-		)
-	);
+  core->methods[core->name] = std::bind(
+      &Zone::updateZone, this, std::placeholders::_1, std::placeholders::_2);
+  scenegraph->addNode(core);
+
+  messenger->sendSignal(
+      "/spatial", "createZone",
+      FLEX_ARGS(
+          FLEX_STRING(core->name) FLEX_STRING(field.getNodePath())
+              FLEX_STRING(parent ? parent->getNodePath() : std::string(""))
+                  FLEX_VEC3(origin) FLEX_QUAT(rotation)
+                      FLEX_STRING(std::string("")) FLEX_STRING(core->name)));
 }
 Zone::~Zone() {
-	scenegraph->removeMethod(nodeName);
-	for(auto space : spatials) {
-		release(space.second);
-	}
+  for (auto space : spatials) {
+    release(space.second);
+  }
 }
 
 void Zone::isCaptured(Spatial &spatial, std::function<void(bool)> callback) {
-	messenger->executeRemoteMethod(
-		getNodePath().c_str(),
-		"isCaptured",
-		FLEX_ARG(
-			FLEX_STRING(spatial.getNodeName())
-		),
-		[callback](flexbuffers::Reference data) {
-			callback(data.AsBool());
-		}
-	);
+  executeMethod(
+      "isCaptured", FLEX_ARG(FLEX_STRING(spatial.getNodeName())),
+      [callback](flexbuffers::Reference data) { callback(data.AsBool()); });
 }
 
 void Zone::capture(Spatial &spatial) {
-	messenger->sendSignal(
-		getNodePath().c_str(),
-		"capture",
-		FLEX_ARG(
-			FLEX_STRING(spatial.getNodeName())
-		)
-	);
+  sendSignal("capture", FLEX_ARG(FLEX_STRING(spatial.getNodeName())));
 }
 
 void Zone::release(Spatial &spatial) {
-	messenger->sendSignal(
-		getNodePath().c_str(),
-		"release",
-		FLEX_ARG(
-			FLEX_STRING(spatial.getNodeName())
-		)
-	);
+  sendSignal("release", FLEX_ARG(FLEX_STRING(spatial.getNodeName())));
 }
 
 std::vector<uint8_t> Zone::updateZone(flexbuffers::Reference data, bool) {
-	flexbuffers::Vector vector = data.AsVector();
-	flexbuffers::TypedVector enter = vector[0].AsTypedVector();
-	flexbuffers::TypedVector exit  = vector[1].AsTypedVector();
+  flexbuffers::Vector vector = data.AsVector();
+  flexbuffers::TypedVector enter = vector[0].AsTypedVector();
+  flexbuffers::TypedVector exit = vector[1].AsTypedVector();
 
-	for(uint i=0; i<enter.size(); ++i) {
-		std::string uuid = enter[i].AsString().str();
-		Spatial spatial;
-		spatial.setBackend(getNodePath(), uuid);
-		spatials.emplace(uuid, spatial);
-		onSpatialEnter(spatial);
-	}
-	for(uint i=0; i<exit.size(); ++i) {
-		std::string uuid = exit[i].AsString().str();
-		spatials.erase(uuid);
-		onSpatialLeave(uuid);
-	}
-	return std::vector<uint8_t>();
+  for (uint i = 0; i < enter.size(); ++i) {
+    std::string uuid = enter[i].AsString().str();
+    Spatial spatial;
+    spatial.setBackend(
+        std::shared_ptr<NodeCore>(new NodeCore(getNodePath(), uuid, false)));
+    spatials.emplace(uuid, spatial);
+    onSpatialEnter(spatial);
+  }
+  for (uint i = 0; i < exit.size(); ++i) {
+    std::string uuid = exit[i].AsString().str();
+    spatials.erase(uuid);
+    onSpatialLeave(uuid);
+  }
+  return std::vector<uint8_t>();
 }
 
 } // namespace StardustXRFusion
