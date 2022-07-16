@@ -121,7 +121,9 @@ void SetSkylight(std::string path) {
 }
 
 std::vector<uint8_t> LogicStep(flexbuffers::Reference data, bool) {
-  flexbuffers::Vector vec = data.AsVector();
+//  flexbuffers::Vector vec = data.AsVector();
+//  flexbuffers::TypedVector vec = data.AsTypedVector();
+  flexbuffers::FixedTypedVector vec = data.AsFixedTypedVector();
   double delta = vec[0].AsDouble();
   double timeToRender = vec[1].AsDouble();
   logicMethod(delta, timeToRender);
