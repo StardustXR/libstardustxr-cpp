@@ -20,12 +20,13 @@ void FusionScenegraph::removeNode(NodeCore &node) {
 std::vector<uint8_t> FusionScenegraph::sendCall(std::string nodePath,
                                                 std::string methodName,
                                                 flexbuffers::Reference data,
-                                                bool method) {
-  nodesMutex.lock();
+												bool method) {
+	std::unique_lock<std::mutex> lock(nodesMutex);
   auto node = nodes[nodePath].lock();
   if (node) {
     auto methodRef = node->methods.find(methodName);
     if (methodRef != node->methods.end()) {
+		lock.unlock();
       return methodRef->second(data, method);
     } else {
       fprintf(stderr, "Method/signal \"%s\" does not exist\n",
